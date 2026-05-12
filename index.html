@@ -572,11 +572,13 @@
       transition: width .25s ease;
     }
 
-    .form-step {
+    .form-step,
+    .life-step {
       display: none;
     }
 
-    .form-step.active {
+    .form-step.active,
+    .life-step.active {
       display: block;
     }
 
@@ -1709,6 +1711,39 @@
                 </div>
               </div>
 
+              <div id="lifeChooser" style="display:none">
+                <h2>Choose life product</h2>
+                <p class="wizard-intro">Start a focused flow for life insurance, critical illness insurance, or both together.</p>
+                <input id="lifeProductType" name="lifeProductType" type="hidden" value="both">
+                <div class="coverage-grid">
+                  <button class="coverage-card active" data-choice-target="lifeProductType" data-choice-value="both" type="button">
+                    <span>
+                      <strong>Life + critical illness</strong>
+                      <span>One flow for both life and critical illness protection.</span>
+                    </span>
+                    <span class="tag">Recommended</span>
+                  </button>
+                  <button class="coverage-card" data-choice-target="lifeProductType" data-choice-value="life" type="button">
+                    <span>
+                      <strong>Life insurance</strong>
+                      <span>Family payout if the insured person passes away.</span>
+                    </span>
+                    <span class="tag">Life only</span>
+                  </button>
+                  <button class="coverage-card" data-choice-target="lifeProductType" data-choice-value="critical" type="button">
+                    <span>
+                      <strong>Critical illness</strong>
+                      <span>Payout after selected serious diagnoses.</span>
+                    </span>
+                    <span class="tag">Critical only</span>
+                  </button>
+                </div>
+                <div class="flow-actions">
+                  <button class="secondary-btn" data-route="home" type="button">Choose another product</button>
+                  <button class="primary-btn" id="startLifeFlowBtn" type="button">Continue to questions</button>
+                </div>
+              </div>
+
               <div id="comingSoonProduct" style="display:none">
                 <h2 id="comingSoonTitle">This product flow is being prepared</h2>
                 <p id="comingSoonCopy">The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.</p>
@@ -2035,6 +2070,125 @@
               <div class="flow-actions">
                 <button class="secondary-btn" id="backBtn" type="button">Back</button>
                 <button class="primary-btn" id="nextBtn" type="button">Next</button>
+              </div>
+            </form>
+
+            <form id="lifeQuoteForm" style="display:none">
+              <div class="life-step active" data-life-step="0">
+                <h2>Life and critical illness insurance</h2>
+                <p class="wizard-intro">Choose the product type before we calculate the monthly premium.</p>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="lifeProductSelect">Choose product</label>
+                    <select id="lifeProductSelect" name="lifeProductSelect">
+                      <option value="both" selected>Life + critical illness</option>
+                      <option value="life">Life insurance</option>
+                      <option value="critical">Critical illness</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="life-step" data-life-step="1">
+                <h2>Insured person</h2>
+                <p class="wizard-intro">Age for this product must be between 20 and 53 years.</p>
+                <input id="lifeGender" name="lifeGender" type="hidden" value="male">
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="lifeGender" data-choice-value="female" type="button"><strong>Female</strong></button>
+                  <button class="select-card active" data-choice-target="lifeGender" data-choice-value="male" type="button"><strong>Male</strong></button>
+                </div>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="lifeAge">Age</label>
+                    <input id="lifeAge" name="lifeAge" type="number" min="20" max="53" value="35">
+                  </div>
+                </div>
+              </div>
+
+              <div class="life-step" data-life-step="2">
+                <h2>Choose insurance amount</h2>
+                <p class="wizard-intro">Select the life limit and critical illness limit. The monthly premium updates immediately.</p>
+                <input id="lifeLimit" name="lifeLimit" type="hidden" value="100000">
+                <input id="criticalLimit" name="criticalLimit" type="hidden" value="100000">
+                <label>Life insurance limit</label>
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="lifeLimit" data-choice-value="50000" type="button"><strong>50,000 ₾</strong></button>
+                  <button class="select-card active" data-choice-target="lifeLimit" data-choice-value="100000" type="button"><strong>100,000 ₾</strong></button>
+                </div>
+                <label style="display:block;margin-top:22px">Critical illness limit</label>
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="criticalLimit" data-choice-value="50000" type="button"><strong>50,000 ₾</strong></button>
+                  <button class="select-card active" data-choice-target="criticalLimit" data-choice-value="100000" type="button"><strong>100,000 ₾</strong></button>
+                </div>
+                <div class="package-card active" style="margin-top:22px">
+                  <strong>Monthly premium</strong>
+                  <span class="price" id="lifePremium">51.35 ₾</span>
+                </div>
+              </div>
+
+              <div class="life-step" data-life-step="3">
+                <h2>Remote verification</h2>
+                <div class="info-box">
+                  <p><strong>Product:</strong> Life and critical illness insurance</p>
+                  <p>To buy this product you will need basic identity verification and a short health declaration.</p>
+                  <p><strong>Required documents:</strong></p>
+                  <p>1. Personal ID document<br>2. Passport, if requested<br>3. Driving license, if requested</p>
+                </div>
+              </div>
+
+              <div class="life-step" data-life-step="4">
+                <h2>TBC insurance terms</h2>
+                <div class="info-box" style="max-height:360px;overflow:auto">
+                  <p>I confirm that I have read the insurance conditions and agree that shevadaro may prepare a sample life and critical illness insurance quote based on my information.</p>
+                  <p>The final insurer may request additional identity, health, income, or beneficiary information before issuing a real policy.</p>
+                  <p>This prototype does not issue a binding policy. It only prepares an estimated comparison and lead request.</p>
+                </div>
+                <label class="source-note field full" style="display:flex;gap:10px;align-items:flex-start;margin-top:18px">
+                  <input id="lifeTerms" name="lifeTerms" type="checkbox" style="width:auto;min-height:auto;margin-top:4px">
+                  <span>I agree to continue</span>
+                </label>
+              </div>
+
+              <div class="life-step" data-life-step="5">
+                <h2>Choose document</h2>
+                <div class="limit-list">
+                  <button class="limit-option active" type="button"><strong>Personal ID document</strong><span>Use Georgian personal number and date of birth.</span></button>
+                  <button class="limit-option" type="button"><strong>Passport</strong><span>Use passport details if ID is not available.</span></button>
+                  <button class="limit-option" type="button"><strong>Driving license</strong><span>Alternative identification document.</span></button>
+                </div>
+              </div>
+
+              <div class="life-step" data-life-step="6">
+                <h2>Personal details</h2>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="lifeFirstName">First name</label>
+                    <input id="lifeFirstName" name="lifeFirstName">
+                  </div>
+                  <div class="field">
+                    <label for="lifeLastName">Last name</label>
+                    <input id="lifeLastName" name="lifeLastName">
+                  </div>
+                  <div class="field">
+                    <label for="lifePersonalId">Personal number</label>
+                    <input id="lifePersonalId" name="lifePersonalId" inputmode="numeric">
+                  </div>
+                  <div class="field">
+                    <label for="lifePhone">Phone number</label>
+                    <input id="lifePhone" name="lifePhone" placeholder="+995 ...">
+                  </div>
+                </div>
+              </div>
+
+              <div class="life-step" data-life-step="7">
+                <h2>Your life insurance comparison</h2>
+                <p id="lifeSummaryLine">Review sample life insurance offers based on your selections.</p>
+                <div class="results-grid" id="lifeResultsGrid"></div>
+              </div>
+
+              <div class="flow-actions">
+                <button class="secondary-btn" id="lifeBackBtn" type="button">Back</button>
+                <button class="primary-btn" id="lifeNextBtn" type="button">Next</button>
               </div>
             </form>
           </section>
@@ -2477,6 +2631,50 @@
       'Last name': 'გვარი'
     });
 
+    Object.assign(translations.ge, {
+      'Choose life product': 'აირჩიეთ პროდუქტი',
+      'Start a focused flow for life insurance, critical illness insurance, or both together.': 'დაიწყეთ სიცოცხლის, კრიტიკული დაავადებების ან ორივე დაზღვევის პროცესი.',
+      'Life + critical illness': 'სიცოცხლის და კრიტიკული დაავადებების დაზღვევა',
+      'One flow for both life and critical illness protection.': 'ერთი პროცესი სიცოცხლისა და კრიტიკული დაავადებების დასაცავად.',
+      'Family payout if the insured person passes away.': 'ანაზღაურება ოჯახისთვის დაზღვეულის გარდაცვალების შემთხვევაში.',
+      'Critical illness': 'კრიტიკული დაავადებები',
+      'Payout after selected serious diagnoses.': 'ანაზღაურება მძიმე დიაგნოზების შემთხვევაში.',
+      'Life only': 'მხოლოდ სიცოცხლე',
+      'Critical only': 'მხოლოდ კრიტიკული',
+      'Choose life insurance, critical illness insurance, or both, then continue into a focused quote flow.': 'აირჩიეთ სიცოცხლის დაზღვევა, კრიტიკული დაავადებების დაზღვევა ან ორივე და გააგრძელეთ შეთავაზების პროცესი.',
+      'This flow is modeled for life insurance, critical illness insurance, or a combined product with identity verification and a health declaration.': 'ეს პროცესი აგებულია სიცოცხლის დაზღვევის, კრიტიკული დაავადებების დაზღვევის ან კომბინირებული პროდუქტის შესაძენად, პირადობის დადასტურებითა და ჯანმრთელობის დეკლარაციით.',
+      'Life and critical illness insurance': 'სიცოცხლის და კრიტიკული დაავადებების დაზღვევა',
+      'Choose the product type before we calculate the monthly premium.': 'აირჩიეთ პროდუქტის ტიპი, სანამ თვიურ პრემიას დავითვლით.',
+      'Choose product': 'აირჩიეთ პროდუქტი',
+      'Insured person': 'დაზღვეული პირი',
+      'Age for this product must be between 20 and 53 years.': 'ამ პროდუქტისთვის ასაკი უნდა იყოს 20-დან 53 წლამდე.',
+      'Choose insurance amount': 'აირჩიეთ დაზღვევის თანხა',
+      'Select the life limit and critical illness limit. The monthly premium updates immediately.': 'აირჩიეთ სიცოცხლისა და კრიტიკული დაავადებების ლიმიტი. თვიური პრემია მაშინვე განახლდება.',
+      'Life insurance limit': 'სიცოცხლის დაზღვევის ლიმიტი',
+      'Critical illness limit': 'კრიტიკული დაავადებების დაზღვევის ლიმიტი',
+      'Monthly premium': 'ყოველთვიური პრემია',
+      'Remote verification': 'დისტანციური ვერიფიკაცია',
+      'To buy this product you will need basic identity verification and a short health declaration.': 'ამ პროდუქტის შესაძენად საჭიროა პირადობის დადასტურება და მოკლე ჯანმრთელობის დეკლარაცია.',
+      'Required documents:': 'საჭირო დოკუმენტები:',
+      '1. Personal ID document<br>2. Passport, if requested<br>3. Driving license, if requested': '1. პირადობის მოწმობა<br>2. პასპორტი, საჭიროების შემთხვევაში<br>3. მართვის მოწმობა, საჭიროების შემთხვევაში',
+      'TBC insurance terms': 'სადაზღვევო პირობები',
+      'I confirm that I have read the insurance conditions and agree that shevadaro may prepare a sample life and critical illness insurance quote based on my information.': 'ვადასტურებ, რომ გავეცანი სადაზღვევო პირობებს და shevadaro-ს შეუძლია ჩემი ინფორმაციის მიხედვით მოამზადოს სიცოცხლისა და კრიტიკული დაავადებების დაზღვევის სატესტო შეთავაზება.',
+      'The final insurer may request additional identity, health, income, or beneficiary information before issuing a real policy.': 'რეალური პოლისის გაცემამდე საბოლოო სადაზღვევომ შეიძლება მოითხოვოს დამატებითი პირადობის, ჯანმრთელობის, შემოსავლის ან ბენეფიციარის ინფორმაცია.',
+      'This prototype does not issue a binding policy. It only prepares an estimated comparison and lead request.': 'ეს პროტოტიპი არ გასცემს სავალდებულო პოლისს. ის მხოლოდ სავარაუდო შედარებას და მოთხოვნას ამზადებს.',
+      'I agree to continue': 'ვეთანხმები გაგრძელებას',
+      'Choose document': 'აირჩიეთ დოკუმენტი',
+      'Personal ID document': 'პირადობის მოწმობა',
+      'Use Georgian personal number and date of birth.': 'გამოიყენეთ პირადი ნომერი და დაბადების თარიღი.',
+      'Passport': 'პასპორტი',
+      'Use passport details if ID is not available.': 'გამოიყენეთ პასპორტის მონაცემები, თუ პირადობა არ გაქვთ.',
+      'Driving license': 'მართვის მოწმობა',
+      'Alternative identification document.': 'ალტერნატიული საიდენტიფიკაციო დოკუმენტი.',
+      'Personal details': 'პირადი ინფორმაცია',
+      'Your life insurance comparison': 'თქვენი სიცოცხლის დაზღვევის შედარება',
+      'Review sample life insurance offers based on your selections.': 'ნახეთ სატესტო სიცოცხლის დაზღვევის შეთავაზებები თქვენი არჩევანის მიხედვით.',
+      'Health declaration': 'ჯანმრთელობის დეკლარაცია'
+    });
+
     const productConfigs = {
       car: {
         title: 'Car insurance',
@@ -2546,15 +2744,19 @@
     const mobileMenu = document.getElementById('mobileMenu');
     const productButtons = document.querySelectorAll('[data-product]');
     const formSteps = document.querySelectorAll('.form-step');
+    const lifeFormSteps = document.querySelectorAll('.life-step');
     const stepItems = document.querySelectorAll('[data-step-label]');
     const progressBar = document.getElementById('progressBar');
     const backBtn = document.getElementById('backBtn');
     const nextBtn = document.getElementById('nextBtn');
     const quoteForm = document.getElementById('quoteForm');
+    const lifeQuoteForm = document.getElementById('lifeQuoteForm');
     const productDetail = document.getElementById('productDetail');
     const coverageChooser = document.getElementById('coverageChooser');
+    const lifeChooser = document.getElementById('lifeChooser');
     const comingSoonProduct = document.getElementById('comingSoonProduct');
     const startCarFlowBtn = document.getElementById('startCarFlowBtn');
+    const startLifeFlowBtn = document.getElementById('startLifeFlowBtn');
     const coverageCards = document.querySelectorAll('[data-coverage-intent]');
     const startChoiceButtons = document.querySelectorAll('[data-start-choice]');
     const brandSelect = document.getElementById('brand');
@@ -2567,6 +2769,11 @@
     const startDateInput = document.getElementById('startDate');
     const deductibleDueNow = document.getElementById('deductibleDueNow');
     const deductibleOriginal = document.getElementById('deductibleOriginal');
+    const lifeBackBtn = document.getElementById('lifeBackBtn');
+    const lifeNextBtn = document.getElementById('lifeNextBtn');
+    const lifeResultsGrid = document.getElementById('lifeResultsGrid');
+    const lifeSummaryLine = document.getElementById('lifeSummaryLine');
+    const lifePremium = document.getElementById('lifePremium');
 
     function t(text) {
       return state.lang === 'ge' ? translations.ge[text] || text : text;
@@ -2687,33 +2894,44 @@
     function renderProductPage() {
       const config = productConfigs[state.product] || productConfigs.car;
       const isCar = state.product === 'car';
+      const isLife = state.product === 'life';
+      const activeFlowSteps = isLife ? lifeFormSteps : formSteps;
       document.getElementById('flowHeading').textContent = t(config.title);
       document.getElementById('flowCopy').textContent = state.product === 'car'
         ? t('Choose the coverage style first, then continue into a focused car quote flow.')
+        : isLife
+          ? t('Choose life insurance, critical illness insurance, or both, then continue into a focused quote flow.')
         : t('The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.');
       document.getElementById('productTitle').textContent = t(config.title);
       document.getElementById('productDescription').textContent = t(config.description);
       document.getElementById('productSource').textContent = isCar
         ? t('Based on Georgian market patterns: Aldagi lists Minimum, Standard, and Full packages; GPI Auto Fix includes third-party liability and fixed limits; TBC motor terms describe Casco, MTPL, and driver/passenger accident sections.')
+        : isLife
+          ? t('This flow is modeled for life insurance, critical illness insurance, or a combined product with identity verification and a health declaration.')
         : t('This product has its own page now. Its dedicated question flow can be added without returning the user to the full product selector.');
       document.getElementById('productImage').src = config.image;
       document.getElementById('productImage').alt = t(config.alt);
       document.getElementById('productEyebrow').textContent = t('Selected product');
 
-      compareLayout.classList.toggle('single-product', !isCar);
+      compareLayout.classList.toggle('single-product', !(isCar || isLife));
       productDetail.style.display = state.quoteStarted ? 'none' : 'grid';
       quoteForm.style.display = state.quoteStarted && isCar ? 'block' : 'none';
+      lifeQuoteForm.style.display = state.quoteStarted && isLife ? 'block' : 'none';
       coverageChooser.style.display = isCar ? 'block' : 'none';
-      comingSoonProduct.style.display = isCar ? 'none' : 'block';
-      progressBar.style.width = isCar ? `${Math.min(100, ((state.step + 1) / (formSteps.length + 1)) * 100)}%` : '16%';
+      lifeChooser.style.display = isLife ? 'block' : 'none';
+      comingSoonProduct.style.display = isCar || isLife ? 'none' : 'block';
+      progressBar.style.width = (isCar || isLife) ? `${Math.min(100, ((state.step + 1) / (activeFlowSteps.length + 1)) * 100)}%` : '16%';
 
       stepItems.forEach((item, index) => {
-        item.classList.toggle('active', index === 0 && isCar);
+        item.classList.toggle('active', index === 0 && (isCar || isLife));
         item.classList.toggle('done', false);
       });
 
       if (state.quoteStarted && isCar) {
         renderStep();
+      }
+      if (state.quoteStarted && isLife) {
+        renderLifeStep();
       }
     }
 
@@ -2749,6 +2967,100 @@
       const selected = priceByDeductible[deductibleInput.value] || priceByDeductible[1];
       deductibleDueNow.textContent = `${selected.due} ₾`;
       deductibleOriginal.textContent = `${selected.original} ₾`;
+    }
+
+    function renderLifeStep() {
+      const formIndex = state.step - 1;
+      const lastIndex = lifeFormSteps.length - 1;
+      const stageIndex = getLifeStageIndex(formIndex);
+      productDetail.style.display = 'none';
+      lifeQuoteForm.style.display = 'block';
+      lifeFormSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.lifeStep) === formIndex));
+      stepItems.forEach((item, index) => {
+        item.classList.toggle('active', index === stageIndex);
+        item.classList.toggle('done', index < stageIndex);
+      });
+      progressBar.style.width = `${Math.min(100, ((formIndex + 2) / (lifeFormSteps.length + 1)) * 100)}%`;
+      lifeNextBtn.textContent = formIndex === lastIndex ? t('Start again') : formIndex === lastIndex - 1 ? t('Show prices') : t('Next');
+      lifeBackBtn.textContent = t('Back');
+      updateLifePremium();
+      if (formIndex === lastIndex) renderLifeResults();
+    }
+
+    function getLifeStageIndex(formIndex) {
+      if (formIndex < 0) return 0;
+      if (formIndex <= 1) return 1;
+      if (formIndex <= 2) return 4;
+      if (formIndex <= 6) return 3;
+      return 5;
+    }
+
+    function getLifeData() {
+      const data = new FormData(lifeQuoteForm);
+      const productType = data.get('lifeProductSelect') || document.getElementById('lifeProductType').value || 'both';
+      return {
+        productType,
+        gender: data.get('lifeGender') || 'male',
+        age: Number(data.get('lifeAge') || 35),
+        lifeLimit: Number(data.get('lifeLimit') || 100000),
+        criticalLimit: Number(data.get('criticalLimit') || 100000)
+      };
+    }
+
+    function calculateLifePremium(data, factor = 1) {
+      const ageFactor = data.age < 30 ? .82 : data.age > 45 ? 1.28 : 1;
+      const genderFactor = data.gender === 'male' ? 1.08 : .96;
+      const lifePart = data.productType === 'critical' ? 0 : data.lifeLimit / 100000 * 24;
+      const criticalPart = data.productType === 'life' ? 0 : data.criticalLimit / 100000 * 23.55;
+      return Math.max(12, Math.round((lifePart + criticalPart) * ageFactor * genderFactor * factor * 100) / 100);
+    }
+
+    function updateLifePremium() {
+      if (!lifePremium) return;
+      const data = getLifeData();
+      lifePremium.textContent = `${calculateLifePremium(data).toFixed(2)} ₾`;
+    }
+
+    function renderLifeResults() {
+      const data = getLifeData();
+      const productLabel = {
+        both: t('Life + critical illness'),
+        life: t('Life insurance'),
+        critical: t('Critical illness')
+      }[data.productType];
+      lifeSummaryLine.textContent = state.lang === 'ge'
+        ? `${productLabel}, ასაკი ${data.age}, სიცოცხლის ლიმიტი ${data.lifeLimit} ₾, კრიტიკული დაავადებების ლიმიტი ${data.criticalLimit} ₾.`
+        : `${productLabel}, age ${data.age}, life limit ${data.lifeLimit} GEL, critical illness limit ${data.criticalLimit} GEL.`;
+      lifeResultsGrid.innerHTML = '';
+      insurers
+        .map(insurer => ({ ...insurer, price: calculateLifePremium(data, insurer.factor) }))
+        .sort((a, b) => a.price - b.price)
+        .forEach(insurer => {
+          const card = document.createElement('article');
+          card.className = 'result-card';
+          card.innerHTML = `
+            <div>
+              <div class="result-brand">
+                <span class="company-logo" style="background:${insurer.tone}">${insurer.logo}</span>
+                <div>
+                  <h3>${insurer.name}</h3>
+                  <p>${productLabel}</p>
+                </div>
+              </div>
+              <div class="coverage-tags">
+                <span class="tag">${t('Remote verification')}</span>
+                <span class="tag">${t('Health declaration')}</span>
+                <span class="tag">${t('Monthly premium')}</span>
+              </div>
+            </div>
+            <div class="price-box">
+              <strong>${insurer.price.toFixed(2)} ${state.lang === 'ge' ? 'ლარი' : 'GEL'}</strong>
+              <span>${t('per month')}</span>
+              <button class="ghost-btn" type="button" style="margin-top:12px">${t('Request call')}</button>
+            </div>
+          `;
+          lifeResultsGrid.appendChild(card);
+        });
     }
 
     function getStageIndex(formIndex) {
@@ -2879,7 +3191,18 @@
           choice.classList.toggle('active', choice === button);
         });
         if (button.dataset.choiceTarget === 'deductible') updateDeductiblePrice();
+        if (['lifeProductType', 'lifeGender', 'lifeLimit', 'criticalLimit'].includes(button.dataset.choiceTarget)) {
+          if (button.dataset.choiceTarget === 'lifeProductType') {
+            document.getElementById('lifeProductSelect').value = button.dataset.choiceValue;
+          }
+          updateLifePremium();
+        }
       });
+    });
+
+    document.getElementById('lifeProductSelect').addEventListener('change', event => {
+      document.getElementById('lifeProductType').value = event.target.value;
+      updateLifePremium();
     });
 
     startDateInput.addEventListener('change', () => {
@@ -2892,6 +3215,12 @@
       state.step = 1;
       setStartChoice(state.startChoice);
       renderStep();
+    });
+
+    startLifeFlowBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = 1;
+      renderLifeStep();
     });
 
     document.querySelectorAll('.toggle').forEach(button => {
@@ -2926,6 +3255,29 @@
       } else {
         state.step += 1;
         renderStep();
+      }
+    });
+
+    lifeBackBtn.addEventListener('click', () => {
+      if (state.step <= 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step -= 1;
+        renderLifeStep();
+      }
+    });
+
+    lifeNextBtn.addEventListener('click', () => {
+      const formIndex = state.step - 1;
+      if (formIndex === lifeFormSteps.length - 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step += 1;
+        renderLifeStep();
       }
     });
 
