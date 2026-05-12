@@ -2158,110 +2158,117 @@
 
             <form id="homeQuoteForm" style="display:none">
               <div class="home-step active" data-home-step="0">
-                <h2>Enter apartment area in square meters</h2>
+                <h2>Tell us about the apartment</h2>
                 <div class="field-grid">
-                  <div class="field full">
+                  <div class="field">
+                    <label for="homeCity">City</label>
+                    <select id="homeCity" name="homeCity">
+                      <option selected>Tbilisi</option>
+                      <option>Batumi</option>
+                      <option>Kutaisi</option>
+                      <option>Rustavi</option>
+                    </select>
+                  </div>
+                  <div class="field">
                     <label for="homeArea">Area</label>
                     <input id="homeArea" name="homeArea" type="number" min="20" value="55" placeholder="sq/m">
+                  </div>
+                  <div class="field full">
+                    <label for="homeAddress">Address</label>
+                    <input id="homeAddress" name="homeAddress" value="Vake, Tbilisi" placeholder="Street and building">
                   </div>
                 </div>
               </div>
 
               <div class="home-step" data-home-step="1">
-                <h2>Is the apartment rented?</h2>
+                <h2>Who lives in the apartment?</h2>
                 <input id="homeRented" name="homeRented" type="hidden" value="no">
                 <div class="option-grid">
-                  <button class="select-card" data-choice-target="homeRented" data-choice-value="yes" type="button"><strong>Yes</strong></button>
-                  <button class="select-card active" data-choice-target="homeRented" data-choice-value="no" type="button"><strong>No</strong></button>
+                  <button class="select-card active" data-choice-target="homeRented" data-choice-value="no" type="button"><strong>Owner lives there</strong><span>Best for a family home.</span></button>
+                  <button class="select-card" data-choice-target="homeRented" data-choice-value="yes" type="button"><strong>Rented apartment</strong><span>For landlord or tenant cover.</span></button>
+                  <button class="select-card" data-choice-target="homeRented" data-choice-value="vacant" type="button"><strong>Empty / seasonal</strong><span>Higher risk demo pricing.</span></button>
                 </div>
               </div>
 
               <div class="home-step" data-home-step="2">
-                <h2>Do you want liability cover if a neighbor apartment is damaged because of your home?</h2>
+                <h2>What do you want to insure?</h2>
+                <input id="homeBuildingCover" name="homeBuildingCover" type="hidden" value="yes">
+                <input id="homeContentsCover" name="homeContentsCover" type="hidden" value="yes">
                 <input id="neighborCover" name="neighborCover" type="hidden" value="yes">
-                <div class="option-grid">
-                  <button class="select-card active" data-choice-target="neighborCover" data-choice-value="yes" type="button"><strong>Yes</strong></button>
-                  <button class="select-card" data-choice-target="neighborCover" data-choice-value="no" type="button"><strong>No</strong></button>
+                <div class="coverage-grid">
+                  <button class="coverage-card active" data-choice-target="homeBuildingCover" data-choice-value="yes" type="button">
+                    <span><strong>Apartment structure</strong><span>Walls, floor, ceiling, built-in systems.</span></span><span class="tag">On</span>
+                  </button>
+                  <button class="coverage-card active" data-choice-target="homeContentsCover" data-choice-value="yes" type="button">
+                    <span><strong>Contents</strong><span>Furniture, appliances, personal belongings.</span></span><span class="tag">On</span>
+                  </button>
+                  <button class="coverage-card active" data-choice-target="neighborCover" data-choice-value="yes" type="button">
+                    <span><strong>Neighbor liability</strong><span>If leakage or fire damages another apartment.</span></span><span class="tag">On</span>
+                  </button>
                 </div>
               </div>
 
               <div class="home-step" data-home-step="3">
-                <h2>Payment frequency</h2>
-                <input id="homePayment" name="homePayment" type="hidden" value="monthly">
+                <h2>Choose coverage amounts</h2>
+                <input id="homeBuildingLimit" name="homeBuildingLimit" type="hidden" value="100000">
+                <input id="homeContentsLimit" name="homeContentsLimit" type="hidden" value="25000">
                 <div class="payment-grid">
-                  <button class="payment-option active" data-choice-target="homePayment" data-choice-value="monthly" type="button"><strong>Monthly</strong><span>25 ₾</span></button>
-                  <button class="payment-option" data-choice-target="homePayment" data-choice-value="yearly" type="button"><strong>Yearly</strong><span>300 ₾</span></button>
+                  <button class="payment-option" data-choice-target="homeBuildingLimit" data-choice-value="75000" type="button"><strong>75,000 ₾</strong><span>Apartment</span></button>
+                  <button class="payment-option active" data-choice-target="homeBuildingLimit" data-choice-value="100000" type="button"><strong>100,000 ₾</strong><span>Apartment</span></button>
+                  <button class="payment-option" data-choice-target="homeBuildingLimit" data-choice-value="150000" type="button"><strong>150,000 ₾</strong><span>Apartment</span></button>
+                  <button class="payment-option active" data-choice-target="homeContentsLimit" data-choice-value="25000" type="button"><strong>25,000 ₾</strong><span>Contents</span></button>
+                  <button class="payment-option" data-choice-target="homeContentsLimit" data-choice-value="50000" type="button"><strong>50,000 ₾</strong><span>Contents</span></button>
+                  <button class="payment-option" data-choice-target="homeContentsLimit" data-choice-value="0" type="button"><strong>No contents</strong><span>Structure only</span></button>
                 </div>
               </div>
 
               <div class="home-step" data-home-step="4">
-                <h2>Choose policy payment period</h2>
+                <h2>Choose policy start date and payment</h2>
                 <input id="homePayTerm" name="homePayTerm" type="hidden" value="monthly">
-                <div class="payment-grid">
-                  <button class="payment-option active" data-choice-target="homePayTerm" data-choice-value="monthly" type="button"><strong>Monthly</strong><span>39.58 ₾</span></button>
-                  <button class="payment-option" data-choice-target="homePayTerm" data-choice-value="annual" type="button"><strong>Yearly</strong><span>475 ₾</span></button>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="homeStartDate">Policy start date</label>
+                    <input id="homeStartDate" name="homeStartDate" type="date">
+                  </div>
+                  <div class="field">
+                    <label for="homePayTermSelect">Payment period</label>
+                    <select id="homePayTermSelect" name="homePayTermSelect">
+                      <option value="monthly" selected>Monthly</option>
+                      <option value="annual">Yearly</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               <div class="home-step" data-home-step="5">
-                <h2>Choose owner type</h2>
+                <h2>Policyholder details</h2>
                 <input id="homeOwnerType" name="homeOwnerType" type="hidden" value="individual">
+                <div class="field-grid">
+                  <div class="field"><label for="homeFirstName">First name</label><input id="homeFirstName" name="homeFirstName" value="Giorgi"></div>
+                  <div class="field"><label for="homeLastName">Last name</label><input id="homeLastName" name="homeLastName" value="Beridze"></div>
+                  <div class="field full"><label for="homePersonalId">Personal number</label><input id="homePersonalId" name="homePersonalId" value="01001001001" placeholder="Personal #"></div>
+                  <div class="field"><label for="homePhone">Phone number</label><input id="homePhone" name="homePhone" value="+995 555 10 20 30"></div>
+                  <div class="field"><label for="homeEmail">Email</label><input id="homeEmail" name="homeEmail" value="demo@shevadaro.ge"></div>
+                </div>
                 <div class="option-grid">
                   <button class="select-card active" data-choice-target="homeOwnerType" data-choice-value="individual" type="button"><strong>Individual</strong></button>
                   <button class="select-card" data-choice-target="homeOwnerType" data-choice-value="company" type="button"><strong>Company</strong></button>
-                  <button class="select-card" data-choice-target="homeOwnerType" data-choice-value="bank" type="button"><strong>Bank</strong></button>
                 </div>
               </div>
 
               <div class="home-step" data-home-step="6">
-                <h2>Do you have a promo code?</h2>
-                <input id="homePromoChoice" name="homePromoChoice" type="hidden" value="no">
+                <h2>Final home questions</h2>
+                <input id="homeOwns" name="homeOwns" type="hidden" value="yes">
+                <input id="homeSecurity" name="homeSecurity" type="hidden" value="yes">
                 <div class="option-grid">
-                  <button class="select-card" data-choice-target="homePromoChoice" data-choice-value="yes" type="button"><strong>Yes</strong></button>
-                  <button class="select-card active" data-choice-target="homePromoChoice" data-choice-value="no" type="button"><strong>No</strong></button>
+                  <button class="select-card active" data-choice-target="homeOwns" data-choice-value="yes" type="button"><strong>I own the apartment</strong><span>Owner policy.</span></button>
+                  <button class="select-card" data-choice-target="homeOwns" data-choice-value="no" type="button"><strong>I rent it</strong><span>Tenant contents and liability.</span></button>
+                  <button class="select-card active" data-choice-target="homeSecurity" data-choice-value="yes" type="button"><strong>Security door or alarm</strong><span>Applies a demo discount.</span></button>
+                  <button class="select-card" data-choice-target="homeSecurity" data-choice-value="no" type="button"><strong>No security system</strong><span>Standard risk price.</span></button>
                 </div>
               </div>
 
               <div class="home-step" data-home-step="7">
-                <h2>Do you own the apartment?</h2>
-                <input id="homeOwns" name="homeOwns" type="hidden" value="yes">
-                <div class="option-grid">
-                  <button class="select-card active" data-choice-target="homeOwns" data-choice-value="yes" type="button"><strong>Yes</strong></button>
-                  <button class="select-card" data-choice-target="homeOwns" data-choice-value="no" type="button"><strong>No</strong></button>
-                </div>
-              </div>
-
-              <div class="home-step" data-home-step="8">
-                <h2>Enter personal number and date of birth</h2>
-                <div class="field-grid">
-                  <div class="field full"><label for="homePersonalId">Personal number</label><input id="homePersonalId" name="homePersonalId" placeholder="Personal #"></div>
-                </div>
-                <div class="identity-grid">
-                  <input name="homeBirthDay" placeholder="DD" value="13">
-                  <input name="homeBirthMonth" placeholder="MM" value="5">
-                  <input name="homeBirthYear" placeholder="YYYY" value="2026">
-                </div>
-              </div>
-
-              <div class="home-step" data-home-step="9">
-                <h2>Do you want to insure your apartment?</h2>
-                <input id="homeBuildingCover" name="homeBuildingCover" type="hidden" value="yes">
-                <div class="option-grid">
-                  <button class="select-card active" data-choice-target="homeBuildingCover" data-choice-value="yes" type="button"><strong>Yes</strong></button>
-                  <button class="select-card" data-choice-target="homeBuildingCover" data-choice-value="no" type="button"><strong>No</strong></button>
-                </div>
-              </div>
-
-              <div class="home-step" data-home-step="10">
-                <h2>Do you want to insure your contents?</h2>
-                <input id="homeContentsCover" name="homeContentsCover" type="hidden" value="yes">
-                <div class="option-grid">
-                  <button class="select-card active" data-choice-target="homeContentsCover" data-choice-value="yes" type="button"><strong>Yes</strong></button>
-                  <button class="select-card" data-choice-target="homeContentsCover" data-choice-value="no" type="button"><strong>No</strong></button>
-                </div>
-              </div>
-
-              <div class="home-step" data-home-step="11">
                 <h2>Your apartment insurance comparison</h2>
                 <p id="homeSummaryLine">Review sample apartment insurance offers based on your selections.</p>
                 <div class="results-grid" id="homeResultsGrid"></div>
@@ -2673,7 +2680,7 @@
       'Monthly premium estimate with insurer follow-up.': 'თვიური პრემიის შეფასება სადაზღვევოს შემდგომი ზარით.',
         'Start apartment insurance': 'ბინის დაზღვევის დაწყება',
         'A short apartment flow for building cover, contents, liability, and sample partner prices.': 'მოკლე ბინის დაზღვევის პროცესი შენობის, ნივთების, პასუხისმგებლობისა და პარტნიორი ფასებისთვის.',
-        'This demo follows apartment insurance questions: area, rental status, neighbor liability, payment period, owner details, and contents cover.': 'ეს დემო მიჰყვება ბინის დაზღვევის კითხვებს: ფართობი, გაქირავება, მეზობლის პასუხისმგებლობა, გადახდა, მფლობელი და ნივთების დაფარვა.',
+        'This demo follows apartment insurance questions: city, area, resident type, limits, neighbor liability, start date, and contact details.': 'ეს დემო მიჰყვება ბინის დაზღვევის კითხვებს: ქალაქი, ფართობი, მობინადრე, ლიმიტები, მეზობლის პასუხისმგებლობა, დაწყების თარიღი და საკონტაქტო მონაცემები.',
         'Apartment and contents': 'ბინა და ნივთები',
         'Area, rental status, owner details, and policy start date.': 'ფართობი, გაქირავების სტატუსი, მფლობელის მონაცემები და პოლისის დაწყება.',
         'Liability option': 'პასუხისმგებლობის ოფცია',
@@ -2682,17 +2689,46 @@
         'Monthly or yearly sample pricing.': 'თვიური ან წლიური სატესტო ფასი.',
         'Demo ready': 'დემო მზადაა',
         'Included': 'ჩართულია',
-        'Enter apartment area in square meters': 'შეიყვანეთ დასაზღვევი სახლის ფართობი კვადრატულ მეტრში',
+        'Tell us about the apartment': 'გვითხარით ბინის შესახებ',
+        'City': 'ქალაქი',
+        'Address': 'მისამართი',
+        'Street and building': 'ქუჩა და კორპუსი',
         'Area': 'ფართობი',
-        'Is the apartment rented?': 'ბინა გაქირავებულია?',
-        'Do you want liability cover if a neighbor apartment is damaged because of your home?': 'გსურთ თუ არა პასუხისმგებლობის დაზღვევა იმ შემთხვევისთვის, თუ სხვისი სახლი თქვენი მიზეზით დაზიანდება?',
-        'Payment frequency': 'გადახდის სიხშირე',
-        'Choose policy payment period': 'აირჩიეთ პოლისის გადახდის პერიოდი',
-        'Choose owner type': 'აირჩიეთ პოლისის დამზღვევის ტიპი',
+        'Who lives in the apartment?': 'ვინ ცხოვრობს ბინაში?',
+        'Owner lives there': 'მფლობელი ცხოვრობს',
+        'Best for a family home.': 'საუკეთესოა საოჯახო სახლისთვის.',
+        'Rented apartment': 'გაქირავებული ბინა',
+        'For landlord or tenant cover.': 'მესაკუთრის ან დამქირავებლის დაფარვისთვის.',
+        'Empty / seasonal': 'ცარიელი / სეზონური',
+        'Higher risk demo pricing.': 'უფრო მაღალი რისკის დემო ფასი.',
+        'What do you want to insure?': 'რის დაზღვევა გსურთ?',
+        'Apartment structure': 'ბინის კონსტრუქცია',
+        'Walls, floor, ceiling, built-in systems.': 'კედლები, იატაკი, ჭერი და ჩაშენებული სისტემები.',
+        'Contents': 'ნივთები',
+        'Furniture, appliances, personal belongings.': 'ავეჯი, ტექნიკა და პირადი ნივთები.',
+        'Neighbor liability': 'მეზობლის პასუხისმგებლობა',
+        'If leakage or fire damages another apartment.': 'თუ გაჟონვამ ან ხანძარმა სხვა ბინა დააზიანა.',
+        'On': 'ჩართულია',
+        'Choose coverage amounts': 'აირჩიეთ დაფარვის თანხები',
+        'Apartment': 'ბინა',
+        'No contents': 'ნივთების გარეშე',
+        'Structure only': 'მხოლოდ ბინა',
+        'Choose policy start date and payment': 'აირჩიეთ პოლისის დაწყება და გადახდა',
+        'Policy start date': 'პოლისის დაწყების თარიღი',
+        'Payment period': 'გადახდის პერიოდი',
+        'Yearly': 'წლიური',
+        'Policyholder details': 'დამზღვევის მონაცემები',
+        'Email': 'ელფოსტა',
+        'Final home questions': 'ბოლო კითხვები ბინის შესახებ',
+        'I own the apartment': 'ბინა ჩემია',
+        'Owner policy.': 'მესაკუთრის პოლისი.',
+        'I rent it': 'ვქირაობ',
+        'Tenant contents and liability.': 'დამქირავებლის ნივთები და პასუხისმგებლობა.',
+        'Security door or alarm': 'უსაფრთხოების კარი ან სიგნალიზაცია',
+        'Applies a demo discount.': 'დემო ფასდაკლება მოქმედებს.',
+        'No security system': 'უსაფრთხოების სისტემის გარეშე',
+        'Standard risk price.': 'სტანდარტული რისკის ფასი.',
         'Company': 'კომპანია',
-        'Do you own the apartment?': 'თქვენს სახლს აზღვევთ?',
-        'Do you want to insure your apartment?': 'გსურთ ბინის დაზღვევა?',
-        'Do you want to insure your contents?': 'გსურთ თქვენი ნივთების დაზღვევა?',
         'Your apartment insurance comparison': 'თქვენი ბინის დაზღვევის შედარება',
         'Review sample apartment insurance offers based on your selections.': 'ნახეთ სატესტო ბინის დაზღვევის შეთავაზებები თქვენი არჩევანის მიხედვით.',
         'Water leakage and fire damage protection.': 'წყლის გაჟონვისა და ხანძრის დაზიანების დაფარვა.',
@@ -3197,7 +3233,7 @@
         : isLife
           ? t('This flow is modeled for life insurance, critical illness insurance, or a combined product with identity verification and a health declaration.')
         : isHome
-          ? t('This demo follows apartment insurance questions: area, rental status, neighbor liability, payment period, owner details, and contents cover.')
+          ? t('This demo follows apartment insurance questions: city, area, resident type, limits, neighbor liability, start date, and contact details.')
         : t('This product has its own page now. Its dedicated question flow can be added without returning the user to the full product selector.');
       document.getElementById('productImage').src = config.image;
       document.getElementById('productImage').alt = t(config.alt);
@@ -3371,6 +3407,8 @@
       const lastIndex = homeFormSteps.length - 1;
       productDetail.style.display = 'none';
       homeQuoteForm.style.display = 'block';
+      const homeStartDate = document.getElementById('homeStartDate');
+      if (homeStartDate && !homeStartDate.value) homeStartDate.value = formatDateForInput(new Date());
       if (compareProductSwitch) compareProductSwitch.style.display = 'none';
       homeFormSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.homeStep) === formIndex));
       stepItems.forEach((item, index) => {
@@ -3386,12 +3424,18 @@
     function getHomeData() {
       const data = new FormData(homeQuoteForm);
       return {
+        city: data.get('homeCity') || 'Tbilisi',
+        address: data.get('homeAddress') || 'Vake, Tbilisi',
         area: Number(data.get('homeArea') || 55),
         rented: data.get('homeRented') || 'no',
         neighborCover: data.get('neighborCover') || 'yes',
-        payment: data.get('homePayment') || 'monthly',
-        payTerm: data.get('homePayTerm') || 'monthly',
+        payTerm: data.get('homePayTermSelect') || data.get('homePayTerm') || 'monthly',
         ownerType: data.get('homeOwnerType') || 'individual',
+        buildingLimit: Number(data.get('homeBuildingLimit') || 100000),
+        contentsLimit: Number(data.get('homeContentsLimit') || 25000),
+        startDate: data.get('homeStartDate') || formatDateForInput(new Date()),
+        security: data.get('homeSecurity') || 'yes',
+        owns: data.get('homeOwns') || 'yes',
         buildingCover: data.get('homeBuildingCover') || 'yes',
         contentsCover: data.get('homeContentsCover') || 'yes'
       };
@@ -3399,20 +3443,23 @@
 
     function calculateHomePrice(data, factor = 1) {
       const areaFactor = Math.max(.72, data.area / 55);
-      const rentedFactor = data.rented === 'yes' ? 1.12 : 1;
+      const rentedFactor = data.rented === 'vacant' ? 1.22 : data.rented === 'yes' ? 1.12 : 1;
       const neighborFactor = data.neighborCover === 'yes' ? 1.08 : .94;
       const ownerFactor = data.ownerType === 'company' ? 1.16 : data.ownerType === 'bank' ? 1.08 : 1;
-      const buildingFactor = data.buildingCover === 'yes' ? 1 : .78;
-      const contentsFactor = data.contentsCover === 'yes' ? 1.1 : .88;
-      return Math.max(14, Math.round(32 * areaFactor * rentedFactor * neighborFactor * ownerFactor * buildingFactor * contentsFactor * factor));
+      const buildingFactor = Math.max(.7, data.buildingLimit / 100000);
+      const contentsFactor = data.contentsLimit === 0 ? .88 : 1 + (data.contentsLimit / 100000);
+      const securityFactor = data.security === 'yes' ? .95 : 1.06;
+      const tenantFactor = data.owns === 'no' ? .92 : 1;
+      const termFactor = data.payTerm === 'annual' ? .92 : 1;
+      return Math.max(14, Math.round(30 * areaFactor * rentedFactor * neighborFactor * ownerFactor * buildingFactor * contentsFactor * securityFactor * tenantFactor * termFactor * factor));
     }
 
     function renderHomeResults() {
       const data = getHomeData();
       const monthly = t('per month');
       homeSummaryLine.textContent = state.lang === 'ge'
-        ? `${data.area} კვ.მ, ბინა ${data.rented === 'yes' ? 'გაქირავებულია' : 'არ არის გაქირავებული'}, მეზობლის პასუხისმგებლობა ${data.neighborCover === 'yes' ? 'ჩართულია' : 'გამორთულია'}.`
-        : `${data.area} sq/m, rented: ${data.rented}, neighbor liability: ${data.neighborCover}.`;
+        ? `${data.city}, ${data.area} კვ.მ, ლიმიტი ${data.buildingLimit.toLocaleString()} ლარი, შიგთავსი ${data.contentsLimit.toLocaleString()} ლარი, დაწყება ${data.startDate}.`
+        : `${data.city}, ${data.area} sq/m, building limit ${data.buildingLimit.toLocaleString()} GEL, contents ${data.contentsLimit.toLocaleString()} GEL, starts ${data.startDate}.`;
       homeResultsGrid.innerHTML = '';
       insurers
         .map(insurer => ({ ...insurer, price: calculateHomePrice(data, insurer.factor) }))
@@ -3433,6 +3480,7 @@
                 <span class="tag">${t('Apartment and contents')}</span>
                 <span class="tag">${t('Liability option')}</span>
                 <span class="tag">${t('Flexible payment')}</span>
+                <span class="tag">${data.payTerm === 'annual' ? t('Yearly') : t('Monthly')}</span>
               </div>
               <ul class="coverage-bullets">
                 ${homeCoverageBullets.map(item => `<li>${t(item)}</li>`).join('')}
