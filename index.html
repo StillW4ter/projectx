@@ -1044,6 +1044,16 @@
       gap: 8px;
     }
 
+    .coverage-bullets {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: #40504b;
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
     .tag {
       border: 1px solid #d6e4df;
       background: #f1f7f4;
@@ -1745,6 +1755,7 @@
                 </div>
                 <div class="flow-actions">
                   <button class="secondary-btn" data-route="home" type="button">Choose another product</button>
+                  <button class="secondary-btn" id="demoCarPricesBtn" type="button">Show demo prices</button>
                   <button class="primary-btn" id="startCarFlowBtn" type="button">Continue to questions</button>
                 </div>
               </div>
@@ -1778,6 +1789,7 @@
                 </div>
                 <div class="flow-actions">
                   <button class="secondary-btn" data-route="home" type="button">Choose another product</button>
+                  <button class="secondary-btn" id="demoLifePricesBtn" type="button">Show demo prices</button>
                   <button class="primary-btn" id="startLifeFlowBtn" type="button">Continue to questions</button>
                 </div>
               </div>
@@ -2341,6 +2353,7 @@
       step: 0,
       lang: 'ge',
       product: 'car',
+      productPreselected: false,
       quoteStarted: false,
       coverageIntent: 'thirdParty',
       startChoice: 'tomorrow',
@@ -2487,6 +2500,7 @@
         'Prepare request': 'მოთხოვნის მომზადება',
         '© 2026 shevadaro. Prototype for insurance comparison.': '© 2026 shevadaro. დაზღვევის შედარების პროტოტიპი.',
         'Sample prices only. Not a binding offer.': 'ფასები მხოლოდ სატესტოა. ეს არ არის სავალდებულო შეთავაზება.',
+        'Show demo prices': 'დემო ფასების ნახვა',
         'Fast claims': 'სწრაფი ზარალები',
         'Garage network': 'სერვისების ქსელი',
         'Roadside': 'გზაზე დახმარება',
@@ -2496,6 +2510,17 @@
         'Premium casco': 'პრემიუმ კასკო',
         'Travel cover': 'მოგზაურობის დაფარვა',
         'Low deductible': 'დაბალი ფრანშიზა',
+        'Family driver': 'ოჯახის მძღოლი',
+        'Photo inspection': 'ფოტო შემოწმება',
+        'Quick support': 'სწრაფი მხარდაჭერა',
+        'Third-party liability for damage to another car or property.': 'მესამე პირის პასუხისმგებლობა სხვა მანქანის ან ქონების დაზიანებაზე.',
+        'Own-car accident and fire cover based on the selected package.': 'საკუთარი მანქანის ავარიისა და ხანძრის დაფარვა არჩეული პაკეტის მიხედვით.',
+        'Roadside assistance and partner garage support.': 'გზაზე დახმარება და პარტნიორი სერვისების მხარდაჭერა.',
+        'Driver and passenger accident limit shown in the offer.': 'მძღოლისა და მგზავრის უბედური შემთხვევის ლიმიტი შეთავაზებაში.',
+        'Life insurance payout to the chosen beneficiary.': 'სიცოცხლის დაზღვევის ანაზღაურება არჩეულ ბენეფიციარზე.',
+        'Critical illness payout when the selected product includes it.': 'კრიტიკული დაავადების ანაზღაურება, თუ პროდუქტი ამას მოიცავს.',
+        'Remote verification with personal ID or passport.': 'დისტანციური ვერიფიკაცია პირადობით ან პასპორტით.',
+        'Monthly premium estimate with insurer follow-up.': 'თვიური პრემიის შეფასება სადაზღვევოს შემდგომი ზარით.',
         'per month': 'თვეში',
         'Request call': 'ზარის მოთხოვნა'
       }
@@ -2775,7 +2800,22 @@
     const insurers = [
       { name: 'Tbilisi Shield', logo: 'TS', tone: '#1f6f8f', factor: 1.02, tags: ['Fast claims', 'Garage network', 'Roadside'] },
       { name: 'Caucasus Protect', logo: 'CP', tone: '#176d4f', factor: .94, tags: ['Best price', 'Glass option', 'Monthly pay'] },
-      { name: 'Iberia Assurance', logo: 'IA', tone: '#b87d2b', factor: 1.12, tags: ['Premium casco', 'Travel cover', 'Low deductible'] }
+      { name: 'Iberia Assurance', logo: 'IA', tone: '#b87d2b', factor: 1.12, tags: ['Premium casco', 'Travel cover', 'Low deductible'] },
+      { name: 'Georgian Mutual', logo: 'GM', tone: '#6f4bb8', factor: .98, tags: ['Family driver', 'Photo inspection', 'Quick support'] }
+    ];
+
+    const autoCoverageBullets = [
+      'Third-party liability for damage to another car or property.',
+      'Own-car accident and fire cover based on the selected package.',
+      'Roadside assistance and partner garage support.',
+      'Driver and passenger accident limit shown in the offer.'
+    ];
+
+    const lifeCoverageBullets = [
+      'Life insurance payout to the chosen beneficiary.',
+      'Critical illness payout when the selected product includes it.',
+      'Remote verification with personal ID or passport.',
+      'Monthly premium estimate with insurer follow-up.'
     ];
 
     const pages = document.querySelectorAll('.page');
@@ -2785,6 +2825,7 @@
     const topbar = document.getElementById('topbar');
     const mobileMenu = document.getElementById('mobileMenu');
     const productButtons = document.querySelectorAll('[data-product]');
+    const compareProductSwitch = document.querySelector('.compare-product-switch');
     const formSteps = document.querySelectorAll('.form-step');
     const lifeFormSteps = document.querySelectorAll('.life-step');
     const stepItems = document.querySelectorAll('[data-step-label]');
@@ -2799,6 +2840,8 @@
     const comingSoonProduct = document.getElementById('comingSoonProduct');
     const startCarFlowBtn = document.getElementById('startCarFlowBtn');
     const startLifeFlowBtn = document.getElementById('startLifeFlowBtn');
+    const demoCarPricesBtn = document.getElementById('demoCarPricesBtn');
+    const demoLifePricesBtn = document.getElementById('demoLifePricesBtn');
     const coverageCards = document.querySelectorAll('[data-coverage-intent]');
     const startChoiceButtons = document.querySelectorAll('[data-start-choice]');
     const brandSelect = document.getElementById('brand');
@@ -2927,8 +2970,11 @@
       });
     }
 
-    function setProduct(product) {
+    function setProduct(product, options = {}) {
       state.product = product;
+      if (Object.prototype.hasOwnProperty.call(options, 'preselected')) {
+        state.productPreselected = options.preselected;
+      }
       state.quoteStarted = false;
       state.step = 0;
       productButtons.forEach(button => button.classList.toggle('active', button.dataset.product === product));
@@ -2965,6 +3011,9 @@
       coverageChooser.style.display = isCar ? 'block' : 'none';
       lifeChooser.style.display = isLife ? 'block' : 'none';
       comingSoonProduct.style.display = isCar || isLife ? 'none' : 'block';
+      if (compareProductSwitch) {
+        compareProductSwitch.style.display = state.productPreselected || state.quoteStarted ? 'none' : 'grid';
+      }
       progressBar.style.width = (isCar || isLife) ? `${Math.min(100, ((state.step + 1) / (activeFlowSteps.length + 1)) * 100)}%` : '16%';
 
       stepItems.forEach((item, index) => {
@@ -2986,6 +3035,7 @@
       const stageIndex = getStageIndex(formIndex);
       productDetail.style.display = 'none';
       quoteForm.style.display = 'block';
+      if (compareProductSwitch) compareProductSwitch.style.display = 'none';
       formSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.step) === formIndex));
       stepItems.forEach((item, index) => {
         item.classList.toggle('active', index === stageIndex);
@@ -3020,6 +3070,7 @@
       const stageIndex = getLifeStageIndex(formIndex);
       productDetail.style.display = 'none';
       lifeQuoteForm.style.display = 'block';
+      if (compareProductSwitch) compareProductSwitch.style.display = 'none';
       lifeFormSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.lifeStep) === formIndex));
       stepItems.forEach((item, index) => {
         item.classList.toggle('active', index === stageIndex);
@@ -3097,6 +3148,9 @@
                 <span class="tag">${t('Health declaration')}</span>
                 <span class="tag">${t('Monthly premium')}</span>
               </div>
+              <ul class="coverage-bullets">
+                ${lifeCoverageBullets.map(item => `<li>${t(item)}</li>`).join('')}
+              </ul>
             </div>
             <div class="price-box">
               <strong>${insurer.price.toFixed(2)} ${state.lang === 'ge' ? 'ლარი' : 'GEL'}</strong>
@@ -3194,6 +3248,9 @@
               <div class="coverage-tags">
                 ${insurer.tags.map(tag => `<span class="tag">${t(tag)}</span>`).join('')}
               </div>
+              <ul class="coverage-bullets">
+                ${autoCoverageBullets.map(item => `<li>${t(item)}</li>`).join('')}
+              </ul>
             </div>
             <div class="price-box">
               <strong>${insurer.price} ${state.lang === 'ge' ? 'ლარი' : 'GEL'}</strong>
@@ -3207,13 +3264,20 @@
 
     navButtons.forEach(button => {
       button.addEventListener('click', () => {
-        if (button.dataset.product) setProduct(button.dataset.product);
+        if (button.dataset.product) {
+          setProduct(button.dataset.product, { preselected: true });
+        } else if (button.dataset.route === 'compare') {
+          state.productPreselected = false;
+        }
         setRoute(button.dataset.route);
       });
     });
 
     productButtons.forEach(button => {
-      button.addEventListener('click', () => setProduct(button.dataset.product));
+      button.addEventListener('click', () => {
+        if (button.dataset.route) return;
+        setProduct(button.dataset.product, { preselected: false });
+      });
     });
 
     coverageCards.forEach(button => {
@@ -3265,6 +3329,19 @@
     startLifeFlowBtn.addEventListener('click', () => {
       state.quoteStarted = true;
       state.step = 1;
+      renderLifeStep();
+    });
+
+    demoCarPricesBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = formSteps.length;
+      setStartChoice(state.startChoice);
+      renderStep();
+    });
+
+    demoLifePricesBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = lifeFormSteps.length;
       renderLifeStep();
     });
 
