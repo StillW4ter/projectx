@@ -23,7 +23,10 @@
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
 
     body {
       margin: 0;
@@ -31,6 +34,7 @@
       background: var(--paper);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.45;
+      overflow-x: hidden;
     }
 
     img {
@@ -50,6 +54,10 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    h1, h2, h3, p, span, strong, button, label {
+      overflow-wrap: anywhere;
     }
 
     .app-shell {
@@ -446,6 +454,7 @@
       grid-template-columns: 300px minmax(0, 1fr);
       gap: 24px;
       align-items: start;
+      min-width: 0;
     }
 
     .compare-layout.single-product {
@@ -523,6 +532,7 @@
     .flow-main {
       padding: 24px;
       min-height: 620px;
+      min-width: 0;
     }
 
     .flow-title {
@@ -613,6 +623,7 @@
     .product-detail {
       display: grid;
       gap: 22px;
+      min-width: 0;
     }
 
     .product-hero-panel {
@@ -623,10 +634,12 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) 320px;
       align-items: stretch;
+      min-width: 0;
     }
 
     .product-hero-copy {
       padding: 24px;
+      min-width: 0;
     }
 
     .product-hero-copy h2 {
@@ -662,6 +675,7 @@
       display: grid;
       align-content: space-between;
       gap: 12px;
+      min-width: 0;
     }
 
     .coverage-card:hover,
@@ -995,7 +1009,7 @@
       }
 
       .flow-sidebar {
-        position: static;
+        display: none;
       }
 
       .product-strip,
@@ -1034,11 +1048,50 @@
 
     @media (max-width: 680px) {
       .nav {
-        width: min(100% - 22px, 1180px);
+        width: min(100% - 24px, 1180px);
+        min-height: 64px;
+        gap: 8px;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        font-size: .82rem;
       }
 
       .brand > span:not(.brand-mark) {
         display: none;
+      }
+
+      .nav-actions {
+        gap: 8px;
+      }
+
+      .lang-switch {
+        padding: 2px;
+      }
+
+      .lang-switch button {
+        min-width: 34px;
+        min-height: 34px;
+        padding: 0 8px;
+        font-size: .82rem;
+      }
+
+      .mobile-menu {
+        width: 40px;
+        height: 40px;
+        font-size: 1.05rem;
+      }
+
+      .nav-links {
+        top: 64px;
+        left: 12px;
+        right: 12px;
       }
 
       .hero-inner,
@@ -1048,15 +1101,155 @@
       .about-grid,
       .contact-grid,
       .footer-inner {
-        width: min(100% - 22px, 1180px);
+        width: min(100% - 24px, 1180px);
       }
 
       .hero-inner {
-        padding-top: 38px;
+        padding-top: 28px;
       }
 
       h1 {
-        font-size: 2.35rem;
+        font-size: clamp(1.85rem, 8vw, 2.35rem);
+        line-height: 1.08;
+        margin-bottom: 14px;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+        line-height: 1.18;
+      }
+
+      .hero-copy,
+      .content-hero p {
+        font-size: 1rem;
+      }
+
+      .primary-btn,
+      .secondary-btn,
+      .ghost-btn {
+        min-height: 40px;
+        padding: 0 12px;
+        font-size: .92rem;
+        white-space: normal;
+      }
+
+      .compare-layout {
+        padding: 12px 0 44px;
+        gap: 14px;
+      }
+
+      .flow-sidebar {
+        display: none;
+      }
+
+      .flow-main {
+        padding: 14px;
+        min-height: auto;
+      }
+
+      .flow-title {
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .flow-title h1 {
+        font-size: clamp(1.7rem, 7.5vw, 2.15rem);
+      }
+
+      .progress {
+        width: 100%;
+        max-width: 150px;
+        margin-top: 4px;
+      }
+
+      .product-detail {
+        gap: 14px;
+      }
+
+      .product-hero-panel {
+        border-radius: 8px;
+      }
+
+      .product-hero-copy {
+        padding: 14px;
+      }
+
+      .product-hero-copy h2 {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+        line-height: 1.12;
+      }
+
+      .product-hero-copy p {
+        font-size: .95rem;
+      }
+
+      .product-hero-panel img {
+        height: 158px;
+        min-height: 0;
+        object-position: center;
+      }
+
+      .coverage-card,
+      .choice,
+      .quick-card {
+        min-height: auto;
+        padding: 14px;
+      }
+
+      .coverage-card strong {
+        font-size: 1rem;
+      }
+
+      .coverage-card span,
+      .source-note,
+      .choice span,
+      .quick-card span {
+        font-size: .88rem;
+      }
+
+      .tag {
+        width: fit-content;
+        max-width: 100%;
+        font-size: .76rem;
+      }
+
+      .icon,
+      .choice .icon,
+      .quick-card .icon {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 8px;
+      }
+
+      .field-grid {
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      select,
+      input,
+      textarea {
+        min-height: 44px;
+        font-size: 1rem;
+      }
+
+      .flow-actions {
+        gap: 10px;
+        margin-top: 18px;
+        padding-top: 14px;
+      }
+
+      .result-card {
+        padding: 14px;
+        gap: 12px;
+      }
+
+      .price-box {
+        min-width: 0;
+      }
+
+      .price-box strong {
+        font-size: 1.35rem;
       }
 
       .trust-row,
