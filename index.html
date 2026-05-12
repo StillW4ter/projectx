@@ -1828,14 +1828,150 @@
               </div>
 
               <div id="comingSoonProduct" style="display:none">
-                <h2 id="comingSoonTitle">This product flow is being prepared</h2>
-                <p id="comingSoonCopy">The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.</p>
+                <h2 id="genericChooserTitle">Start questions</h2>
+                <p id="genericChooserCopy">Answer a short demo flow and then compare sample prices from several companies.</p>
+                <div class="option-grid" id="genericPreviewGrid"></div>
                 <div class="flow-actions">
                   <button class="secondary-btn" data-route="home" type="button">Choose another product</button>
-                  <button class="primary-btn" data-product="car" data-route="compare" type="button">Open car flow</button>
+                  <button class="secondary-btn" id="demoGenericPricesBtn" type="button">Show demo prices</button>
+                  <button class="primary-btn" id="startGenericFlowBtn" type="button">Continue to questions</button>
                 </div>
               </div>
             </div>
+
+            <form id="genericQuoteForm" style="display:none">
+              <div class="generic-step active" data-generic-step="0">
+                <h2 id="genericStepTitle">Policy questions</h2>
+                <p id="genericStepCopy" class="wizard-intro">Enter demo data. Any fake information works for this prototype.</p>
+
+                <div class="generic-product-group" data-generic-product="travel">
+                  <div class="field-grid">
+                    <div class="field"><label for="travelDestination">Destination</label><input id="travelDestination" name="travelDestination" value="Europe"></div>
+                    <div class="field"><label for="travelers">Travelers</label><input id="travelers" name="travelers" type="number" min="1" value="1"></div>
+                    <div class="field"><label for="travelStartDate">Trip start date</label><input id="travelStartDate" name="travelStartDate" type="date"></div>
+                    <div class="field"><label for="travelEndDate">Trip end date</label><input id="travelEndDate" name="travelEndDate" type="date"></div>
+                    <div class="field full"><label for="travelPassport">Passport number</label><input id="travelPassport" name="travelPassport" value="P1234567"></div>
+                  </div>
+                </div>
+
+                <div class="generic-product-group" data-generic-product="mortgage">
+                  <div class="field-grid">
+                    <div class="field"><label for="mortgageBank">Mortgage bank</label><select id="mortgageBank" name="mortgageBank"><option>TBC Bank</option><option>Bank of Georgia</option><option>Liberty Bank</option></select></div>
+                    <div class="field"><label for="mortgagePropertyType">Property type</label><select id="mortgagePropertyType" name="mortgagePropertyType"><option>Apartment</option><option>House</option><option>Commercial space</option></select></div>
+                    <div class="field"><label for="mortgagePropertyValue">Property value</label><input id="mortgagePropertyValue" name="mortgagePropertyValue" type="number" value="180000"></div>
+                    <div class="field"><label for="mortgageLoanAmount">Loan amount</label><input id="mortgageLoanAmount" name="mortgageLoanAmount" type="number" value="120000"></div>
+                    <div class="field full"><label for="mortgageAddress">Property address</label><input id="mortgageAddress" name="mortgageAddress" value="Tbilisi, Saburtalo"></div>
+                  </div>
+                </div>
+
+                <div class="generic-product-group" data-generic-product="health">
+                  <input id="healthProductType" name="healthProductType" type="hidden" value="critical">
+                  <div class="field-grid">
+                    <div class="field"><label for="healthAge">Age</label><input id="healthAge" name="healthAge" type="number" min="1" value="35"></div>
+                    <div class="field"><label for="healthFamilyMembers">Family members</label><input id="healthFamilyMembers" name="healthFamilyMembers" type="number" min="1" value="1"></div>
+                  </div>
+                  <div class="option-grid">
+                    <button class="select-card active" data-choice-target="healthProductType" data-choice-value="critical" type="button"><strong>Critical illness</strong><span>Like critical insurance flow</span></button>
+                    <button class="select-card" data-choice-target="healthProductType" data-choice-value="medical" type="button"><strong>Medical insurance</strong><span>Clinic and emergency cover</span></button>
+                    <button class="select-card" data-choice-target="healthProductType" data-choice-value="both" type="button"><strong>Medical and critical</strong><span>Combined demo package</span></button>
+                  </div>
+                </div>
+
+                <div class="generic-product-group" data-generic-product="dog">
+                  <div class="field-grid">
+                    <div class="field"><label for="petType">Pet type</label><select id="petType" name="petType"><option>Dog</option><option>Cat</option></select></div>
+                    <div class="field"><label for="petAge">Pet age</label><input id="petAge" name="petAge" type="number" min="0" value="3"></div>
+                    <div class="field full"><label for="petBreed">Breed</label><input id="petBreed" name="petBreed" value="Mixed breed"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="generic-step" data-generic-step="1">
+                <h2 id="genericOptionsTitle">Choose coverage options</h2>
+
+                <div class="generic-product-group" data-generic-product="travel">
+                  <input id="travelLimit" name="travelLimit" type="hidden" value="50000">
+                  <input id="travelCurrency" name="travelCurrency" type="hidden" value="EUR">
+                  <input id="travelExtraRisk" name="travelExtraRisk" type="hidden" value="no">
+                  <div class="limit-list">
+                    <button class="limit-option active" data-choice-target="travelLimit" data-choice-value="50000" type="button"><strong>50,000 EUR</strong><span>Medical limit</span></button>
+                    <button class="limit-option" data-choice-target="travelLimit" data-choice-value="100000" type="button"><strong>100,000 EUR</strong><span>Higher medical limit</span></button>
+                  </div>
+                  <div class="option-grid">
+                    <button class="select-card active" data-choice-target="travelExtraRisk" data-choice-value="no" type="button"><strong>Standard trip</strong><span>Medical emergency only</span></button>
+                    <button class="select-card" data-choice-target="travelExtraRisk" data-choice-value="yes" type="button"><strong>Add baggage and delays</strong><span>Lost baggage and flight delay</span></button>
+                  </div>
+                </div>
+
+                <div class="generic-product-group" data-generic-product="mortgage">
+                  <input id="mortgageBuildingLimit" name="mortgageBuildingLimit" type="hidden" value="100000">
+                  <input id="mortgageBorrowerLife" name="mortgageBorrowerLife" type="hidden" value="yes">
+                  <div class="limit-list">
+                    <button class="limit-option" data-choice-target="mortgageBuildingLimit" data-choice-value="75000" type="button"><strong>75,000 ₾</strong><span>Building limit</span></button>
+                    <button class="limit-option active" data-choice-target="mortgageBuildingLimit" data-choice-value="100000" type="button"><strong>100,000 ₾</strong><span>Bank requirement</span></button>
+                    <button class="limit-option" data-choice-target="mortgageBuildingLimit" data-choice-value="150000" type="button"><strong>150,000 ₾</strong><span>Higher property value</span></button>
+                  </div>
+                  <div class="option-grid">
+                    <button class="select-card active" data-choice-target="mortgageBorrowerLife" data-choice-value="yes" type="button"><strong>Borrower life cover</strong><span>Often requested by banks</span></button>
+                    <button class="select-card" data-choice-target="mortgageBorrowerLife" data-choice-value="no" type="button"><strong>Property only</strong><span>Building protection only</span></button>
+                  </div>
+                </div>
+
+                <div class="generic-product-group" data-generic-product="health">
+                  <input id="healthPackage" name="healthPackage" type="hidden" value="standard">
+                  <input id="healthDental" name="healthDental" type="hidden" value="yes">
+                  <div class="limit-list">
+                    <button class="limit-option" data-choice-target="healthPackage" data-choice-value="basic" type="button"><strong>Basic</strong><span>Emergency and clinic visits</span></button>
+                    <button class="limit-option active" data-choice-target="healthPackage" data-choice-value="standard" type="button"><strong>Standard</strong><span>Clinic, labs, medicines</span></button>
+                    <button class="limit-option" data-choice-target="healthPackage" data-choice-value="premium" type="button"><strong>Premium</strong><span>Dental and wider limits</span></button>
+                  </div>
+                  <div class="option-grid">
+                    <button class="select-card active" data-choice-target="healthDental" data-choice-value="yes" type="button"><strong>Dental included</strong></button>
+                    <button class="select-card" data-choice-target="healthDental" data-choice-value="no" type="button"><strong>No dental</strong></button>
+                  </div>
+                </div>
+
+                <div class="generic-product-group" data-generic-product="dog">
+                  <input id="petPackage" name="petPackage" type="hidden" value="clinic">
+                  <input id="petVaccinated" name="petVaccinated" type="hidden" value="yes">
+                  <div class="limit-list">
+                    <button class="limit-option" data-choice-target="petPackage" data-choice-value="accident" type="button"><strong>Accident</strong><span>Injury and emergency</span></button>
+                    <button class="limit-option active" data-choice-target="petPackage" data-choice-value="clinic" type="button"><strong>Clinic</strong><span>Visits, tests, medicine</span></button>
+                    <button class="limit-option" data-choice-target="petPackage" data-choice-value="full" type="button"><strong>Full</strong><span>Surgery and liability</span></button>
+                  </div>
+                  <div class="option-grid">
+                    <button class="select-card active" data-choice-target="petVaccinated" data-choice-value="yes" type="button"><strong>Vaccinated</strong></button>
+                    <button class="select-card" data-choice-target="petVaccinated" data-choice-value="no" type="button"><strong>Not vaccinated</strong></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="generic-step" data-generic-step="2">
+                <h2>Enter your contact details</h2>
+                <div class="field-grid">
+                  <div class="field"><label for="genericFirstName">First name</label><input id="genericFirstName" name="genericFirstName" value="Demo"></div>
+                  <div class="field"><label for="genericLastName">Last name</label><input id="genericLastName" name="genericLastName" value="User"></div>
+                  <div class="field"><label for="genericPersonalId">Personal number</label><input id="genericPersonalId" name="genericPersonalId" value="01001001001"></div>
+                  <div class="field"><label for="genericPhone">Phone number</label><input id="genericPhone" name="genericPhone" value="+995 555 000 000"></div>
+                  <div class="field full"><label for="genericEmail">Email</label><input id="genericEmail" name="genericEmail" value="demo@shevadaro.ge"></div>
+                </div>
+                <label class="source-note field full" style="display:flex;gap:10px;align-items:flex-start;margin-top:18px">
+                  <input id="genericConsent" name="genericConsent" type="checkbox" checked style="width:auto;min-height:auto;margin-top:4px">
+                  <span>I confirm that this information may be used to prepare a sample insurance offer.</span>
+                </label>
+              </div>
+
+              <div class="generic-step" data-generic-step="3">
+                <h2>Your estimated comparison</h2>
+                <p id="genericSummaryLine">Review sample offers based on your selections.</p>
+                <div class="results-grid" id="genericResultsGrid"></div>
+              </div>
+
+              <div class="flow-actions">
+                <button class="secondary-btn" id="genericBackBtn" type="button">Back</button>
+                <button class="primary-btn" id="genericNextBtn" type="button">Next</button>
+              </div>
+            </form>
 
             <form id="quoteForm">
               <div class="form-step active" data-step="0">
@@ -2544,6 +2680,14 @@
         'What do you want to compare?': 'რისი შედარება გსურთ?',
         'Start with car insurance or choose another product for the next version.': 'დაიწყეთ ავტოდაზღვევით ან აირჩიეთ სხვა პროდუქტი შემდეგი ვერსიისთვის.',
         'Car insurance': 'ავტოდაზღვევა',
+        'Car': 'ავტო',
+        'Travel': 'მოგზაურობა',
+        'House': 'სახლი',
+        'Mortgage': 'იპოთეკა',
+        'Life': 'სიცოცხლე',
+        'Health': 'ჯანმრთელობა',
+        'Pet': 'ცხოველი',
+        'Dog': 'ცხოველი',
         'Brand, model, year, driver profile': 'ბრენდი, მოდელი, წელი, მძღოლის პროფილი',
         'Home insurance': 'სახლის დაზღვევა',
         'Apartment, house, contents': 'ბინა, სახლი, ქონება',
@@ -2953,7 +3097,93 @@
       'Personal details': 'პირადი ინფორმაცია',
       'Your life insurance comparison': 'თქვენი სიცოცხლის დაზღვევის შედარება',
       'Review sample life insurance offers based on your selections.': 'ნახეთ სატესტო სიცოცხლის დაზღვევის შეთავაზებები თქვენი არჩევანის მიხედვით.',
-      'Health declaration': 'ჯანმრთელობის დეკლარაცია'
+      'Health declaration': 'ჯანმრთელობის დეკლარაცია',
+      'Start questions': 'კითხვების დაწყება',
+      'Answer a short demo flow and then compare sample prices from several companies.': 'შეავსეთ მოკლე დემო პროცესი და შეადარეთ რამდენიმე კომპანიის სატესტო ფასები.',
+      'Policy questions': 'პოლისის კითხვები',
+      'Enter demo data. Any fake information works for this prototype.': 'შეიყვანეთ დემო მონაცემები. პროტოტიპში ნებისმიერი სატესტო ინფორმაცია მუშაობს.',
+      'Travel insurance questions': 'სამოგზაურო დაზღვევის კითხვები',
+      'Mortgage / property insurance questions': 'იპოთეკის და ქონების დაზღვევის კითხვები',
+      'Health insurance questions': 'ჯანმრთელობის დაზღვევის კითხვები',
+      'Pet insurance questions': 'ცხოველის დაზღვევის კითხვები',
+      'Choose coverage options': 'აირჩიეთ დაფარვის პირობები',
+      'Destination': 'მიმართულება',
+      'Travelers': 'მგზავრები',
+      'Trip start date': 'მოგზაურობის დაწყება',
+      'Trip end date': 'მოგზაურობის დასრულება',
+      'Passport number': 'პასპორტის ნომერი',
+      'Medical limit': 'სამედიცინო ლიმიტი',
+      'Higher medical limit': 'გაზრდილი სამედიცინო ლიმიტი',
+      'Standard trip': 'სტანდარტული მოგზაურობა',
+      'Medical emergency only': 'მხოლოდ გადაუდებელი სამედიცინო დახმარება',
+      'Add baggage and delays': 'ბარგისა და დაგვიანების დამატება',
+      'Lost baggage and flight delay': 'დაკარგული ბარგი და რეისის დაგვიანება',
+      'Mortgage bank': 'იპოთეკის ბანკი',
+      'Property type': 'ქონების ტიპი',
+      'Property value': 'ქონების ღირებულება',
+      'Loan amount': 'სესხის თანხა',
+      'Property address': 'ქონების მისამართი',
+      'Building limit': 'შენობის ლიმიტი',
+      'Bank requirement': 'ბანკის მოთხოვნა',
+      'Higher property value': 'უფრო მაღალი ქონების ღირებულება',
+      'Borrower life cover': 'მსესხებლის სიცოცხლის დაფარვა',
+      'Often requested by banks': 'ხშირად ითხოვენ ბანკები',
+      'Property only': 'მხოლოდ ქონება',
+      'Building protection only': 'მხოლოდ შენობის დაცვა',
+      'Critical illness': 'კრიტიკული დაავადებები',
+      'Like critical insurance flow': 'კრიტიკული დაზღვევის მსგავსი პროცესი',
+      'Medical insurance': 'სამედიცინო დაზღვევა',
+      'Clinic and emergency cover': 'კლინიკა და გადაუდებელი დახმარება',
+      'Medical and critical': 'სამედიცინო და კრიტიკული',
+      'Combined demo package': 'კომბინირებული დემო პაკეტი',
+      'Health package': 'ჯანმრთელობის პაკეტი',
+      'Family members': 'ოჯახის წევრები',
+      'Emergency and clinic visits': 'გადაუდებელი და კლინიკის ვიზიტები',
+      'Clinic, labs, medicines': 'კლინიკა, ანალიზები, მედიკამენტები',
+      'Dental and wider limits': 'სტომატოლოგია და უფრო ფართო ლიმიტები',
+      'Dental included': 'სტომატოლოგია შედის',
+      'No dental': 'სტომატოლოგიის გარეშე',
+      'Pet type': 'ცხოველის ტიპი',
+      'Pet age': 'ცხოველის ასაკი',
+      'Breed': 'ჯიში',
+      'Accident': 'უბედური შემთხვევა',
+      'Injury and emergency': 'ტრავმა და გადაუდებელი დახმარება',
+      'Clinic': 'კლინიკა',
+      'Visits, tests, medicine': 'ვიზიტები, ანალიზები, მედიკამენტები',
+      'Full': 'სრული',
+      'Surgery and liability': 'ოპერაცია და პასუხისმგებლობა',
+      'Vaccinated': 'ვაქცინირებული',
+      'Not vaccinated': 'არ არის ვაქცინირებული',
+      'Enter your contact details': 'შეიყვანეთ საკონტაქტო ინფორმაცია',
+      'Start demo flow': 'დემო პროცესის დაწყება',
+      'per trip': 'მოგზაურობაზე',
+      'per month': 'თვეში',
+      'Travel medical emergency cover.': 'სამოგზაურო გადაუდებელი სამედიცინო დახმარება.',
+      'Baggage and flight delay options when selected.': 'ბარგისა და რეისის დაგვიანების ოფციები არჩევისას.',
+      'Passport and traveler details for policy issue.': 'პასპორტისა და მგზავრის მონაცემები პოლისისთვის.',
+      'Email delivery of the demo policy summary.': 'დემო პოლისის შეჯამების ელფოსტით გაგზავნა.',
+      'Bank-required property protection.': 'ბანკის მოთხოვნილი ქონების დაცვა.',
+      'Building fire, water leakage, and natural risk cover.': 'შენობის ხანძრის, წყლის დაზიანებისა და ბუნებრივი რისკების დაფარვა.',
+      'Optional borrower life protection.': 'მსესხებლის სიცოცხლის დამატებითი დაცვა.',
+      'Apartment or house value used for limits.': 'ლიმიტებისთვის გამოიყენება ბინის ან სახლის ღირებულება.',
+      'Clinic and emergency medical cover.': 'კლინიკის და გადაუდებელი სამედიცინო დაფარვა.',
+      'Critical illness payout when selected.': 'კრიტიკული დაავადების ანაზღაურება არჩევისას.',
+      'Dental and medicine options by package.': 'სტომატოლოგიის და მედიკამენტების ოფციები პაკეტით.',
+      'Family member count affects price.': 'ოჯახის წევრების რაოდენობა ცვლის ფასს.',
+      'Veterinary clinic visit cover.': 'ვეტერინარული კლინიკის ვიზიტების დაფარვა.',
+      'Accident and emergency treatment support.': 'უბედური შემთხვევისა და გადაუდებელი მკურნალობის მხარდაჭერა.',
+      'Surgery option in full package.': 'სრული პაკეტის ოპერაციის ოფცია.',
+      'Breed, age, and vaccination affect price.': 'ჯიში, ასაკი და ვაქცინაცია გავლენას ახდენს ფასზე.'
+    });
+
+    Object.assign(translations.ge, {
+      'Trip dates': 'მოგზაურობის თარიღები',
+      'Passport': 'პასპორტი',
+      'Bank': 'ბანკი',
+      'Borrower cover': 'მსესხებლის დაფარვა',
+      'Product type': 'პროდუქტის ტიპი',
+      'Package': 'პაკეტი',
+      'Dental option': 'სტომატოლოგიის ოფცია'
     });
 
     const productConfigs = {
@@ -3039,6 +3269,61 @@
       'Neighbor liability support when selected.'
     ];
 
+    const genericFlowConfigs = {
+      travel: {
+        title: 'Travel insurance questions',
+        copy: 'Trip dates, destination, passport, medical limit, and baggage delay options.',
+        groups: ['Destination', 'Trip dates', 'Passport', 'Medical limit'],
+        base: 10.8,
+        unit: 'per trip',
+        bullets: [
+          'Travel medical emergency cover.',
+          'Baggage and flight delay options when selected.',
+          'Passport and traveler details for policy issue.',
+          'Email delivery of the demo policy summary.'
+        ]
+      },
+      mortgage: {
+        title: 'Mortgage / property insurance questions',
+        copy: 'Property value, bank, loan amount, building limit, and borrower protection.',
+        groups: ['Bank', 'Property value', 'Loan amount', 'Borrower cover'],
+        base: 28,
+        unit: 'per month',
+        bullets: [
+          'Bank-required property protection.',
+          'Building fire, water leakage, and natural risk cover.',
+          'Optional borrower life protection.',
+          'Apartment or house value used for limits.'
+        ]
+      },
+      health: {
+        title: 'Health insurance questions',
+        copy: 'Health works like the critical insurance flow: person, product type, limits, and declaration.',
+        groups: ['Age', 'Product type', 'Package', 'Dental option'],
+        base: 35,
+        unit: 'per month',
+        bullets: [
+          'Clinic and emergency medical cover.',
+          'Critical illness payout when selected.',
+          'Dental and medicine options by package.',
+          'Family member count affects price.'
+        ]
+      },
+      dog: {
+        title: 'Pet insurance questions',
+        copy: 'Pet type, breed, age, vaccination, clinic package, and surgery support.',
+        groups: ['Pet type', 'Breed', 'Age', 'Clinic package'],
+        base: 18,
+        unit: 'per month',
+        bullets: [
+          'Veterinary clinic visit cover.',
+          'Accident and emergency treatment support.',
+          'Surgery option in full package.',
+          'Breed, age, and vaccination affect price.'
+        ]
+      }
+    };
+
     const pages = document.querySelectorAll('.page');
     const compareLayout = document.querySelector('.compare-layout');
     const navButtons = document.querySelectorAll('[data-route]');
@@ -3049,11 +3334,13 @@
     const compareProductSwitch = document.querySelector('.compare-product-switch');
     const formSteps = document.querySelectorAll('.form-step');
     const lifeFormSteps = document.querySelectorAll('.life-step');
+    const genericFormSteps = document.querySelectorAll('.generic-step');
     const stepItems = document.querySelectorAll('[data-step-label]');
     const progressBar = document.getElementById('progressBar');
     const backBtn = document.getElementById('backBtn');
     const nextBtn = document.getElementById('nextBtn');
     const quoteForm = document.getElementById('quoteForm');
+    const genericQuoteForm = document.getElementById('genericQuoteForm');
     const lifeQuoteForm = document.getElementById('lifeQuoteForm');
     const homeQuoteForm = document.getElementById('homeQuoteForm');
     const productDetail = document.getElementById('productDetail');
@@ -3062,9 +3349,11 @@
     const homeChooser = document.getElementById('homeChooser');
     const comingSoonProduct = document.getElementById('comingSoonProduct');
     const startCarFlowBtn = document.getElementById('startCarFlowBtn');
+    const startGenericFlowBtn = document.getElementById('startGenericFlowBtn');
     const startLifeFlowBtn = document.getElementById('startLifeFlowBtn');
     const startHomeFlowBtn = document.getElementById('startHomeFlowBtn');
     const demoCarPricesBtn = document.getElementById('demoCarPricesBtn');
+    const demoGenericPricesBtn = document.getElementById('demoGenericPricesBtn');
     const demoLifePricesBtn = document.getElementById('demoLifePricesBtn');
     const demoHomePricesBtn = document.getElementById('demoHomePricesBtn');
     const coverageCards = document.querySelectorAll('[data-coverage-intent]');
@@ -3089,6 +3378,10 @@
     const homeNextBtn = document.getElementById('homeNextBtn');
     const homeResultsGrid = document.getElementById('homeResultsGrid');
     const homeSummaryLine = document.getElementById('homeSummaryLine');
+    const genericBackBtn = document.getElementById('genericBackBtn');
+    const genericNextBtn = document.getElementById('genericNextBtn');
+    const genericResultsGrid = document.getElementById('genericResultsGrid');
+    const genericSummaryLine = document.getElementById('genericSummaryLine');
 
     function t(text) {
       return state.lang === 'ge' ? translations.ge[text] || text : text;
@@ -3217,7 +3510,9 @@
       const isCar = state.product === 'car';
       const isLife = state.product === 'life';
       const isHome = state.product === 'home';
-      const activeFlowSteps = isLife ? lifeFormSteps : isHome ? homeFormSteps : formSteps;
+      const isGeneric = Boolean(genericFlowConfigs[state.product]);
+      const genericConfig = genericFlowConfigs[state.product];
+      const activeFlowSteps = isLife ? lifeFormSteps : isHome ? homeFormSteps : isGeneric ? genericFormSteps : formSteps;
       document.getElementById('flowHeading').textContent = t(config.title);
       document.getElementById('flowCopy').textContent = state.product === 'car'
         ? t('Choose the coverage style first, then continue into a focused car quote flow.')
@@ -3225,7 +3520,9 @@
           ? t('Choose life insurance, critical illness insurance, or both, then continue into a focused quote flow.')
         : isHome
           ? t('A short apartment flow for building cover, contents, liability, and sample partner prices.')
-        : t('The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.');
+        : isGeneric
+          ? t(genericConfig.copy)
+        : t('Answer a short demo flow and then compare sample prices from several companies.');
       document.getElementById('productTitle').textContent = t(config.title);
       document.getElementById('productDescription').textContent = t(config.description);
       document.getElementById('productSource').textContent = isCar
@@ -3234,27 +3531,31 @@
           ? t('This flow is modeled for life insurance, critical illness insurance, or a combined product with identity verification and a health declaration.')
         : isHome
           ? t('This demo follows apartment insurance questions: city, area, resident type, limits, neighbor liability, start date, and contact details.')
-        : t('This product has its own page now. Its dedicated question flow can be added without returning the user to the full product selector.');
+        : isGeneric
+          ? t(genericConfig.copy)
+        : t('Answer a short demo flow and then compare sample prices from several companies.');
       document.getElementById('productImage').src = config.image;
       document.getElementById('productImage').alt = t(config.alt);
       document.getElementById('productEyebrow').textContent = t('Selected product');
 
-      compareLayout.classList.toggle('single-product', !(isCar || isLife || isHome));
+      compareLayout.classList.toggle('single-product', !(isCar || isLife || isHome || isGeneric));
       productDetail.style.display = state.quoteStarted ? 'none' : 'grid';
       quoteForm.style.display = state.quoteStarted && isCar ? 'block' : 'none';
+      genericQuoteForm.style.display = state.quoteStarted && isGeneric ? 'block' : 'none';
       lifeQuoteForm.style.display = state.quoteStarted && isLife ? 'block' : 'none';
       homeQuoteForm.style.display = state.quoteStarted && isHome ? 'block' : 'none';
       coverageChooser.style.display = isCar ? 'block' : 'none';
       lifeChooser.style.display = isLife ? 'block' : 'none';
       homeChooser.style.display = isHome ? 'block' : 'none';
-      comingSoonProduct.style.display = isCar || isLife || isHome ? 'none' : 'block';
+      comingSoonProduct.style.display = isGeneric ? 'block' : 'none';
+      if (isGeneric) renderGenericChooser();
       if (compareProductSwitch) {
         compareProductSwitch.style.display = state.productPreselected || state.quoteStarted ? 'none' : 'grid';
       }
-      progressBar.style.width = (isCar || isLife || isHome) ? `${Math.min(100, ((state.step + 1) / (activeFlowSteps.length + 1)) * 100)}%` : '16%';
+      progressBar.style.width = (isCar || isLife || isHome || isGeneric) ? `${Math.min(100, ((state.step + 1) / (activeFlowSteps.length + 1)) * 100)}%` : '16%';
 
       stepItems.forEach((item, index) => {
-        item.classList.toggle('active', index === 0 && (isCar || isLife || isHome));
+        item.classList.toggle('active', index === 0 && (isCar || isLife || isHome || isGeneric));
         item.classList.toggle('done', false);
       });
 
@@ -3267,6 +3568,115 @@
       if (state.quoteStarted && isHome) {
         renderHomeStep();
       }
+      if (state.quoteStarted && isGeneric) {
+        renderGenericStep();
+      }
+    }
+
+    function renderGenericChooser() {
+      const config = genericFlowConfigs[state.product];
+      if (!config) return;
+      document.getElementById('genericChooserTitle').textContent = t(config.title);
+      document.getElementById('genericChooserCopy').textContent = t(config.copy);
+      const previewGrid = document.getElementById('genericPreviewGrid');
+      previewGrid.innerHTML = '';
+      config.groups.forEach(group => {
+        const card = document.createElement('div');
+        card.className = 'select-card';
+        card.innerHTML = `<strong>${t(group)}</strong><span>${t('Start demo flow')}</span>`;
+        previewGrid.appendChild(card);
+      });
+    }
+
+    function renderGenericStep() {
+      const formIndex = state.step - 1;
+      const lastIndex = genericFormSteps.length - 1;
+      const config = genericFlowConfigs[state.product];
+      productDetail.style.display = 'none';
+      comingSoonProduct.style.display = 'none';
+      genericQuoteForm.style.display = 'block';
+      if (compareProductSwitch) compareProductSwitch.style.display = 'none';
+      genericFormSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.genericStep) === formIndex));
+      document.querySelectorAll('.generic-product-group').forEach(group => {
+        group.style.display = group.dataset.genericProduct === state.product ? '' : 'none';
+      });
+      document.getElementById('genericStepTitle').textContent = t(config.title);
+      document.getElementById('genericStepCopy').textContent = t(config.copy);
+      document.getElementById('genericOptionsTitle').textContent = t('Choose coverage options');
+      stepItems.forEach((item, index) => {
+        const stageIndex = Math.min(5, formIndex + 1);
+        item.classList.toggle('active', index === stageIndex);
+        item.classList.toggle('done', index < stageIndex);
+      });
+      progressBar.style.width = `${Math.min(100, ((formIndex + 2) / (genericFormSteps.length + 1)) * 100)}%`;
+      genericBackBtn.textContent = t('Back');
+      genericNextBtn.textContent = formIndex === lastIndex ? t('Start again') : formIndex === lastIndex - 1 ? t('Show prices') : t('Next');
+      if (formIndex === lastIndex) renderGenericResults();
+    }
+
+    function genericNumber(id, fallback = 0) {
+      const element = document.getElementById(id);
+      return Number(element?.value || fallback);
+    }
+
+    function travelDays() {
+      const start = new Date(document.getElementById('travelStartDate')?.value || Date.now());
+      const end = new Date(document.getElementById('travelEndDate')?.value || Date.now());
+      const diff = Math.ceil((end - start) / 86400000) + 1;
+      return Math.max(1, Number.isFinite(diff) ? diff : 1);
+    }
+
+    function calculateGenericPrice(product, factor) {
+      if (product === 'travel') {
+        const days = travelDays();
+        const travelers = genericNumber('travelers', 1);
+        const limit = genericNumber('travelLimit', 50000);
+        const extra = document.getElementById('travelExtraRisk').value === 'yes' ? 4.5 : 0;
+        return Math.max(10, (days * travelers * 2.2 + (limit > 50000 ? 8 : 0) + extra) * factor);
+      }
+      if (product === 'mortgage') {
+        const value = genericNumber('mortgagePropertyValue', 180000);
+        const limit = genericNumber('mortgageBuildingLimit', 100000);
+        const borrower = document.getElementById('mortgageBorrowerLife').value === 'yes' ? 15 : 0;
+        return ((value * 0.00011) + (limit * 0.00008) + borrower) * factor;
+      }
+      if (product === 'health') {
+        const age = genericNumber('healthAge', 35);
+        const family = genericNumber('healthFamilyMembers', 1);
+        const pack = document.getElementById('healthPackage').value;
+        const productType = document.getElementById('healthProductType').value;
+        const dental = document.getElementById('healthDental').value === 'yes' ? 7 : 0;
+        const packageAdd = pack === 'premium' ? 35 : pack === 'standard' ? 18 : 0;
+        const typeAdd = productType === 'both' ? 22 : productType === 'critical' ? 12 : 0;
+        return (28 + packageAdd + typeAdd + dental + Math.max(0, age - 35) * 0.8) * family * factor;
+      }
+      const age = genericNumber('petAge', 3);
+      const pack = document.getElementById('petPackage').value;
+      const notVaccinated = document.getElementById('petVaccinated').value === 'no' ? 6 : 0;
+      const packageAdd = pack === 'full' ? 22 : pack === 'clinic' ? 10 : 0;
+      return (14 + packageAdd + age * 1.2 + notVaccinated) * factor;
+    }
+
+    function renderGenericResults() {
+      const config = genericFlowConfigs[state.product];
+      genericSummaryLine.textContent = t('Review sample offers based on your selections.');
+      genericResultsGrid.innerHTML = '';
+      insurers.forEach((insurer, index) => {
+        const price = calculateGenericPrice(state.product, insurer.factor + index * 0.03);
+        const card = document.createElement('article');
+        card.className = 'result-card';
+        card.innerHTML = `
+          <div class="insurer-logo" style="background:${insurer.tone}">${insurer.logo}</div>
+          <h3>${insurer.name}</h3>
+          <p class="price">${price.toFixed(2)} ₾</p>
+          <p>${t(config.unit)}</p>
+          <ul class="coverage-bullets">
+            ${config.bullets.map(item => `<li>${t(item)}</li>`).join('')}
+          </ul>
+          <button class="ghost-btn" type="button" style="margin-top:12px">${t('Request call')}</button>
+        `;
+        genericResultsGrid.appendChild(card);
+      });
     }
 
     function renderStep() {
@@ -3672,6 +4082,12 @@
       renderHomeStep();
     });
 
+    startGenericFlowBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = 1;
+      renderGenericStep();
+    });
+
     demoCarPricesBtn.addEventListener('click', () => {
       state.quoteStarted = true;
       state.step = formSteps.length;
@@ -3689,6 +4105,12 @@
       state.quoteStarted = true;
       state.step = homeFormSteps.length;
       renderHomeStep();
+    });
+
+    demoGenericPricesBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = genericFormSteps.length;
+      renderGenericStep();
     });
 
     document.querySelectorAll('.toggle').forEach(button => {
@@ -3772,6 +4194,29 @@
       }
     });
 
+    genericBackBtn.addEventListener('click', () => {
+      if (state.step <= 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step -= 1;
+        renderGenericStep();
+      }
+    });
+
+    genericNextBtn.addEventListener('click', () => {
+      const formIndex = state.step - 1;
+      if (formIndex === genericFormSteps.length - 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step += 1;
+        renderGenericStep();
+      }
+    });
+
     mobileMenu.addEventListener('click', () => {
       topbar.classList.toggle('menu-open');
     });
@@ -3800,6 +4245,10 @@
 
     populateYears();
     populateModels();
+    document.getElementById('travelStartDate').value = formatDateForInput(new Date());
+    const sampleEndDate = new Date();
+    sampleEndDate.setDate(sampleEndDate.getDate() + 5);
+    document.getElementById('travelEndDate').value = formatDateForInput(sampleEndDate);
     setStartChoice('tomorrow');
     setProduct('car');
     setRoute(location.hash.replace('#', '') || 'home');
