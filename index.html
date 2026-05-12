@@ -207,7 +207,7 @@
     }
 
     main {
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .page {
@@ -709,6 +709,181 @@
       margin-top: 18px;
     }
 
+    .wizard-intro {
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+
+    .option-grid,
+    .package-grid,
+    .limit-list,
+    .payment-grid,
+    .identity-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .package-grid,
+    .payment-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .limit-list {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .identity-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .select-card,
+    .package-card,
+    .limit-option,
+    .payment-option {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 16px;
+      text-align: left;
+      min-height: 88px;
+      display: grid;
+      align-content: center;
+      gap: 6px;
+    }
+
+    .select-card:hover,
+    .select-card.active,
+    .package-card:hover,
+    .package-card.active,
+    .limit-option:hover,
+    .limit-option.active,
+    .payment-option:hover,
+    .payment-option.active {
+      border-color: var(--green);
+      box-shadow: 0 10px 22px rgba(23, 109, 79, .12);
+    }
+
+    .select-card strong,
+    .package-card strong,
+    .limit-option strong,
+    .payment-option strong {
+      font-size: 1.1rem;
+    }
+
+    .select-card span,
+    .package-card span,
+    .limit-option span,
+    .payment-option span {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .package-card {
+      text-align: center;
+      min-height: 210px;
+      position: relative;
+    }
+
+    .package-card .discount {
+      width: fit-content;
+      margin: -28px auto 10px;
+      background: var(--gold);
+      color: #181818;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-weight: 900;
+    }
+
+    .package-card strong {
+      font-size: 1.45rem;
+      color: var(--green-2);
+    }
+
+    .package-card .price {
+      font-size: 1.85rem;
+      line-height: 1;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .compare-table {
+      margin-top: 18px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .compare-table table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .compare-table th:first-child,
+    .compare-table td:first-child {
+      text-align: left;
+    }
+
+    .check {
+      color: var(--green);
+      font-size: 1.25rem;
+    }
+
+    .cross {
+      color: var(--red);
+      font-size: 1.25rem;
+    }
+
+    .info-box {
+      margin-top: 18px;
+      border-radius: 8px;
+      background: #eef5f1;
+      color: #31403c;
+      padding: 16px;
+    }
+
+    .quote-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+    }
+
+    .quote-total strong {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .quote-total span {
+      color: var(--muted);
+      text-decoration: line-through;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 900;
+    }
+
     .field-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1015,7 +1190,11 @@
       .product-strip,
       .choice-grid,
       .coverage-grid,
-      .date-options {
+      .date-options,
+      .option-grid,
+      .package-grid,
+      .payment-grid,
+      .identity-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -1259,8 +1438,24 @@
       .product-strip,
       .choice-grid,
       .coverage-grid,
-      .date-options {
+      .date-options,
+      .option-grid,
+      .package-grid,
+      .payment-grid,
+      .identity-grid {
         grid-template-columns: 1fr;
+      }
+
+      .limit-list {
+        max-width: none;
+      }
+
+      .package-card {
+        min-height: auto;
+      }
+
+      .quote-total {
+        display: grid;
       }
 
       .section-header,
@@ -1526,23 +1721,229 @@
 
             <form id="quoteForm">
               <div class="form-step active" data-step="0">
-                <h2>When should the policy start?</h2>
+                <h2>Policyholder</h2>
+                <p class="wizard-intro">Tell us who will hold the policy so we can estimate the correct risk group.</p>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="age">Age</label>
+                    <input id="age" name="age" type="number" min="18" max="85" value="35">
+                  </div>
+                  <div class="field">
+                    <label for="experience">Driving experience</label>
+                    <select id="experience" name="experience">
+                      <option value="0.5">Less than 1 year</option>
+                      <option value="2">1 - 2 years</option>
+                      <option value="4">2 - 5 years</option>
+                      <option value="8" selected>5+ years</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="1">
+                <h2>Vehicle</h2>
+                <p class="wizard-intro">Choose the car details used by insurers before they calculate a casco price.</p>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="year">Year of manufacture</label>
+                    <select id="year" name="year"></select>
+                  </div>
+                  <div class="field">
+                    <label for="brand">Car brand</label>
+                    <select id="brand" name="brand">
+                      <option>Honda</option>
+                      <option>Mercedes-Benz</option>
+                      <option>Toyota</option>
+                      <option>BMW</option>
+                      <option>Hyundai</option>
+                      <option>Kia</option>
+                      <option>Lexus</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="model">Model</label>
+                    <select id="model" name="model"></select>
+                  </div>
+                  <div class="field">
+                    <label for="engine">Engine</label>
+                    <select id="engine" name="engine">
+                      <option>1.5L petrol</option>
+                      <option>1.8L hybrid</option>
+                      <option>2.0L petrol</option>
+                      <option>2.2L diesel</option>
+                      <option>3.0L petrol</option>
+                      <option>Electric</option>
+                    </select>
+                  </div>
+                </div>
+                <input id="vehicleType" name="vehicleType" type="hidden" value="suv">
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="vehicleType" data-choice-value="sedan" type="button">
+                    <strong>Sedan/Hatchback</strong>
+                    <span>Private passenger car</span>
+                  </button>
+                  <button class="select-card active" data-choice-target="vehicleType" data-choice-value="suv" type="button">
+                    <strong>SUV</strong>
+                    <span>Jeep or crossover</span>
+                  </button>
+                  <button class="select-card" data-choice-target="vehicleType" data-choice-value="coupe" type="button">
+                    <strong>Coupe</strong>
+                    <span>Two-door or sport body</span>
+                  </button>
+                </div>
+                <div class="info-box">Please note that insurance can only be purchased for vehicles that are for personal use.</div>
+              </div>
+
+              <div class="form-step" data-step="2">
+                <h2>Choose package</h2>
+                <input id="coverage" name="coverage" type="hidden" value="standard">
+                <div class="package-grid">
+                  <button class="package-card" data-choice-target="coverage" data-choice-value="basic" type="button">
+                    <span class="discount">-20%</span>
+                    <strong>Package M</strong>
+                    <span>Per month</span>
+                    <span class="price">153.11 ₾</span>
+                    <span>From 57 ₾</span>
+                  </button>
+                  <button class="package-card active" data-choice-target="coverage" data-choice-value="standard" type="button">
+                    <span class="discount">-20%</span>
+                    <strong>Package L</strong>
+                    <span>Per month</span>
+                    <span class="price">204.17 ₾</span>
+                    <span>From 76 ₾</span>
+                  </button>
+                  <button class="package-card" data-choice-target="coverage" data-choice-value="premium" type="button">
+                    <span class="discount">-20%</span>
+                    <strong>Package XL</strong>
+                    <span>Per month</span>
+                    <span class="price">263.97 ₾</span>
+                    <span>From 98 ₾</span>
+                  </button>
+                </div>
+                <div class="compare-table" aria-label="Compare plans">
+                  <table>
+                    <thead><tr><th>Coverage</th><th>Package M</th><th>Package L</th><th>Package XL</th></tr></thead>
+                    <tbody>
+                      <tr><td>Car accident</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                      <tr><td>Theft and robbery</td><td class="cross">×</td><td class="check">✓</td><td class="check">✓</td></tr>
+                      <tr><td>Glass or mirror damage</td><td class="cross">×</td><td class="check">✓</td><td class="check">✓</td></tr>
+                      <tr><td>Fallen objects</td><td class="cross">×</td><td class="check">✓</td><td class="check">✓</td></tr>
+                      <tr><td>Natural disasters</td><td class="cross">×</td><td class="check">✓</td><td class="check">✓</td></tr>
+                      <tr><td>Zero deductible</td><td class="cross">×</td><td class="cross">×</td><td class="check">✓</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="3">
+                <h2>Deductible</h2>
+                <div class="quote-total">
+                  <div>
+                    <h3>Amount due now</h3>
+                  </div>
+                  <div><strong id="deductibleDueNow">204.17 ₾</strong> <span id="deductibleOriginal">255.22 ₾</span></div>
+                </div>
+                <input id="deductible" name="deductible" type="hidden" value="1">
+                <div class="limit-list">
+                  <button class="limit-option active" data-choice-target="deductible" data-choice-value="1" type="button"><strong>1%</strong></button>
+                  <button class="limit-option" data-choice-target="deductible" data-choice-value="2" type="button"><strong>2%</strong></button>
+                </div>
+                <div class="info-box"><strong>What is deductible?</strong><br>Deductible is the minimum amount that the insurance company will not reimburse.</div>
+              </div>
+
+              <div class="form-step" data-step="4">
+                <h2>What currency do you want for car insurance?</h2>
+                <input id="currency" name="currency" type="hidden" value="gel">
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="currency" data-choice-value="usd" type="button"><strong>USD</strong><span>$</span></button>
+                  <button class="select-card active" data-choice-target="currency" data-choice-value="gel" type="button"><strong>GEL</strong><span>₾</span></button>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="5">
+                <h2>What is the vehicle value?</h2>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="value">Vehicle value</label>
+                    <input id="value" name="value" type="number" min="1000" step="500" value="100000">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="6">
+                <h2>Choose third-party liability limit</h2>
+                <input id="limit" name="limit" type="hidden" value="10000">
+                <div class="limit-list">
+                  <button class="limit-option" data-choice-target="limit" data-choice-value="5000" type="button"><strong>5,000 ₾</strong><span>Price 120 ₾</span></button>
+                  <button class="limit-option active" data-choice-target="limit" data-choice-value="10000" type="button"><strong>10,000 ₾</strong><span>Price 160 ₾</span></button>
+                  <button class="limit-option" data-choice-target="limit" data-choice-value="25000" type="button"><strong>25,000 ₾</strong><span>Price 220 ₾</span></button>
+                  <button class="limit-option" data-choice-target="limit" data-choice-value="0" type="button"><strong>I do not want it</strong></button>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="7">
+                <h2>Choose driver and passenger accident limit</h2>
+                <input id="passengerLimit" name="passengerLimit" type="hidden" value="5000">
+                <div class="limit-list">
+                  <button class="limit-option active" data-choice-target="passengerLimit" data-choice-value="5000" type="button"><strong>5,000 ₾</strong><span>Price 25 ₾</span></button>
+                  <button class="limit-option" data-choice-target="passengerLimit" data-choice-value="10000" type="button"><strong>10,000 ₾</strong><span>Price 35 ₾</span></button>
+                  <button class="limit-option" data-choice-target="passengerLimit" data-choice-value="25000" type="button"><strong>25,000 ₾</strong><span>Price 50 ₾</span></button>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="8">
+                <h2>Youngest driver age</h2>
+                <input id="youngestAge" name="youngestAge" type="hidden" value="26">
+                <div class="limit-list">
+                  <button class="limit-option" data-choice-target="youngestAge" data-choice-value="18" type="button"><strong>18+</strong></button>
+                  <button class="limit-option" data-choice-target="youngestAge" data-choice-value="21" type="button"><strong>21+</strong></button>
+                  <button class="limit-option active" data-choice-target="youngestAge" data-choice-value="26" type="button"><strong>26+</strong></button>
+                  <button class="limit-option" data-choice-target="youngestAge" data-choice-value="30" type="button"><strong>30+</strong></button>
+                  <button class="limit-option" data-choice-target="youngestAge" data-choice-value="40" type="button"><strong>40+</strong></button>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="9">
+                <h2>Are all drivers over the selected age insured?</h2>
+                <input id="drivers" name="drivers" type="hidden" value="all">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="drivers" data-choice-value="all" type="button"><strong>All drivers</strong></button>
+                  <button class="select-card" data-choice-target="drivers" data-choice-value="list" type="button"><strong>I will provide a driver list</strong></button>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="10">
+                <h2>Choose payment frequency</h2>
+                <input id="paymentPeriod" name="paymentPeriod" type="hidden" value="monthly">
+                <div class="payment-grid">
+                  <button class="payment-option" data-choice-target="paymentPeriod" data-choice-value="single" type="button"><strong>Single payment</strong><span>424.34 ₾</span></button>
+                  <button class="payment-option" data-choice-target="paymentPeriod" data-choice-value="two" type="button"><strong>Two payments</strong><span>348.51 ₾</span></button>
+                  <button class="payment-option active" data-choice-target="paymentPeriod" data-choice-value="monthly" type="button"><strong>Monthly</strong><span>401.34 ₾</span></button>
+                </div>
+                <p class="wizard-intro">One-time payment is usually cheaper than monthly payments.</p>
+              </div>
+
+              <div class="form-step" data-step="11">
+                <h2>Do you have a promo code?</h2>
+                <input id="promoChoice" name="promoChoice" type="hidden" value="no">
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="promoChoice" data-choice-value="yes" type="button"><strong>Yes</strong></button>
+                  <button class="select-card active" data-choice-target="promoChoice" data-choice-value="no" type="button"><strong>No</strong></button>
+                </div>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="promoCode">Promo code</label>
+                    <input id="promoCode" name="promoCode" placeholder="Optional">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="12">
+                <h2>Enter policy start date</h2>
                 <div class="date-options">
-                  <button class="choice active" data-start-choice="today" type="button">
-                    <span class="icon">✓</span>
-                    <strong>Today</strong>
-                    <span>Start protection immediately.</span>
-                  </button>
-                  <button class="choice" data-start-choice="nextMonth" type="button">
-                    <span class="icon">1</span>
-                    <strong>Beginning of next month</strong>
-                    <span>Useful when replacing an existing policy.</span>
-                  </button>
-                  <button class="choice" data-start-choice="custom" type="button">
-                    <span class="icon">◷</span>
-                    <strong>Choose date</strong>
-                    <span>Select a custom policy start date.</span>
-                  </button>
+                  <button class="choice active" data-start-choice="today" type="button"><span class="icon">✓</span><strong>Today</strong><span>Start protection immediately.</span></button>
+                  <button class="choice" data-start-choice="tomorrow" type="button"><span class="icon">1</span><strong>Tomorrow</strong><span>Start from the next day.</span></button>
+                  <button class="choice" data-start-choice="custom" type="button"><span class="icon">◷</span><strong>Choose date</strong><span>Select a custom policy start date.</span></button>
                 </div>
                 <div class="field-grid">
                   <div class="field">
@@ -1560,182 +1961,72 @@
                 </div>
               </div>
 
-              <div class="form-step" data-step="1">
-                <h2>Vehicle details</h2>
+              <div class="form-step" data-step="13">
+                <h2>Enter vehicle registration number</h2>
                 <div class="field-grid">
                   <div class="field">
                     <label for="plate">Car registration number</label>
-                    <input id="plate" name="plate" placeholder="AA-123-AA">
+                    <input id="plate" name="plate" placeholder="Example: DD123DD">
                   </div>
                   <div class="field">
                     <label for="vin">VIN code</label>
                     <input id="vin" name="vin" placeholder="17-character VIN" maxlength="17">
                   </div>
-                  <div class="field">
-                    <label for="brand">Car brand</label>
-                    <select id="brand" name="brand">
-                      <option>Honda</option>
-                      <option>Mercedes-Benz</option>
-                      <option>Toyota</option>
-                      <option>BMW</option>
-                      <option>Hyundai</option>
-                      <option>Kia</option>
-                      <option>Lexus</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="year">Year</label>
-                    <select id="year" name="year"></select>
-                  </div>
-                  <div class="field">
-                    <label for="model">Model</label>
-                    <select id="model" name="model"></select>
-                  </div>
-                  <div class="field">
-                    <label for="engine">Engine</label>
-                    <select id="engine" name="engine">
-                      <option>1.5L petrol</option>
-                      <option>1.8L hybrid</option>
-                      <option>2.0L petrol</option>
-                      <option>2.2L diesel</option>
-                      <option>3.0L petrol</option>
-                      <option>Electric</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="value">Estimated vehicle value</label>
-                    <select id="value" name="value">
-                      <option value="15000">Up to 15,000 GEL</option>
-                      <option value="30000">15,000 - 30,000 GEL</option>
-                      <option value="60000">30,000 - 60,000 GEL</option>
-                      <option value="100000">60,000+ GEL</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="vehicleUse">Vehicle use</label>
-                    <select id="vehicleUse" name="vehicleUse">
-                      <option value="personal" selected>Private use</option>
-                      <option value="commute">Daily commute</option>
-                      <option value="taxi">Taxi or ride-share</option>
-                      <option value="commercial">Business/commercial use</option>
-                    </select>
-                  </div>
                 </div>
               </div>
 
-              <div class="form-step" data-step="2">
-                <h2>Owner and driver</h2>
+              <div class="form-step" data-step="14">
+                <h2>Are you insuring your own car?</h2>
+                <input id="ownerType" name="ownerType" type="hidden" value="individual">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="ownerType" data-choice-value="individual" type="button"><strong>Yes</strong></button>
+                  <button class="select-card" data-choice-target="ownerType" data-choice-value="other" type="button"><strong>No</strong></button>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="15">
+                <h2>Enter personal number and date of birth</h2>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="personalId">Personal number</label>
+                    <input id="personalId" name="personalId" inputmode="numeric" placeholder="Personal #">
+                  </div>
+                </div>
+                <div class="identity-grid">
+                  <input id="birthDay" name="birthDay" inputmode="numeric" placeholder="DD">
+                  <input id="birthMonth" name="birthMonth" inputmode="numeric" placeholder="MM">
+                  <input id="birthYear" name="birthYear" inputmode="numeric" placeholder="YYYY">
+                </div>
+                <input id="gender" name="gender" type="hidden" value="male">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="gender" data-choice-value="male" type="button"><strong>Male</strong></button>
+                  <button class="select-card" data-choice-target="gender" data-choice-value="female" type="button"><strong>Female</strong></button>
+                </div>
+                <label class="source-note field full" style="display:flex;gap:10px;align-items:flex-start;margin-top:18px">
+                  <input id="consent" name="consent" type="checkbox" style="width:auto;min-height:auto;margin-top:4px">
+                  <span>I confirm that this information may be used to prepare a sample insurance offer.</span>
+                </label>
+              </div>
+
+              <div class="form-step" data-step="16">
+                <h2>Enter your name and contact details</h2>
                 <div class="field-grid">
                   <div class="field">
-                    <label for="ownerType">Vehicle owner</label>
-                    <select id="ownerType" name="ownerType">
-                      <option value="individual" selected>Individual</option>
-                      <option value="company">Company</option>
-                      <option value="bank">Bank or leasing company</option>
-                    </select>
+                    <label for="firstName">First name</label>
+                    <input id="firstName" name="firstName">
                   </div>
                   <div class="field">
-                    <label for="age">Main driver age</label>
-                    <select id="age" name="age">
-                      <option value="22">18 - 24</option>
-                      <option value="31" selected>25 - 39</option>
-                      <option value="48">40 - 59</option>
-                      <option value="65">60+</option>
-                    </select>
+                    <label for="lastName">Last name</label>
+                    <input id="lastName" name="lastName">
                   </div>
-                  <div class="field">
-                    <label for="experience">Driving experience</label>
-                    <select id="experience" name="experience">
-                      <option value="1">Less than 2 years</option>
-                      <option value="4">2 - 5 years</option>
-                      <option value="8" selected>5+ years</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="city">Primary city</label>
-                    <select id="city" name="city">
-                      <option>Tbilisi</option>
-                      <option>Batumi</option>
-                      <option>Kutaisi</option>
-                      <option>Rustavi</option>
-                      <option>Other Georgia</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="claims">Claims in last 3 years</label>
-                    <select id="claims" name="claims">
-                      <option value="0" selected>No claims</option>
-                      <option value="1">One claim</option>
-                      <option value="2">Two or more claims</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="drivers">Authorized drivers</label>
-                    <select id="drivers" name="drivers">
-                      <option value="main" selected>Main driver only</option>
-                      <option value="family">Family drivers</option>
-                      <option value="unlimited">Unlimited authorized drivers</option>
-                    </select>
-                  </div>
-                  <div class="field">
+                  <div class="field full">
                     <label for="contactPhone">Phone number</label>
                     <input id="contactPhone" name="contactPhone" placeholder="+995 ...">
                   </div>
                 </div>
               </div>
 
-              <div class="form-step" data-step="3">
-                <h2>Coverage options</h2>
-                <div class="field-grid">
-                  <div class="field">
-                    <label for="coverage">Package level</label>
-                    <select id="coverage" name="coverage">
-                      <option value="basic">Minimum / liability</option>
-                      <option value="standard" selected>Standard casco</option>
-                      <option value="premium">Full casco + assistance</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="deductible">Deductible / franchise</label>
-                    <select id="deductible" name="deductible">
-                      <option value="0">0%</option>
-                      <option value="1" selected>1%</option>
-                      <option value="3">3%</option>
-                      <option value="5">5%</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="territory">Coverage territory</label>
-                    <select id="territory" name="territory">
-                      <option value="georgia" selected>Georgia only</option>
-                      <option value="region">Georgia + Turkey / CIS</option>
-                      <option value="world">Extended worldwide territory</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="limit">Liability limit</label>
-                    <select id="limit" name="limit">
-                      <option value="5000">5,000 GEL</option>
-                      <option value="10000" selected>10,000 GEL</option>
-                      <option value="25000">25,000 GEL</option>
-                      <option value="50000">50,000 GEL</option>
-                    </select>
-                  </div>
-                  <div class="field full">
-                    <label>Extra protection</label>
-                    <div class="toggle-row">
-                      <button class="toggle active" data-extra="roadside" type="button">Roadside assistance</button>
-                      <button class="toggle" data-extra="glass" type="button">Glass coverage</button>
-                      <button class="toggle" data-extra="theft" type="button">Theft protection</button>
-                      <button class="toggle" data-extra="passengers" type="button">Driver and passenger accident</button>
-                      <button class="toggle" data-extra="abroad" type="button">Travel outside Georgia</button>
-                    </div>
-                  </div>
-                  <p class="source-note field full">Before issuing a real policy, Georgian insurers commonly request ID or passport, vehicle registration certificate, VIN code, and photos of the car and interior.</p>
-                </div>
-              </div>
-
-              <div class="form-step" data-step="4">
+              <div class="form-step" data-step="17">
                 <h2>Your estimated comparison</h2>
                 <p id="summaryLine">Review sample offers based on your selections.</p>
                 <div class="results-grid" id="resultsGrid"></div>
@@ -2109,6 +2400,83 @@
       'Before issuing a real policy, Georgian insurers commonly request ID or passport, vehicle registration certificate, VIN code, and photos of the car and interior.': 'რეალური პოლისის გაცემამდე ქართული სადაზღვევოები ხშირად ითხოვენ პირადობას ან პასპორტს, ავტომობილის სარეგისტრაციო მოწმობას, VIN კოდს და ავტომობილისა და სალონის ფოტოებს.'
     });
 
+    Object.assign(translations.ge, {
+      'Policyholder': 'დამზღვევი',
+      'Tell us who will hold the policy so we can estimate the correct risk group.': 'გვითხარით ვის სახელზე იქნება პოლისი, რომ სწორად შევაფასოთ რისკის ჯგუფი.',
+      'Age': 'ასაკი',
+      'Less than 1 year': '1 წელზე ნაკლები',
+      '1 - 2 years': '1 - 2 წელი',
+      'Choose the car details used by insurers before they calculate a casco price.': 'აირჩიეთ ავტომობილის მონაცემები, რომლებსაც სადაზღვევოები კასკოს ფასის დასათვლელად იყენებენ.',
+      'Year of manufacture': 'გამოშვების წელი',
+      'Sedan/Hatchback': 'სედანი/ჰეჩბექი',
+      'Private passenger car': 'პირადი სამგზავრო ავტომობილი',
+      'SUV': 'ჯიპი',
+      'Jeep or crossover': 'ჯიპი ან კროსოვერი',
+      'Coupe': 'კუპე',
+      'Two-door or sport body': 'ორ კარიანი ან სპორტული ტიპი',
+      'Please note that insurance can only be purchased for vehicles that are for personal use.': 'გთხოვთ გაითვალისწინოთ, დაზღვევა შესაძლებელია მხოლოდ პირადი გამოყენების ავტომობილებისთვის.',
+      'Choose package': 'აირჩიეთ პაკეტი',
+      'Package M': 'პაკეტი M',
+      'Package L': 'პაკეტი L',
+      'Package XL': 'პაკეტი XL',
+      'Per month': 'თვეში',
+      'From 57 ₾': '57 ₾-დან',
+      'From 76 ₾': '76 ₾-დან',
+      'From 98 ₾': '98 ₾-დან',
+      'Compare plans': 'პაკეტების შედარება',
+      'Car accident': 'ავარია',
+      'Theft and robbery': 'ქურდობა და ძარცვა',
+      'Glass or mirror damage': 'მინის ან სარკის დაზიანება',
+      'Fallen objects': 'დაცემული საგნები',
+      'Natural disasters': 'სტიქიური მოვლენები',
+      'Zero deductible': 'ნულოვანი ფრანშიზა',
+      'Deductible': 'ფრანშიზა',
+      'Amount due now': 'ახლა გადასახდელი თანხა',
+      'What is deductible?': 'რა არის ფრანშიზა?',
+      'Deductible is the minimum amount that the insurance company will not reimburse.': 'ფრანშიზა არის მინიმალური თანხა, რომელსაც სადაზღვევო კომპანია არ ანაზღაურებს.',
+      'What currency do you want for car insurance?': 'რა ვალუტაში გსურთ ავტომობილის დაზღვევა?',
+      'What is the vehicle value?': 'რა ღირებულებისაა ავტომობილი?',
+      'Vehicle value': 'ავტომობილის ღირებულება',
+      'Choose third-party liability limit': 'აირჩიეთ ავტოპასუხისმგებლობის ლიმიტი',
+      'Price 120 ₾': 'ფასი 120 ₾',
+      'Price 160 ₾': 'ფასი 160 ₾',
+      'Price 220 ₾': 'ფასი 220 ₾',
+      'I do not want it': 'არ მსურს',
+      'Choose driver and passenger accident limit': 'აირჩიეთ მძღოლისა და მგზავრების დაზღვევის ლიმიტი',
+      'Price 25 ₾': 'ფასი 25 ₾',
+      'Price 35 ₾': 'ფასი 35 ₾',
+      'Price 50 ₾': 'ფასი 50 ₾',
+      'Youngest driver age': 'ყველაზე ახალგაზრდა მძღოლის ასაკი',
+      'Are all drivers over the selected age insured?': 'დაზღვეული იქნება ყველა მძღოლი არჩეული ასაკიდან?',
+      'All drivers': 'ყველა მძღოლი',
+      'I will provide a driver list': 'მძღოლების სიას მივაწვდი',
+      'Choose payment frequency': 'აირჩიეთ გადახდის პერიოდულობა',
+      'Single payment': 'ერთჯერადი',
+      'Two payments': 'ორჯერადი',
+      'Monthly': 'ყოველთვიური',
+      'One-time payment is usually cheaper than monthly payments.': 'ერთჯერადი გადახდა ჩვეულებრივ თვიურ გადახდაზე იაფია.',
+      'Do you have a promo code?': 'გაქვთ პრომო კოდი?',
+      'Yes': 'დიახ',
+      'No': 'არა',
+      'Promo code': 'პრომო კოდი',
+      'Optional': 'არასავალდებულო',
+      'Enter policy start date': 'შეიყვანეთ პოლისის დაწყების თარიღი',
+      'Tomorrow': 'ხვალ',
+      'Start from the next day.': 'დაწყება შემდეგი დღიდან.',
+      'Enter vehicle registration number': 'შეიყვანეთ ავტომობილის სახელმწიფო ნომერი',
+      'Example: DD123DD': 'მაგ.: DD123DD',
+      'Are you insuring your own car?': 'საკუთარ ავტომობილს აზღვევთ?',
+      'Enter personal number and date of birth': 'შეიყვანეთ პირადი ნომერი და დაბადების თარიღი',
+      'Personal number': 'პირადი ნომერი',
+      'Personal #': 'პირადი #',
+      'Male': 'კაცი',
+      'Female': 'ქალი',
+      'I confirm that this information may be used to prepare a sample insurance offer.': 'ვადასტურებ, რომ ეს ინფორმაცია შეიძლება გამოყენებულ იქნას სატესტო სადაზღვევო შეთავაზების მოსამზადებლად.',
+      'Enter your name and contact details': 'შეიყვანეთ სახელი და საკონტაქტო ინფორმაცია',
+      'First name': 'სახელი',
+      'Last name': 'გვარი'
+    });
+
     const productConfigs = {
       car: {
         title: 'Car insurance',
@@ -2197,6 +2565,8 @@
     const summaryLine = document.getElementById('summaryLine');
     const langButtons = document.querySelectorAll('[data-lang]');
     const startDateInput = document.getElementById('startDate');
+    const deductibleDueNow = document.getElementById('deductibleDueNow');
+    const deductibleOriginal = document.getElementById('deductibleOriginal');
 
     function t(text) {
       return state.lang === 'ge' ? translations.ge[text] || text : text;
@@ -2273,6 +2643,11 @@
       state.startChoice = choice;
       startChoiceButtons.forEach(button => button.classList.toggle('active', button.dataset.startChoice === choice));
       if (choice === 'today') startDateInput.value = formatDateForInput(new Date());
+      if (choice === 'tomorrow') {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        startDateInput.value = formatDateForInput(tomorrow);
+      }
       if (choice === 'nextMonth') startDateInput.value = formatDateForInput(beginningOfNextMonth());
       if (choice === 'custom') startDateInput.focus();
     }
@@ -2330,11 +2705,11 @@
       quoteForm.style.display = state.quoteStarted && isCar ? 'block' : 'none';
       coverageChooser.style.display = isCar ? 'block' : 'none';
       comingSoonProduct.style.display = isCar ? 'none' : 'block';
-      progressBar.style.width = isCar ? `${((state.step + 1) / stepItems.length) * 100}%` : '16%';
+      progressBar.style.width = isCar ? `${Math.min(100, ((state.step + 1) / (formSteps.length + 1)) * 100)}%` : '16%';
 
       stepItems.forEach((item, index) => {
-        item.classList.toggle('active', index === state.step && isCar);
-        item.classList.toggle('done', index < state.step && isCar);
+        item.classList.toggle('active', index === 0 && isCar);
+        item.classList.toggle('done', false);
       });
 
       if (state.quoteStarted && isCar) {
@@ -2343,21 +2718,46 @@
     }
 
     function renderStep() {
+      const formIndex = state.step - 1;
+      const lastIndex = formSteps.length - 1;
+      const stageIndex = getStageIndex(formIndex);
       productDetail.style.display = 'none';
       quoteForm.style.display = 'block';
-      formSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.step) === state.step - 1));
+      formSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.step) === formIndex));
       stepItems.forEach((item, index) => {
-        item.classList.toggle('active', index === state.step);
-        item.classList.toggle('done', index < state.step);
+        item.classList.toggle('active', index === stageIndex);
+        item.classList.toggle('done', index < stageIndex);
       });
-      progressBar.style.width = `${((state.step + 1) / stepItems.length) * 100}%`;
+      progressBar.style.width = `${Math.min(100, ((formIndex + 2) / (formSteps.length + 1)) * 100)}%`;
       backBtn.disabled = false;
       backBtn.style.visibility = 'visible';
-      nextBtn.textContent = state.step === stepItems.length - 1 ? t('Start again') : state.step === stepItems.length - 2 ? t('Show prices') : t('Next');
+      nextBtn.textContent = formIndex === lastIndex ? t('Start again') : formIndex === lastIndex - 1 ? t('Show prices') : t('Next');
       backBtn.textContent = t('Back');
-      if (state.step === stepItems.length - 1) {
+      if (formIndex === lastIndex) {
         renderResults();
       }
+      updateDeductiblePrice();
+    }
+
+    function updateDeductiblePrice() {
+      const deductibleInput = document.getElementById('deductible');
+      if (!deductibleInput || !deductibleDueNow || !deductibleOriginal) return;
+      const priceByDeductible = {
+        1: { due: '204.17', original: '255.22' },
+        2: { due: '185.30', original: '231.62' }
+      };
+      const selected = priceByDeductible[deductibleInput.value] || priceByDeductible[1];
+      deductibleDueNow.textContent = `${selected.due} ₾`;
+      deductibleOriginal.textContent = `${selected.original} ₾`;
+    }
+
+    function getStageIndex(formIndex) {
+      if (formIndex < 0) return 0;
+      if (formIndex <= 0) return 1;
+      if (formIndex <= 5) return 2;
+      if (formIndex <= 10) return 4;
+      if (formIndex <= 16) return 3;
+      return 5;
     }
 
     function getFormData() {
@@ -2371,9 +2771,13 @@
         coverage: data.get('coverage') || 'standard',
         deductible: Number(data.get('deductible') || 1),
         limit: Number(data.get('limit') || 10000),
+        passengerLimit: Number(data.get('passengerLimit') || 5000),
         territory: data.get('territory') || 'georgia',
         vehicleUse: data.get('vehicleUse') || 'personal',
+        vehicleType: data.get('vehicleType') || 'suv',
+        currency: data.get('currency') || 'gel',
         drivers: data.get('drivers') || 'main',
+        paymentPeriod: data.get('paymentPeriod') || 'monthly',
         startDate: data.get('startDate') || startDateInput.value,
         policyTerm: Number(data.get('policyTerm') || 12),
         age: Number(data.get('age') || 31),
@@ -2392,12 +2796,14 @@
       const deductibleFactor = data.deductible === 0 ? 1.2 : data.deductible >= 5 ? .86 : data.deductible >= 3 ? .93 : 1;
       const territoryFactor = data.territory === 'world' ? 1.18 : data.territory === 'region' ? 1.09 : 1;
       const useFactor = data.vehicleUse === 'taxi' ? 1.35 : data.vehicleUse === 'commercial' ? 1.22 : 1;
-      const driversFactor = data.drivers === 'unlimited' ? 1.14 : data.drivers === 'family' ? 1.06 : 1;
-      const limitFactor = Math.max(.86, data.limit / 10000 * .12 + .88);
+      const driversFactor = data.drivers === 'list' ? .96 : data.drivers === 'unlimited' ? 1.14 : data.drivers === 'family' ? 1.06 : 1.04;
+      const limitFactor = data.limit === 0 ? .9 : Math.max(.86, data.limit / 10000 * .12 + .88);
+      const passengerFactor = 1 + (data.passengerLimit / 25000 * .04);
+      const bodyFactor = data.vehicleType === 'suv' ? 1.06 : data.vehicleType === 'coupe' ? 1.12 : 1;
       const valueFactor = data.value / 30000;
       const extraFactor = 1 + (state.extras.size * .035);
       const vehicleAgeFactor = Math.max(.82, 1 - ((new Date().getFullYear() - data.year) * .012));
-      return Math.round(72 * valueFactor * coverageFactor * intentFactor * deductibleFactor * territoryFactor * useFactor * driversFactor * limitFactor * ageFactor * experienceFactor * claimsFactor * extraFactor * vehicleAgeFactor * factor);
+      return Math.round(72 * valueFactor * coverageFactor * intentFactor * deductibleFactor * territoryFactor * useFactor * driversFactor * limitFactor * passengerFactor * bodyFactor * ageFactor * experienceFactor * claimsFactor * extraFactor * vehicleAgeFactor * factor);
     }
 
     function renderResults() {
@@ -2464,6 +2870,18 @@
       button.addEventListener('click', () => setStartChoice(button.dataset.startChoice));
     });
 
+    document.querySelectorAll('[data-choice-target]').forEach(button => {
+      button.addEventListener('click', () => {
+        const input = document.getElementById(button.dataset.choiceTarget);
+        if (!input) return;
+        input.value = button.dataset.choiceValue;
+        document.querySelectorAll(`[data-choice-target="${button.dataset.choiceTarget}"]`).forEach(choice => {
+          choice.classList.toggle('active', choice === button);
+        });
+        if (button.dataset.choiceTarget === 'deductible') updateDeductiblePrice();
+      });
+    });
+
     startDateInput.addEventListener('change', () => {
       state.startChoice = 'custom';
       startChoiceButtons.forEach(button => button.classList.toggle('active', button.dataset.startChoice === 'custom'));
@@ -2500,7 +2918,8 @@
     });
 
     nextBtn.addEventListener('click', () => {
-      if (state.step === stepItems.length - 1) {
+      const formIndex = state.step - 1;
+      if (formIndex === formSteps.length - 1) {
         state.quoteStarted = false;
         state.step = 0;
         renderProductPage();
