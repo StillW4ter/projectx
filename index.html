@@ -1,0 +1,2354 @@
+<!doctype html>
+<html lang="ka">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>shevadaro Insurance Compare</title>
+  <meta name="description" content="Insurance price comparison for the Georgian community.">
+  <style>
+    :root {
+      --ink: #18201f;
+      --muted: #65706c;
+      --line: #dbe3df;
+      --paper: #fbfcf9;
+      --surface: #ffffff;
+      --green: #176d4f;
+      --green-2: #0f4f3e;
+      --gold: #b87d2b;
+      --red: #bb5148;
+      --blue: #1f6f8f;
+      --shadow: 0 18px 50px rgba(21, 38, 33, .12);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      object-fit: cover;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(251, 252, 249, .92);
+      border-bottom: 1px solid rgba(219, 227, 223, .85);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 190px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      font-weight: 800;
+      letter-spacing: 0;
+      box-shadow: 0 10px 28px rgba(23, 109, 79, .24);
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.1;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .nav-link {
+      border: 0;
+      background: transparent;
+      color: #384440;
+      padding: 10px 13px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: .93rem;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: #eaf2ee;
+      color: var(--green-2);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lang-switch {
+      border: 1px solid var(--line);
+      display: flex;
+      padding: 3px;
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      padding: 7px 9px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: .78rem;
+    }
+
+    .lang-switch button.active {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .ghost-btn {
+      border-radius: 8px;
+      border: 1px solid transparent;
+      min-height: 44px;
+      padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .primary-btn {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(23, 109, 79, .22);
+    }
+
+    .primary-btn:hover {
+      background: var(--green-2);
+    }
+
+    .secondary-btn {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .ghost-btn {
+      background: transparent;
+      color: var(--green-2);
+      border-color: rgba(23, 109, 79, .2);
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 76px);
+      display: grid;
+      align-items: stretch;
+      background: #edf4f1;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      opacity: .24;
+      filter: saturate(.9);
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(251, 252, 249, .98) 0%, rgba(251, 252, 249, .78) 52%, rgba(251, 252, 249, .52) 100%);
+    }
+
+    .hero-inner {
+      position: relative;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 70px 0 34px;
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(360px, .64fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green-2);
+      background: #e3eee9;
+      border: 1px solid #cfe0d8;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: .82rem;
+      font-weight: 800;
+      width: fit-content;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.45rem, 5vw, 5.4rem);
+      line-height: .98;
+      letter-spacing: 0;
+      margin-bottom: 20px;
+      max-width: 840px;
+    }
+
+    .hero-copy {
+      color: #3f4b48;
+      font-size: 1.15rem;
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 720px;
+    }
+
+    .trust-item {
+      border-left: 3px solid var(--gold);
+      padding: 4px 12px;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 1.1rem;
+    }
+
+    .trust-item span {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .quote-panel {
+      background: rgba(255, 255, 255, .95);
+      border: 1px solid rgba(219, 227, 223, .9);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .quote-panel h2 {
+      font-size: 1.25rem;
+      margin-bottom: 6px;
+    }
+
+    .quote-panel p {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .quick-card {
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+      min-height: 112px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .quick-card:hover,
+    .quick-card.selected {
+      border-color: var(--green);
+      box-shadow: 0 10px 24px rgba(23, 109, 79, .12);
+      transform: translateY(-1px);
+    }
+
+    .quick-card .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+
+    .quick-card strong {
+      display: block;
+    }
+
+    .quick-card span {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .section {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 72px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 0;
+      max-width: 700px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 0;
+    }
+
+    .product-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 276px;
+      display: grid;
+      grid-template-rows: 132px 1fr;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 132px;
+    }
+
+    .product-card div {
+      padding: 15px;
+    }
+
+    .product-card h3 {
+      font-size: 1.02rem;
+      margin-bottom: 7px;
+    }
+
+    .product-card p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 0;
+    }
+
+    .compare-layout {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 72px;
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .compare-layout.single-product {
+      grid-template-columns: 1fr;
+    }
+
+    .compare-layout.single-product .flow-sidebar {
+      display: none;
+    }
+
+    .flow-sidebar,
+    .flow-main,
+    .contact-panel,
+    .about-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .flow-sidebar {
+      padding: 18px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .flow-sidebar h2 {
+      font-size: 1.15rem;
+      margin-bottom: 14px;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #edf2ef;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .step-item.active {
+      color: var(--green-2);
+    }
+
+    .step-item.active .step-number,
+    .step-item.done .step-number {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .mini-note {
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      font-size: .9rem;
+      margin-bottom: 0;
+    }
+
+    .flow-main {
+      padding: 24px;
+      min-height: 620px;
+    }
+
+    .flow-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      align-items: start;
+    }
+
+    .flow-title h1 {
+      font-size: clamp(2rem, 3vw, 3.3rem);
+      margin-bottom: 8px;
+    }
+
+    .flow-title p {
+      color: var(--muted);
+      margin-bottom: 0;
+      max-width: 650px;
+    }
+
+    .progress {
+      width: 150px;
+      height: 8px;
+      border-radius: 999px;
+      background: #edf2ef;
+      overflow: hidden;
+      margin-top: 14px;
+      flex: 0 0 auto;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 25%;
+      background: var(--green);
+      transition: width .25s ease;
+    }
+
+    .form-step {
+      display: none;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0 8px;
+    }
+
+    .choice {
+      min-height: 124px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px;
+      text-align: left;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .choice:hover,
+    .choice.active {
+      border-color: var(--green);
+      box-shadow: 0 10px 22px rgba(23, 109, 79, .12);
+    }
+
+    .choice .icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .choice span {
+      color: var(--muted);
+      font-size: .83rem;
+    }
+
+    .product-detail {
+      display: grid;
+      gap: 22px;
+    }
+
+    .product-hero-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      align-items: stretch;
+    }
+
+    .product-hero-copy {
+      padding: 24px;
+    }
+
+    .product-hero-copy h2 {
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .product-hero-copy p {
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .product-hero-panel img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+    }
+
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .coverage-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      text-align: left;
+      min-height: 176px;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+    }
+
+    .coverage-card:hover,
+    .coverage-card.active {
+      border-color: var(--green);
+      box-shadow: 0 10px 24px rgba(23, 109, 79, .12);
+    }
+
+    .coverage-card strong {
+      display: block;
+      font-size: 1.08rem;
+      margin-bottom: 6px;
+    }
+
+    .coverage-card span,
+    .source-note {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .source-note {
+      border-left: 3px solid var(--gold);
+      padding-left: 12px;
+      margin-bottom: 0;
+    }
+
+    .date-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 800;
+      font-size: .9rem;
+      color: #2e3936;
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      min-height: 48px;
+      padding: 0 12px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 126px;
+      resize: vertical;
+      padding-top: 12px;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(23, 109, 79, .12);
+    }
+
+    .toggle-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .toggle {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 13px;
+      font-weight: 800;
+      color: #40504b;
+    }
+
+    .toggle.active {
+      color: #fff;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .flow-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+
+    .results-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .result-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .result-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .company-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      background: var(--blue);
+    }
+
+    .result-card h3 {
+      margin-bottom: 2px;
+      font-size: 1.1rem;
+    }
+
+    .result-card p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .coverage-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      border: 1px solid #d6e4df;
+      background: #f1f7f4;
+      color: #33564a;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-weight: 800;
+      font-size: .78rem;
+    }
+
+    .price-box {
+      text-align: right;
+      min-width: 170px;
+    }
+
+    .price-box strong {
+      display: block;
+      font-size: 1.65rem;
+      line-height: 1;
+      color: var(--green-2);
+    }
+
+    .price-box span {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .content-hero {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 58px 0 28px;
+      display: grid;
+      grid-template-columns: .82fr .58fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .content-hero h1 {
+      font-size: clamp(2.25rem, 4vw, 4.6rem);
+      margin-bottom: 16px;
+    }
+
+    .content-hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 690px;
+    }
+
+    .content-hero img {
+      width: 100%;
+      height: 360px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-grid {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 72px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .about-panel {
+      padding: 22px;
+    }
+
+    .about-panel h2 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .about-panel p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .contact-grid {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 72px;
+      display: grid;
+      grid-template-columns: .72fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .contact-panel {
+      padding: 22px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 12px;
+      align-items: start;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .contact-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .contact-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: #eaf2ee;
+      color: var(--green-2);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .contact-row strong {
+      display: block;
+    }
+
+    .contact-row span {
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .mobile-menu {
+      display: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      width: 44px;
+      height: 44px;
+      font-size: 1.25rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .compare-layout,
+      .content-hero,
+      .contact-grid,
+      .product-hero-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .flow-sidebar {
+        position: static;
+      }
+
+      .product-strip,
+      .choice-grid,
+      .coverage-grid,
+      .date-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: 76px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .topbar.menu-open .nav-links {
+        display: grid;
+      }
+
+      .mobile-menu {
+        display: grid;
+        place-items: center;
+      }
+
+      .nav-actions .primary-btn {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .brand > span:not(.brand-mark) {
+        display: none;
+      }
+
+      .hero-inner,
+      .section,
+      .compare-layout,
+      .content-hero,
+      .about-grid,
+      .contact-grid,
+      .footer-inner {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .hero-inner {
+        padding-top: 38px;
+      }
+
+      h1 {
+        font-size: 2.35rem;
+      }
+
+      .trust-row,
+      .quick-grid,
+      .field-grid,
+      .about-grid,
+      .product-strip,
+      .choice-grid,
+      .coverage-grid,
+      .date-options {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header,
+      .flow-title,
+      .result-card,
+      .footer-inner {
+        display: grid;
+      }
+
+      .price-box {
+        text-align: left;
+      }
+
+      .flow-main {
+        padding: 16px;
+      }
+
+      .content-hero img {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" id="topbar">
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#home" class="brand" aria-label="shevadaro home">
+          <span class="brand-mark">sh</span>
+          <span>
+            <strong>shevadaro</strong>
+            <span>Insurance compare for Georgia</span>
+          </span>
+        </a>
+
+        <div class="nav-links" id="navLinks">
+          <button class="nav-link active" data-route="home">Home</button>
+          <button class="nav-link" data-route="compare">Compare</button>
+          <button class="nav-link" data-route="about">About us</button>
+          <button class="nav-link" data-route="contact">Contact us</button>
+        </div>
+
+        <div class="nav-actions">
+          <div class="lang-switch" aria-label="Language">
+            <button class="active" data-lang="en" type="button">EN</button>
+            <button data-lang="ge" type="button">GE</button>
+          </div>
+          <button class="primary-btn" data-route="compare" type="button">Start quote</button>
+          <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Open menu">☰</button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page active" id="page-home">
+        <div class="hero">
+          <div class="hero-media" aria-hidden="true">
+            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1800&q=80" alt="">
+          </div>
+          <div class="hero-inner">
+            <div>
+              <span class="eyebrow">Built for Georgian families, drivers, and homeowners</span>
+              <h1>shevadaro compares insurance prices before you commit.</h1>
+              <p class="hero-copy">Choose what you need, answer a short guided form, and see a clear side-by-side estimate from prepared insurance partners in GEL.</p>
+              <div class="hero-actions">
+                <button class="primary-btn" data-route="compare" type="button">Compare car insurance</button>
+                <button class="secondary-btn" data-route="contact" type="button">Talk to an advisor</button>
+              </div>
+              <div class="trust-row" aria-label="Highlights">
+                <div class="trust-item">
+                  <strong>4 min</strong>
+                  <span>prototype quote flow</span>
+                </div>
+                <div class="trust-item">
+                  <strong>7 products</strong>
+                  <span>car, travel, house, mortgage, life, health, dog</span>
+                </div>
+                <div class="trust-item">
+                  <strong>GEL</strong>
+                  <span>localized pricing display</span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="quote-panel" aria-label="Insurance categories">
+              <h2>What do you want to compare?</h2>
+              <p>Choose one product first. The next page will focus only on that insurance flow.</p>
+              <div class="quick-grid">
+                <button class="quick-card selected" data-product="car" data-route="compare" type="button">
+                  <span class="icon">🚗</span>
+                  <strong>Car insurance</strong>
+                  <span>Brand, model, year, driver profile</span>
+                </button>
+                <button class="quick-card" data-product="travel" data-route="compare" type="button">
+                  <span class="icon">✈</span>
+                  <strong>Travel insurance</strong>
+                  <span>Dates, destination, travelers</span>
+                </button>
+                <button class="quick-card" data-product="home" data-route="compare" type="button">
+                  <span class="icon">⌂</span>
+                  <strong>House insurance</strong>
+                  <span>Apartment, house, contents</span>
+                </button>
+                <button class="quick-card" data-product="mortgage" data-route="compare" type="button">
+                  <span class="icon">▣</span>
+                  <strong>Mortgage insurance</strong>
+                  <span>Loan, property, bank needs</span>
+                </button>
+                <button class="quick-card" data-product="life" data-route="compare" type="button">
+                  <span class="icon">♡</span>
+                  <strong>Life insurance</strong>
+                  <span>Family protection and terms</span>
+                </button>
+                <button class="quick-card" data-product="health" data-route="compare" type="button">
+                  <span class="icon">✚</span>
+                  <strong>Health insurance</strong>
+                  <span>Individual and family plans</span>
+                </button>
+                <button class="quick-card" data-product="dog" data-route="compare" type="button">
+                  <span class="icon">🐾</span>
+                  <strong>Dog insurance</strong>
+                  <span>Breed, age, clinic coverage</span>
+                </button>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <section class="section">
+          <div class="section-header">
+            <h2>One place for the most common protection needs.</h2>
+            <p>The first prototype focuses on car insurance, while the site already frames the broader company offer.</p>
+          </div>
+          <div class="product-strip">
+            <article class="product-card">
+              <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Car on a road">
+              <div>
+                <h3>Car insurance</h3>
+                <p>Compare estimated monthly and annual options for private vehicles.</p>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=800&q=80" alt="Modern living room">
+              <div>
+                <h3>House insurance</h3>
+                <p>Protect buildings, apartments, contents, and liability.</p>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" alt="Traveler looking over a city">
+              <div>
+                <h3>Travel insurance</h3>
+                <p>Compare medical, baggage, cancellation, and trip protection.</p>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" alt="House keys and contract">
+              <div>
+                <h3>Mortgage insurance</h3>
+                <p>Prepare property and borrower protection for bank requirements.</p>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=800&q=80" alt="Doctor with clipboard">
+              <div>
+                <h3>Health insurance</h3>
+                <p>Prepare family, clinic, dental, and emergency coverage choices.</p>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80" alt="Family portrait">
+              <div>
+                <h3>Life insurance</h3>
+                <p>Match families with clear benefit levels and payment terms.</p>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80" alt="Dog outdoors">
+              <div>
+                <h3>Dog insurance</h3>
+                <p>For dogs, including clinic visits, accidents, and surgery support.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section class="page" id="page-compare">
+        <div class="compare-layout">
+          <aside class="flow-sidebar">
+            <h2>Quote progress</h2>
+            <div class="step-list" id="stepList">
+              <div class="step-item active" data-step-label="0"><span class="step-number">1</span>Coverage</div>
+              <div class="step-item" data-step-label="1"><span class="step-number">2</span>Start date</div>
+              <div class="step-item" data-step-label="2"><span class="step-number">3</span>Vehicle</div>
+              <div class="step-item" data-step-label="3"><span class="step-number">4</span>Owner</div>
+              <div class="step-item" data-step-label="4"><span class="step-number">5</span>Options</div>
+              <div class="step-item" data-step-label="5"><span class="step-number">6</span>Results</div>
+            </div>
+            <p class="mini-note">The car flow is modeled around Georgian insurer requirements: coverage package, policy period, vehicle registration data, VIN or tech passport, driver history, deductible, territory, and car photos before final issue.</p>
+          </aside>
+
+          <section class="flow-main" aria-live="polite">
+            <div class="flow-title">
+              <div>
+                <h1 id="flowHeading">Car insurance</h1>
+                <p id="flowCopy">Choose the coverage style first, then continue into a focused car quote flow.</p>
+              </div>
+              <div class="progress" aria-label="Progress"><span id="progressBar"></span></div>
+            </div>
+
+            <div class="product-detail" id="productDetail">
+              <div class="product-hero-panel">
+                <div class="product-hero-copy">
+                  <span class="eyebrow" id="productEyebrow">Selected product</span>
+                  <h2 id="productTitle">Car insurance</h2>
+                  <p id="productDescription">Compare third-party liability, private casco, or a combined package for your vehicle in Georgia.</p>
+                  <p class="source-note" id="productSource">Based on Georgian market patterns: Aldagi lists Minimum, Standard, and Full packages; GPI Auto Fix includes third-party liability and fixed limits; TBC motor terms describe Casco, MTPL, and driver/passenger accident sections.</p>
+                </div>
+                <img id="productImage" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80" alt="Car on a road">
+              </div>
+
+              <div id="coverageChooser">
+                <h2>Choose car coverage</h2>
+                <div class="coverage-grid">
+                  <button class="coverage-card active" data-coverage-intent="thirdParty" type="button">
+                    <span>
+                      <strong>Third-party liability</strong>
+                      <span>Covers damage you cause to another vehicle, property, or person.</span>
+                    </span>
+                    <span class="tag">Lean option</span>
+                  </button>
+                  <button class="coverage-card" data-coverage-intent="privateCasco" type="button">
+                    <span>
+                      <strong>Private casco</strong>
+                      <span>Covers your own car for accident, fire, theft, natural events, and damage.</span>
+                    </span>
+                    <span class="tag">Popular</span>
+                  </button>
+                  <button class="coverage-card" data-coverage-intent="combined" type="button">
+                    <span>
+                      <strong>Third-party + private</strong>
+                      <span>Combines liability with protection for your own vehicle.</span>
+                    </span>
+                    <span class="tag">Recommended</span>
+                  </button>
+                </div>
+                <div class="flow-actions">
+                  <button class="secondary-btn" data-route="home" type="button">Choose another product</button>
+                  <button class="primary-btn" id="startCarFlowBtn" type="button">Continue to questions</button>
+                </div>
+              </div>
+
+              <div id="comingSoonProduct" style="display:none">
+                <h2 id="comingSoonTitle">This product flow is being prepared</h2>
+                <p id="comingSoonCopy">The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.</p>
+                <div class="flow-actions">
+                  <button class="secondary-btn" data-route="home" type="button">Choose another product</button>
+                  <button class="primary-btn" data-product="car" data-route="compare" type="button">Open car flow</button>
+                </div>
+              </div>
+            </div>
+
+            <form id="quoteForm">
+              <div class="form-step active" data-step="0">
+                <h2>When should the policy start?</h2>
+                <div class="date-options">
+                  <button class="choice active" data-start-choice="today" type="button">
+                    <span class="icon">✓</span>
+                    <strong>Today</strong>
+                    <span>Start protection immediately.</span>
+                  </button>
+                  <button class="choice" data-start-choice="nextMonth" type="button">
+                    <span class="icon">1</span>
+                    <strong>Beginning of next month</strong>
+                    <span>Useful when replacing an existing policy.</span>
+                  </button>
+                  <button class="choice" data-start-choice="custom" type="button">
+                    <span class="icon">◷</span>
+                    <strong>Choose date</strong>
+                    <span>Select a custom policy start date.</span>
+                  </button>
+                </div>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="startDate">Policy start date</label>
+                    <input id="startDate" name="startDate" type="date">
+                  </div>
+                  <div class="field">
+                    <label for="policyTerm">Policy term</label>
+                    <select id="policyTerm" name="policyTerm">
+                      <option value="12" selected>12 months</option>
+                      <option value="6">6 months</option>
+                      <option value="3">3 months</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="1">
+                <h2>Vehicle details</h2>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="plate">Car registration number</label>
+                    <input id="plate" name="plate" placeholder="AA-123-AA">
+                  </div>
+                  <div class="field">
+                    <label for="vin">VIN code</label>
+                    <input id="vin" name="vin" placeholder="17-character VIN" maxlength="17">
+                  </div>
+                  <div class="field">
+                    <label for="brand">Car brand</label>
+                    <select id="brand" name="brand">
+                      <option>Honda</option>
+                      <option>Mercedes-Benz</option>
+                      <option>Toyota</option>
+                      <option>BMW</option>
+                      <option>Hyundai</option>
+                      <option>Kia</option>
+                      <option>Lexus</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="year">Year</label>
+                    <select id="year" name="year"></select>
+                  </div>
+                  <div class="field">
+                    <label for="model">Model</label>
+                    <select id="model" name="model"></select>
+                  </div>
+                  <div class="field">
+                    <label for="engine">Engine</label>
+                    <select id="engine" name="engine">
+                      <option>1.5L petrol</option>
+                      <option>1.8L hybrid</option>
+                      <option>2.0L petrol</option>
+                      <option>2.2L diesel</option>
+                      <option>3.0L petrol</option>
+                      <option>Electric</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="value">Estimated vehicle value</label>
+                    <select id="value" name="value">
+                      <option value="15000">Up to 15,000 GEL</option>
+                      <option value="30000">15,000 - 30,000 GEL</option>
+                      <option value="60000">30,000 - 60,000 GEL</option>
+                      <option value="100000">60,000+ GEL</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="vehicleUse">Vehicle use</label>
+                    <select id="vehicleUse" name="vehicleUse">
+                      <option value="personal" selected>Private use</option>
+                      <option value="commute">Daily commute</option>
+                      <option value="taxi">Taxi or ride-share</option>
+                      <option value="commercial">Business/commercial use</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="2">
+                <h2>Owner and driver</h2>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="ownerType">Vehicle owner</label>
+                    <select id="ownerType" name="ownerType">
+                      <option value="individual" selected>Individual</option>
+                      <option value="company">Company</option>
+                      <option value="bank">Bank or leasing company</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="age">Main driver age</label>
+                    <select id="age" name="age">
+                      <option value="22">18 - 24</option>
+                      <option value="31" selected>25 - 39</option>
+                      <option value="48">40 - 59</option>
+                      <option value="65">60+</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="experience">Driving experience</label>
+                    <select id="experience" name="experience">
+                      <option value="1">Less than 2 years</option>
+                      <option value="4">2 - 5 years</option>
+                      <option value="8" selected>5+ years</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="city">Primary city</label>
+                    <select id="city" name="city">
+                      <option>Tbilisi</option>
+                      <option>Batumi</option>
+                      <option>Kutaisi</option>
+                      <option>Rustavi</option>
+                      <option>Other Georgia</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="claims">Claims in last 3 years</label>
+                    <select id="claims" name="claims">
+                      <option value="0" selected>No claims</option>
+                      <option value="1">One claim</option>
+                      <option value="2">Two or more claims</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="drivers">Authorized drivers</label>
+                    <select id="drivers" name="drivers">
+                      <option value="main" selected>Main driver only</option>
+                      <option value="family">Family drivers</option>
+                      <option value="unlimited">Unlimited authorized drivers</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="contactPhone">Phone number</label>
+                    <input id="contactPhone" name="contactPhone" placeholder="+995 ...">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="3">
+                <h2>Coverage options</h2>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="coverage">Package level</label>
+                    <select id="coverage" name="coverage">
+                      <option value="basic">Minimum / liability</option>
+                      <option value="standard" selected>Standard casco</option>
+                      <option value="premium">Full casco + assistance</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="deductible">Deductible / franchise</label>
+                    <select id="deductible" name="deductible">
+                      <option value="0">0%</option>
+                      <option value="1" selected>1%</option>
+                      <option value="3">3%</option>
+                      <option value="5">5%</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="territory">Coverage territory</label>
+                    <select id="territory" name="territory">
+                      <option value="georgia" selected>Georgia only</option>
+                      <option value="region">Georgia + Turkey / CIS</option>
+                      <option value="world">Extended worldwide territory</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="limit">Liability limit</label>
+                    <select id="limit" name="limit">
+                      <option value="5000">5,000 GEL</option>
+                      <option value="10000" selected>10,000 GEL</option>
+                      <option value="25000">25,000 GEL</option>
+                      <option value="50000">50,000 GEL</option>
+                    </select>
+                  </div>
+                  <div class="field full">
+                    <label>Extra protection</label>
+                    <div class="toggle-row">
+                      <button class="toggle active" data-extra="roadside" type="button">Roadside assistance</button>
+                      <button class="toggle" data-extra="glass" type="button">Glass coverage</button>
+                      <button class="toggle" data-extra="theft" type="button">Theft protection</button>
+                      <button class="toggle" data-extra="passengers" type="button">Driver and passenger accident</button>
+                      <button class="toggle" data-extra="abroad" type="button">Travel outside Georgia</button>
+                    </div>
+                  </div>
+                  <p class="source-note field full">Before issuing a real policy, Georgian insurers commonly request ID or passport, vehicle registration certificate, VIN code, and photos of the car and interior.</p>
+                </div>
+              </div>
+
+              <div class="form-step" data-step="4">
+                <h2>Your estimated comparison</h2>
+                <p id="summaryLine">Review sample offers based on your selections.</p>
+                <div class="results-grid" id="resultsGrid"></div>
+              </div>
+
+              <div class="flow-actions">
+                <button class="secondary-btn" id="backBtn" type="button">Back</button>
+                <button class="primary-btn" id="nextBtn" type="button">Next</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-about">
+        <div class="content-hero">
+          <div>
+            <span class="eyebrow">About shevadaro</span>
+            <h1>Advice first, comparison second, pressure never.</h1>
+            <p>shevadaro is positioned as a Georgian-community insurance comparison company: clear language, prepared partner companies, and practical guidance for people choosing car, travel, house, mortgage, life, health, or dog coverage.</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1100&q=80" alt="Advisor meeting with clients">
+        </div>
+        <div class="about-grid">
+          <article class="about-panel">
+            <h2>Local focus</h2>
+            <p>Questions, currencies, coverage categories, and partner preparation are designed for people living in Georgia.</p>
+          </article>
+          <article class="about-panel">
+            <h2>Transparent comparison</h2>
+            <p>Offers are shown side-by-side with visible coverage tags, estimated monthly cost, and the next action.</p>
+          </article>
+          <article class="about-panel">
+            <h2>Broker-ready platform</h2>
+            <p>The prototype can grow into a CRM-backed broker workflow with lead capture, quote management, and insurer integrations.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-contact">
+        <div class="content-hero">
+          <div>
+            <span class="eyebrow">Contact us</span>
+            <h1>Send a quote request or ask for partner setup.</h1>
+            <p>This form is a front-end demo. In production it should send leads to a CRM, email inbox, or Supabase database with consent tracking.</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1100&q=80" alt="Person working on laptop">
+        </div>
+        <div class="contact-grid">
+          <aside class="contact-panel">
+            <div class="contact-list">
+              <div class="contact-row">
+                <span class="contact-icon">@</span>
+                <div><strong>Email</strong><span>hello@shevadaro.ge</span></div>
+              </div>
+              <div class="contact-row">
+                <span class="contact-icon">☎</span>
+                <div><strong>Phone</strong><span>+995 555 000 000</span></div>
+              </div>
+              <div class="contact-row">
+                <span class="contact-icon">⌖</span>
+                <div><strong>Market</strong><span>Georgia, Georgian community first</span></div>
+              </div>
+            </div>
+          </aside>
+          <form class="contact-panel" id="contactForm">
+            <div class="field-grid">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" placeholder="Your name">
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" placeholder="+995 ...">
+              </div>
+              <div class="field">
+                <label for="need">Insurance need</label>
+                <select id="need" name="need">
+                  <option>Car insurance</option>
+                  <option>Home insurance</option>
+                  <option>Health insurance</option>
+                  <option>Life insurance</option>
+                  <option>Pet insurance</option>
+                  <option>Partnership</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="contactTime">Best time</label>
+                <select id="contactTime" name="contactTime">
+                  <option>Morning</option>
+                  <option>Afternoon</option>
+                  <option>Evening</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell us what you want to compare"></textarea>
+              </div>
+            </div>
+            <div class="flow-actions">
+              <span></span>
+              <button class="primary-btn" type="submit">Prepare request</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span>© 2026 shevadaro. Prototype for insurance comparison.</span>
+        <span>Sample prices only. Not a binding offer.</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const state = {
+      route: 'home',
+      step: 0,
+      lang: 'ge',
+      product: 'car',
+      quoteStarted: false,
+      coverageIntent: 'thirdParty',
+      startChoice: 'today',
+      extras: new Set(['roadside'])
+    };
+
+    const translations = {
+      ge: {
+        'shevadaro Insurance Compare': 'shevadaro დაზღვევის შედარება',
+        'Insurance price comparison for the Georgian community.': 'დაზღვევის ფასების შედარება ქართული საზოგადოებისთვის.',
+        'Main navigation': 'მთავარი ნავიგაცია',
+        'shevadaro home': 'shevadaro მთავარი',
+        'Insurance compare for Georgia': 'დაზღვევის შედარება საქართველოში',
+        'Home': 'მთავარი',
+        'Compare': 'შედარება',
+        'About us': 'ჩვენ შესახებ',
+        'Contact us': 'კონტაქტი',
+        'Language': 'ენა',
+        'Start quote': 'შეთავაზების დაწყება',
+        'Open menu': 'მენიუს გახსნა',
+        'Built for Georgian families, drivers, and homeowners': 'შექმნილია საქართველოში მცხოვრები ოჯახებისთვის, მძღოლებისთვის და სახლის მფლობელებისთვის',
+        'shevadaro compares insurance prices before you commit.': 'shevadaro ადარებს დაზღვევის ფასებს გადაწყვეტილებამდე.',
+        'Choose what you need, answer a short guided form, and see a clear side-by-side estimate from prepared insurance partners in GEL.': 'აირჩიეთ საჭირო პროდუქტი, შეავსეთ მოკლე ფორმა და ნახეთ მომზადებული სადაზღვევო პარტნიორების შეთავაზებები ლარში.',
+        'Compare car insurance': 'ავტოდაზღვევის შედარება',
+        'Talk to an advisor': 'კონსულტანტთან საუბარი',
+        'Highlights': 'მაჩვენებლები',
+        'prototype quote flow': 'სატესტო შეთავაზების პროცესი',
+        'car, travel, house, mortgage, life, health, dog': 'ავტო, მოგზაურობა, სახლი, იპოთეკა, სიცოცხლე, ჯანმრთელობა, ძაღლი',
+        'localized pricing display': 'ლოკალური ფასების ჩვენება',
+        'Insurance categories': 'დაზღვევის კატეგორიები',
+        'What do you want to compare?': 'რისი შედარება გსურთ?',
+        'Start with car insurance or choose another product for the next version.': 'დაიწყეთ ავტოდაზღვევით ან აირჩიეთ სხვა პროდუქტი შემდეგი ვერსიისთვის.',
+        'Car insurance': 'ავტოდაზღვევა',
+        'Brand, model, year, driver profile': 'ბრენდი, მოდელი, წელი, მძღოლის პროფილი',
+        'Home insurance': 'სახლის დაზღვევა',
+        'Apartment, house, contents': 'ბინა, სახლი, ქონება',
+        'Health insurance': 'ჯანმრთელობის დაზღვევა',
+        'Individual and family plans': 'ინდივიდუალური და საოჯახო გეგმები',
+        'Pet insurance': 'შინაური ცხოველის დაზღვევა',
+        'Dogs, cats, clinic coverage': 'ძაღლები, კატები, კლინიკის დაფარვა',
+        'One place for the most common protection needs.': 'ერთი ადგილი ყველაზე საჭირო სადაზღვევო საჭიროებებისთვის.',
+        'The first prototype focuses on car insurance, while the site already frames the broader company offer.': 'პირველი პროტოტიპი ავტოდაზღვევაზეა ფოკუსირებული, ხოლო საიტი უკვე აჩვენებს კომპანიის უფრო ფართო შეთავაზებას.',
+        'Car on a road': 'მანქანა გზაზე',
+        'Compare estimated monthly and annual options for private vehicles.': 'შეადარეთ პირადი ავტომობილის სავარაუდო თვიური და წლიური ვარიანტები.',
+        'Modern living room': 'თანამედროვე მისაღები ოთახი',
+        'Protect buildings, apartments, contents, and liability.': 'დაიცავით შენობა, ბინა, ქონება და პასუხისმგებლობა.',
+        'Doctor with clipboard': 'ექიმი დოკუმენტებით',
+        'Prepare family, clinic, dental, and emergency coverage choices.': 'მოამზადეთ საოჯახო, კლინიკური, სტომატოლოგიური და გადაუდებელი დაფარვის არჩევანი.',
+        'Life insurance': 'სიცოცხლის დაზღვევა',
+        'Family portrait': 'ოჯახის პორტრეტი',
+        'Match families with clear benefit levels and payment terms.': 'შეურჩიეთ ოჯახებს გასაგები სარგებელი და გადახდის პირობები.',
+        'Dog outdoors': 'ძაღლი გარეთ',
+        'For dogs and cats, including clinic visits and accidents.': 'ძაღლებისა და კატებისთვის, კლინიკის ვიზიტებისა და უბედური შემთხვევების ჩათვლით.',
+        'Quote progress': 'შეთავაზების პროგრესი',
+        'Product': 'პროდუქტი',
+        'Vehicle': 'ავტომობილი',
+        'Driver': 'მძღოლი',
+        'Results': 'შედეგები',
+        'This demo uses sample insurer names and generated prices. Real launch should connect to insurer APIs, broker data, or a secure admin pricing table.': 'ეს დემო იყენებს სატესტო სადაზღვევო კომპანიებს და გენერირებულ ფასებს. რეალურ გაშვებაზე საჭიროა სადაზღვევო API-ებთან, ბროკერის მონაცემებთან ან დაცულ ადმინისტრაციულ ცხრილთან დაკავშირება.',
+        'Compare insurance': 'დაზღვევის შედარება',
+        'Select a product and answer the guided questions. Car insurance is fully modeled in this prototype.': 'აირჩიეთ პროდუქტი და უპასუხეთ კითხვებს. ამ პროტოტიპში სრულად დამუშავებულია ავტოდაზღვევა.',
+        'Progress': 'პროგრესი',
+        'Choose insurance type': 'აირჩიეთ დაზღვევის ტიპი',
+        'Car': 'ავტო',
+        'Active quote flow': 'აქტიური შეთავაზების პროცესი',
+        'Coming next': 'შემდეგ ვერსიაში',
+        'Health': 'ჯანმრთელობა',
+        'Life': 'სიცოცხლე',
+        'Pet': 'ცხოველი',
+        'Vehicle details': 'ავტომობილის დეტალები',
+        'Car brand': 'ავტომობილის ბრენდი',
+        'Year': 'წელი',
+        'Model': 'მოდელი',
+        'Engine': 'ძრავი',
+        '1.5L petrol': '1.5ლ ბენზინი',
+        '1.8L hybrid': '1.8ლ ჰიბრიდი',
+        '2.0L petrol': '2.0ლ ბენზინი',
+        '2.2L diesel': '2.2ლ დიზელი',
+        '3.0L petrol': '3.0ლ ბენზინი',
+        'Electric': 'ელექტრო',
+        'Estimated vehicle value': 'ავტომობილის სავარაუდო ღირებულება',
+        'Up to 15,000 GEL': '15,000 ლარამდე',
+        '15,000 - 30,000 GEL': '15,000 - 30,000 ლარი',
+        '30,000 - 60,000 GEL': '30,000 - 60,000 ლარი',
+        '60,000+ GEL': '60,000+ ლარი',
+        'Coverage type': 'დაფარვის ტიპი',
+        'Mandatory / basic': 'სავალდებულო / ძირითადი',
+        'Standard casco': 'სტანდარტული კასკო',
+        'Premium casco + assistance': 'პრემიუმ კასკო + ასისტანსი',
+        'Driver and policy questions': 'მძღოლისა და პოლისის კითხვები',
+        'Main driver age': 'მთავარი მძღოლის ასაკი',
+        'Driving experience': 'მართვის გამოცდილება',
+        'Less than 2 years': '2 წელზე ნაკლები',
+        '2 - 5 years': '2 - 5 წელი',
+        '5+ years': '5+ წელი',
+        'Primary city': 'ძირითადი ქალაქი',
+        'Tbilisi': 'თბილისი',
+        'Batumi': 'ბათუმი',
+        'Kutaisi': 'ქუთაისი',
+        'Rustavi': 'რუსთავი',
+        'Other Georgia': 'საქართველოს სხვა ქალაქი',
+        'Claims in last 3 years': 'ზარალები ბოლო 3 წელში',
+        'No claims': 'ზარალების გარეშე',
+        'One claim': 'ერთი ზარალი',
+        'Two or more claims': 'ორი ან მეტი ზარალი',
+        'Extra protection': 'დამატებითი დაცვა',
+        'Roadside assistance': 'გზაზე დახმარება',
+        'Glass coverage': 'მინის დაფარვა',
+        'Theft protection': 'ქურდობისგან დაცვა',
+        'Travel outside Georgia': 'საქართველოს გარეთ მოგზაურობა',
+        'Your estimated comparison': 'თქვენი სავარაუდო შედარება',
+        'Review sample offers based on your selections.': 'ნახეთ სატესტო შეთავაზებები თქვენი არჩევანის მიხედვით.',
+        'Back': 'უკან',
+        'Next': 'შემდეგი',
+        'Show prices': 'ფასების ნახვა',
+        'Start again': 'თავიდან დაწყება',
+        'About shevadaro': 'shevadaro-ს შესახებ',
+        'Advice first, comparison second, pressure never.': 'ჯერ რჩევა, შემდეგ შედარება, ზეწოლა არასდროს.',
+        'shevadaro is positioned as a Georgian-community insurance comparison company: clear language, prepared partner companies, and practical guidance for people choosing car, travel, house, mortgage, life, health, or dog coverage.': 'shevadaro არის ქართული საზოგადოებისთვის შექმნილი დაზღვევის შედარების კომპანია: მარტივი ენა, მომზადებული პარტნიორები და პრაქტიკული დახმარება ავტო, სამოგზაურო, სახლის, იპოთეკის, სიცოცხლის, ჯანმრთელობის ან ძაღლის დაზღვევის არჩევისას.',
+        'Advisor meeting with clients': 'კონსულტანტის შეხვედრა კლიენტებთან',
+        'Local focus': 'ლოკალური ფოკუსი',
+        'Questions, currencies, coverage categories, and partner preparation are designed for people living in Georgia.': 'კითხვები, ვალუტა, დაფარვის კატეგორიები და პარტნიორების მომზადება მორგებულია საქართველოში მცხოვრებ ადამიანებზე.',
+        'Transparent comparison': 'გამჭვირვალე შედარება',
+        'Offers are shown side-by-side with visible coverage tags, estimated monthly cost, and the next action.': 'შეთავაზებები ნაჩვენებია გვერდიგვერდ, დაფარვის ნიშნებით, სავარაუდო თვიური ფასით და შემდეგი მოქმედებით.',
+        'Broker-ready platform': 'ბროკერისთვის მზად პლატფორმა',
+        'The prototype can grow into a CRM-backed broker workflow with lead capture, quote management, and insurer integrations.': 'პროტოტიპი შეიძლება გადაიზარდოს CRM-ზე დაფუძნებულ ბროკერულ პროცესში ლიდების შეგროვებით, შეთავაზებების მართვით და სადაზღვევო ინტეგრაციებით.',
+        'Send a quote request or ask for partner setup.': 'გაგზავნეთ შეთავაზების მოთხოვნა ან იკითხეთ პარტნიორობაზე.',
+        'This form is a front-end demo. In production it should send leads to a CRM, email inbox, or Supabase database with consent tracking.': 'ეს ფორმა ფრონტენდ დემოა. რეალურ ვერსიაში ის უნდა აგზავნიდეს ლიდებს CRM-ში, ელფოსტაზე ან Supabase ბაზაში თანხმობის აღრიცხვით.',
+        'Person working on laptop': 'ადამიანი ლეპტოპთან მუშაობს',
+        'Email': 'ელფოსტა',
+        'Phone': 'ტელეფონი',
+        'Market': 'ბაზარი',
+        'Georgia, Georgian community first': 'საქართველო, ქართული საზოგადოება პირველ რიგში',
+        'Name': 'სახელი',
+        'Your name': 'თქვენი სახელი',
+        'Insurance need': 'დაზღვევის საჭიროება',
+        'Partnership': 'პარტნიორობა',
+        'Best time': 'საუკეთესო დრო',
+        'Morning': 'დილა',
+        'Afternoon': 'შუადღე',
+        'Evening': 'საღამო',
+        'Message': 'შეტყობინება',
+        'Tell us what you want to compare': 'გვითხარით რისი შედარება გსურთ',
+        'Prepare request': 'მოთხოვნის მომზადება',
+        '© 2026 shevadaro. Prototype for insurance comparison.': '© 2026 shevadaro. დაზღვევის შედარების პროტოტიპი.',
+        'Sample prices only. Not a binding offer.': 'ფასები მხოლოდ სატესტოა. ეს არ არის სავალდებულო შეთავაზება.',
+        'Fast claims': 'სწრაფი ზარალები',
+        'Garage network': 'სერვისების ქსელი',
+        'Roadside': 'გზაზე დახმარება',
+        'Best price': 'საუკეთესო ფასი',
+        'Glass option': 'მინის ოფცია',
+        'Monthly pay': 'თვიური გადახდა',
+        'Premium casco': 'პრემიუმ კასკო',
+        'Travel cover': 'მოგზაურობის დაფარვა',
+        'Low deductible': 'დაბალი ფრანშიზა',
+        'per month': 'თვეში',
+        'Request call': 'ზარის მოთხოვნა'
+      }
+    };
+
+    const languageOverrides = {
+      ge: [
+      ],
+      en: [
+      ]
+    };
+
+    Object.assign(translations.ge, {
+      'Choose one product first. The next page will focus only on that insurance flow.': 'ჯერ აირჩიეთ ერთი პროდუქტი. შემდეგი გვერდი მხოლოდ ამ დაზღვევის პროცესზე იქნება ფოკუსირებული.',
+      'Travel insurance': 'სამოგზაურო დაზღვევა',
+      'Dates, destination, travelers': 'თარიღები, მიმართულება, მგზავრები',
+      'House insurance': 'სახლის დაზღვევა',
+      'Mortgage insurance': 'იპოთეკის დაზღვევა',
+      'Loan, property, bank needs': 'სესხი, ქონება, ბანკის მოთხოვნები',
+      'Family protection and terms': 'ოჯახის დაცვა და პირობები',
+      'Dog insurance': 'ძაღლის დაზღვევა',
+      'Breed, age, clinic coverage': 'ჯიში, ასაკი, კლინიკის დაფარვა',
+      'Traveler looking over a city': 'მოგზაური ქალაქის ხედთან',
+      'Compare medical, baggage, cancellation, and trip protection.': 'შეადარეთ სამედიცინო, ბარგის, გაუქმებისა და მოგზაურობის დაცვა.',
+      'House keys and contract': 'სახლის გასაღებები და ხელშეკრულება',
+      'Prepare property and borrower protection for bank requirements.': 'მოამზადეთ ქონებისა და მსესხებლის დაცვა ბანკის მოთხოვნებისთვის.',
+      'For dogs, including clinic visits, accidents, and surgery support.': 'ძაღლებისთვის, კლინიკის ვიზიტების, შემთხვევებისა და ოპერაციის დახმარების ჩათვლით.',
+      'Coverage': 'დაფარვა',
+      'Start date': 'დაწყების თარიღი',
+      'Owner': 'მფლობელი',
+      'Options': 'ოფციები',
+      'The car flow is modeled around Georgian insurer requirements: coverage package, policy period, vehicle registration data, VIN or tech passport, driver history, deductible, territory, and car photos before final issue.': 'ავტოდაზღვევის პროცესი აგებულია ქართული სადაზღვევო მოთხოვნების მიხედვით: დაფარვის პაკეტი, პოლისის პერიოდი, ავტომობილის სარეგისტრაციო მონაცემები, VIN ან ტექპასპორტი, მძღოლის ისტორია, ფრანშიზა, ტერიტორია და მანქანის ფოტოები საბოლოო გაცემამდე.',
+      'Choose the coverage style first, then continue into a focused car quote flow.': 'ჯერ აირჩიეთ დაფარვის ტიპი, შემდეგ გააგრძელეთ ავტოდაზღვევის კითხვებზე.',
+      'Selected product': 'არჩეული პროდუქტი',
+      'Compare third-party liability, private casco, or a combined package for your vehicle in Georgia.': 'შეადარეთ მესამე პირის პასუხისმგებლობა, კერძო კასკო ან კომბინირებული პაკეტი საქართველოში თქვენი ავტომობილისთვის.',
+      'Based on Georgian market patterns: Aldagi lists Minimum, Standard, and Full packages; GPI Auto Fix includes third-party liability and fixed limits; TBC motor terms describe Casco, MTPL, and driver/passenger accident sections.': 'ქართული ბაზრის მიხედვით: Aldagi აჩვენებს მინიმუმ, სტანდარტულ და სრულ პაკეტებს; GPI Auto Fix მოიცავს მესამე პირის პასუხისმგებლობას და ფიქსირებულ ლიმიტებს; TBC-ის ავტოდაზღვევის პირობებში აღწერილია კასკო, MTPL და მძღოლის/მგზავრის დაზღვევა.',
+      'Choose car coverage': 'აირჩიეთ ავტოდაფარვა',
+      'Third-party liability': 'მესამე პირის პასუხისმგებლობა',
+      'Covers damage you cause to another vehicle, property, or person.': 'ფარავს სხვა ავტომობილის, ქონების ან ადამიანის მიმართ მიყენებულ ზიანს.',
+      'Lean option': 'მარტივი ვარიანტი',
+      'Private casco': 'კერძო კასკო',
+      'Covers your own car for accident, fire, theft, natural events, and damage.': 'ფარავს თქვენს ავტომობილს ავარიის, ხანძრის, ქურდობის, სტიქიისა და დაზიანებისგან.',
+      'Popular': 'პოპულარული',
+      'Third-party + private': 'მესამე პირი + კერძო',
+      'Combines liability with protection for your own vehicle.': 'აერთიანებს პასუხისმგებლობას და თქვენი ავტომობილის დაცვას.',
+      'Recommended': 'რეკომენდებული',
+      'Choose another product': 'სხვა პროდუქტის არჩევა',
+      'Continue to questions': 'კითხვებზე გადასვლა',
+      'This product flow is being prepared': 'ამ პროდუქტის პროცესი მზადდება',
+      'The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.': 'არჩეული დაზღვევის გვერდი უკვე ცალკე პროდუქტად ჩანს. შემდეგ ვერსიაში დაემატება მისი საკუთარი კითხვების პროცესი სრული პროდუქტის სიის ხელახლა ჩვენების გარეშე.',
+      'This product has its own page now. Its dedicated question flow can be added without returning the user to the full product selector.': 'ამ პროდუქტს ახლა საკუთარი გვერდი აქვს. მისი ცალკე კითხვების პროცესი დაემატება ისე, რომ მომხმარებელი სრულ პროდუქტის არჩევანს აღარ დაუბრუნდეს.',
+      'Open car flow': 'ავტო პროცესის გახსნა',
+      'When should the policy start?': 'როდის უნდა დაიწყოს პოლისი?',
+      'Today': 'დღეს',
+      'Start protection immediately.': 'დაცვა დაიწყოს დაუყოვნებლივ.',
+      'Beginning of next month': 'შემდეგი თვის დასაწყისი',
+      'Useful when replacing an existing policy.': 'სასარგებლოა არსებული პოლისის შეცვლისას.',
+      'Choose date': 'თარიღის არჩევა',
+      'Select a custom policy start date.': 'აირჩიეთ პოლისის დაწყების კონკრეტული თარიღი.',
+      'Policy start date': 'პოლისის დაწყების თარიღი',
+      'Policy term': 'პოლისის ვადა',
+      '12 months': '12 თვე',
+      '6 months': '6 თვე',
+      '3 months': '3 თვე',
+      'Car registration number': 'ავტომობილის სახელმწიფო ნომერი',
+      'VIN code': 'VIN კოდი',
+      '17-character VIN': '17-სიმბოლოიანი VIN',
+      'Vehicle use': 'ავტომობილის გამოყენება',
+      'Private use': 'პირადი გამოყენება',
+      'Daily commute': 'ყოველდღიური გადაადგილება',
+      'Taxi or ride-share': 'ტაქსი ან ride-share',
+      'Business/commercial use': 'ბიზნეს/კომერციული გამოყენება',
+      'Owner and driver': 'მფლობელი და მძღოლი',
+      'Vehicle owner': 'ავტომობილის მფლობელი',
+      'Individual': 'ფიზიკური პირი',
+      'Company': 'კომპანია',
+      'Bank or leasing company': 'ბანკი ან სალიზინგო კომპანია',
+      'Authorized drivers': 'დაშვებული მძღოლები',
+      'Main driver only': 'მხოლოდ მთავარი მძღოლი',
+      'Family drivers': 'ოჯახის მძღოლები',
+      'Unlimited authorized drivers': 'შეუზღუდავი დაშვებული მძღოლები',
+      'Phone number': 'ტელეფონის ნომერი',
+      'Coverage options': 'დაფარვის ოფციები',
+      'Package level': 'პაკეტის დონე',
+      'Minimum / liability': 'მინიმუმი / პასუხისმგებლობა',
+      'Full casco + assistance': 'სრული კასკო + ასისტანსი',
+      'Deductible / franchise': 'ფრანშიზა',
+      'Coverage territory': 'დაფარვის ტერიტორია',
+      'Georgia only': 'მხოლოდ საქართველო',
+      'Georgia + Turkey / CIS': 'საქართველო + თურქეთი / დსთ',
+      'Extended worldwide territory': 'გაფართოებული მსოფლიო ტერიტორია',
+      'Liability limit': 'პასუხისმგებლობის ლიმიტი',
+      'Driver and passenger accident': 'მძღოლისა და მგზავრის უბედური შემთხვევა',
+      'Before issuing a real policy, Georgian insurers commonly request ID or passport, vehicle registration certificate, VIN code, and photos of the car and interior.': 'რეალური პოლისის გაცემამდე ქართული სადაზღვევოები ხშირად ითხოვენ პირადობას ან პასპორტს, ავტომობილის სარეგისტრაციო მოწმობას, VIN კოდს და ავტომობილისა და სალონის ფოტოებს.'
+    });
+
+    const productConfigs = {
+      car: {
+        title: 'Car insurance',
+        description: 'Compare third-party liability, private casco, or a combined package for your vehicle in Georgia.',
+        image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Car on a road'
+      },
+      travel: {
+        title: 'Travel insurance',
+        description: 'Compare medical, baggage, cancellation, and trip protection.',
+        image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Traveler looking over a city'
+      },
+      home: {
+        title: 'House insurance',
+        description: 'Protect buildings, apartments, contents, and liability.',
+        image: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Modern living room'
+      },
+      mortgage: {
+        title: 'Mortgage insurance',
+        description: 'Prepare property and borrower protection for bank requirements.',
+        image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1000&q=80',
+        alt: 'House keys and contract'
+      },
+      life: {
+        title: 'Life insurance',
+        description: 'Match families with clear benefit levels and payment terms.',
+        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Family portrait'
+      },
+      health: {
+        title: 'Health insurance',
+        description: 'Prepare family, clinic, dental, and emergency coverage choices.',
+        image: 'https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Doctor with clipboard'
+      },
+      dog: {
+        title: 'Dog insurance',
+        description: 'For dogs, including clinic visits, accidents, and surgery support.',
+        image: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1000&q=80',
+        alt: 'Dog outdoors'
+      }
+    };
+
+    const carModels = {
+      'Honda': ['Civic', 'Accord', 'CR-V', 'Fit'],
+      'Mercedes-Benz': ['C-Class', 'E-Class', 'GLC', 'GLE'],
+      'Toyota': ['Corolla', 'Camry', 'RAV4', 'Land Cruiser'],
+      'BMW': ['3 Series', '5 Series', 'X3', 'X5'],
+      'Hyundai': ['Elantra', 'Tucson', 'Santa Fe', 'Sonata'],
+      'Kia': ['Sportage', 'Sorento', 'K5', 'Picanto'],
+      'Lexus': ['IS', 'ES', 'RX', 'NX']
+    };
+
+    const insurers = [
+      { name: 'Tbilisi Shield', logo: 'TS', tone: '#1f6f8f', factor: 1.02, tags: ['Fast claims', 'Garage network', 'Roadside'] },
+      { name: 'Caucasus Protect', logo: 'CP', tone: '#176d4f', factor: .94, tags: ['Best price', 'Glass option', 'Monthly pay'] },
+      { name: 'Iberia Assurance', logo: 'IA', tone: '#b87d2b', factor: 1.12, tags: ['Premium casco', 'Travel cover', 'Low deductible'] }
+    ];
+
+    const pages = document.querySelectorAll('.page');
+    const compareLayout = document.querySelector('.compare-layout');
+    const navButtons = document.querySelectorAll('[data-route]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const topbar = document.getElementById('topbar');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const productButtons = document.querySelectorAll('[data-product]');
+    const formSteps = document.querySelectorAll('.form-step');
+    const stepItems = document.querySelectorAll('[data-step-label]');
+    const progressBar = document.getElementById('progressBar');
+    const backBtn = document.getElementById('backBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const quoteForm = document.getElementById('quoteForm');
+    const productDetail = document.getElementById('productDetail');
+    const coverageChooser = document.getElementById('coverageChooser');
+    const comingSoonProduct = document.getElementById('comingSoonProduct');
+    const startCarFlowBtn = document.getElementById('startCarFlowBtn');
+    const coverageCards = document.querySelectorAll('[data-coverage-intent]');
+    const startChoiceButtons = document.querySelectorAll('[data-start-choice]');
+    const brandSelect = document.getElementById('brand');
+    const vinInput = document.getElementById('vin');
+    const yearSelect = document.getElementById('year');
+    const modelSelect = document.getElementById('model');
+    const resultsGrid = document.getElementById('resultsGrid');
+    const summaryLine = document.getElementById('summaryLine');
+    const langButtons = document.querySelectorAll('[data-lang]');
+    const startDateInput = document.getElementById('startDate');
+
+    function t(text) {
+      return state.lang === 'ge' ? translations.ge[text] || text : text;
+    }
+
+    function translateTextNodes(root) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+
+      nodes.forEach(node => {
+        const original = node.parentElement?.dataset.i18nOriginalText || node.textContent.trim();
+        if (!original) return;
+        if (translations.ge[original]) {
+          node.parentElement.dataset.i18nOriginalText = original;
+          const leading = node.textContent.match(/^\s*/)[0];
+          const trailing = node.textContent.match(/\s*$/)[0];
+          node.textContent = `${leading}${t(original)}${trailing}`;
+        }
+      });
+    }
+
+    function translateAttributes() {
+      document.querySelectorAll('[placeholder], [aria-label], img[alt]').forEach(element => {
+        ['placeholder', 'aria-label', 'alt'].forEach(attribute => {
+          if (!element.hasAttribute(attribute)) return;
+          const dataKey = `i18nOriginal${attribute.replace(/(^|-)([a-z])/g, (_, __, letter) => letter.toUpperCase())}`;
+          const original = element.dataset[dataKey] || element.getAttribute(attribute);
+          if (translations.ge[original]) {
+            element.dataset[dataKey] = original;
+            element.setAttribute(attribute, t(original));
+          }
+        });
+      });
+    }
+
+    function applyLanguage(lang) {
+      state.lang = lang;
+      document.documentElement.lang = lang === 'ge' ? 'ka' : 'en';
+      document.title = t('shevadaro Insurance Compare');
+      document.querySelector('meta[name="description"]').setAttribute('content', t('Insurance price comparison for the Georgian community.'));
+      langButtons.forEach(button => button.classList.toggle('active', button.dataset.lang === lang));
+      translateTextNodes(document.body);
+      translateAttributes();
+      (languageOverrides[lang] || []).forEach(([selector, text]) => {
+        const element = document.querySelector(selector);
+        if (element) element.textContent = text;
+      });
+      renderProductPage();
+    }
+
+    function setRoute(route) {
+      state.route = route;
+      pages.forEach(page => page.classList.toggle('active', page.id === `page-${route}`));
+      navLinks.forEach(button => button.classList.toggle('active', button.dataset.route === route));
+      topbar.classList.remove('menu-open');
+      history.replaceState(null, '', `#${route}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (route === 'compare') {
+        renderProductPage();
+      }
+    }
+
+    function formatDateForInput(date) {
+      return date.toISOString().slice(0, 10);
+    }
+
+    function beginningOfNextMonth() {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth() + 1, 1);
+    }
+
+    function setStartChoice(choice) {
+      state.startChoice = choice;
+      startChoiceButtons.forEach(button => button.classList.toggle('active', button.dataset.startChoice === choice));
+      if (choice === 'today') startDateInput.value = formatDateForInput(new Date());
+      if (choice === 'nextMonth') startDateInput.value = formatDateForInput(beginningOfNextMonth());
+      if (choice === 'custom') startDateInput.focus();
+    }
+
+    function populateYears() {
+      const currentYear = new Date().getFullYear();
+      yearSelect.innerHTML = '';
+      for (let year = currentYear; year >= 1998; year -= 1) {
+        const option = document.createElement('option');
+        option.value = String(year);
+        option.textContent = String(year);
+        if (year === 2021) option.selected = true;
+        yearSelect.appendChild(option);
+      }
+    }
+
+    function populateModels() {
+      const models = carModels[brandSelect.value] || [];
+      modelSelect.innerHTML = '';
+      models.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model;
+        option.textContent = model;
+        modelSelect.appendChild(option);
+      });
+    }
+
+    function setProduct(product) {
+      state.product = product;
+      state.quoteStarted = false;
+      state.step = 0;
+      productButtons.forEach(button => button.classList.toggle('active', button.dataset.product === product));
+      document.querySelectorAll('.quick-card').forEach(button => button.classList.toggle('selected', button.dataset.product === product));
+      renderProductPage();
+    }
+
+    function renderProductPage() {
+      const config = productConfigs[state.product] || productConfigs.car;
+      const isCar = state.product === 'car';
+      document.getElementById('flowHeading').textContent = t(config.title);
+      document.getElementById('flowCopy').textContent = state.product === 'car'
+        ? t('Choose the coverage style first, then continue into a focused car quote flow.')
+        : t('The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.');
+      document.getElementById('productTitle').textContent = t(config.title);
+      document.getElementById('productDescription').textContent = t(config.description);
+      document.getElementById('productSource').textContent = isCar
+        ? t('Based on Georgian market patterns: Aldagi lists Minimum, Standard, and Full packages; GPI Auto Fix includes third-party liability and fixed limits; TBC motor terms describe Casco, MTPL, and driver/passenger accident sections.')
+        : t('This product has its own page now. Its dedicated question flow can be added without returning the user to the full product selector.');
+      document.getElementById('productImage').src = config.image;
+      document.getElementById('productImage').alt = t(config.alt);
+      document.getElementById('productEyebrow').textContent = t('Selected product');
+
+      compareLayout.classList.toggle('single-product', !isCar);
+      productDetail.style.display = state.quoteStarted ? 'none' : 'grid';
+      quoteForm.style.display = state.quoteStarted && isCar ? 'block' : 'none';
+      coverageChooser.style.display = isCar ? 'block' : 'none';
+      comingSoonProduct.style.display = isCar ? 'none' : 'block';
+      progressBar.style.width = isCar ? `${((state.step + 1) / stepItems.length) * 100}%` : '16%';
+
+      stepItems.forEach((item, index) => {
+        item.classList.toggle('active', index === state.step && isCar);
+        item.classList.toggle('done', index < state.step && isCar);
+      });
+
+      if (state.quoteStarted && isCar) {
+        renderStep();
+      }
+    }
+
+    function renderStep() {
+      productDetail.style.display = 'none';
+      quoteForm.style.display = 'block';
+      formSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.step) === state.step - 1));
+      stepItems.forEach((item, index) => {
+        item.classList.toggle('active', index === state.step);
+        item.classList.toggle('done', index < state.step);
+      });
+      progressBar.style.width = `${((state.step + 1) / stepItems.length) * 100}%`;
+      backBtn.disabled = false;
+      backBtn.style.visibility = 'visible';
+      nextBtn.textContent = state.step === stepItems.length - 1 ? t('Start again') : state.step === stepItems.length - 2 ? t('Show prices') : t('Next');
+      backBtn.textContent = t('Back');
+      if (state.step === stepItems.length - 1) {
+        renderResults();
+      }
+    }
+
+    function getFormData() {
+      const data = new FormData(document.getElementById('quoteForm'));
+      return {
+        brand: data.get('brand') || brandSelect.value,
+        year: Number(data.get('year') || yearSelect.value),
+        model: data.get('model') || modelSelect.value,
+        engine: data.get('engine') || document.getElementById('engine').value,
+        value: Number(data.get('value') || 30000),
+        coverage: data.get('coverage') || 'standard',
+        deductible: Number(data.get('deductible') || 1),
+        limit: Number(data.get('limit') || 10000),
+        territory: data.get('territory') || 'georgia',
+        vehicleUse: data.get('vehicleUse') || 'personal',
+        drivers: data.get('drivers') || 'main',
+        startDate: data.get('startDate') || startDateInput.value,
+        policyTerm: Number(data.get('policyTerm') || 12),
+        age: Number(data.get('age') || 31),
+        experience: Number(data.get('experience') || 8),
+        city: data.get('city') || 'Tbilisi',
+        claims: Number(data.get('claims') || 0)
+      };
+    }
+
+    function estimatePrice(data, factor) {
+      const ageFactor = data.age < 25 ? 1.28 : data.age > 59 ? 1.08 : 1;
+      const experienceFactor = data.experience < 2 ? 1.22 : data.experience < 5 ? 1.09 : .96;
+      const claimsFactor = 1 + (data.claims * .18);
+      const coverageFactor = data.coverage === 'premium' ? 1.34 : data.coverage === 'basic' ? .72 : 1;
+      const intentFactor = state.coverageIntent === 'combined' ? 1.18 : state.coverageIntent === 'privateCasco' ? 1.08 : .82;
+      const deductibleFactor = data.deductible === 0 ? 1.2 : data.deductible >= 5 ? .86 : data.deductible >= 3 ? .93 : 1;
+      const territoryFactor = data.territory === 'world' ? 1.18 : data.territory === 'region' ? 1.09 : 1;
+      const useFactor = data.vehicleUse === 'taxi' ? 1.35 : data.vehicleUse === 'commercial' ? 1.22 : 1;
+      const driversFactor = data.drivers === 'unlimited' ? 1.14 : data.drivers === 'family' ? 1.06 : 1;
+      const limitFactor = Math.max(.86, data.limit / 10000 * .12 + .88);
+      const valueFactor = data.value / 30000;
+      const extraFactor = 1 + (state.extras.size * .035);
+      const vehicleAgeFactor = Math.max(.82, 1 - ((new Date().getFullYear() - data.year) * .012));
+      return Math.round(72 * valueFactor * coverageFactor * intentFactor * deductibleFactor * territoryFactor * useFactor * driversFactor * limitFactor * ageFactor * experienceFactor * claimsFactor * extraFactor * vehicleAgeFactor * factor);
+    }
+
+    function renderResults() {
+      const data = getFormData();
+      const coverageLabels = {
+        basic: t('Minimum / liability'),
+        standard: t('Standard casco'),
+        premium: t('Full casco + assistance')
+      };
+      const annualTotal = state.lang === 'ge' ? 'სავარაუდო წლიური ჯამი' : 'Estimated annual total';
+      const monthly = t('per month');
+      summaryLine.textContent = state.lang === 'ge'
+        ? `${data.brand} ${data.model}, ${data.year}, ${coverageLabels[data.coverage]}, დაწყება ${data.startDate}. სატესტო თვიური შეფასებები ლარში.`
+        : `${data.brand} ${data.model}, ${data.year}, ${coverageLabels[data.coverage]}, starts ${data.startDate}. Sample monthly estimates in GEL.`;
+      resultsGrid.innerHTML = '';
+      insurers
+        .map(insurer => ({ ...insurer, price: estimatePrice(data, insurer.factor) }))
+        .sort((a, b) => a.price - b.price)
+        .forEach(insurer => {
+          const card = document.createElement('article');
+          card.className = 'result-card';
+          card.innerHTML = `
+            <div>
+              <div class="result-brand">
+                  <span class="company-logo" style="background:${insurer.tone}">${insurer.logo}</span>
+                  <div>
+                    <h3>${insurer.name}</h3>
+                  <p>${annualTotal}: ${insurer.price * 12} ${state.lang === 'ge' ? 'ლარი' : 'GEL'}</p>
+                </div>
+              </div>
+              <div class="coverage-tags">
+                ${insurer.tags.map(tag => `<span class="tag">${t(tag)}</span>`).join('')}
+              </div>
+            </div>
+            <div class="price-box">
+              <strong>${insurer.price} ${state.lang === 'ge' ? 'ლარი' : 'GEL'}</strong>
+              <span>${monthly}</span>
+              <button class="ghost-btn" type="button" style="margin-top:12px">${t('Request call')}</button>
+            </div>
+          `;
+          resultsGrid.appendChild(card);
+        });
+    }
+
+    navButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.dataset.product) setProduct(button.dataset.product);
+        setRoute(button.dataset.route);
+      });
+    });
+
+    productButtons.forEach(button => {
+      button.addEventListener('click', () => setProduct(button.dataset.product));
+    });
+
+    coverageCards.forEach(button => {
+      button.addEventListener('click', () => {
+        state.coverageIntent = button.dataset.coverageIntent;
+        coverageCards.forEach(card => card.classList.toggle('active', card === button));
+      });
+    });
+
+    startChoiceButtons.forEach(button => {
+      button.addEventListener('click', () => setStartChoice(button.dataset.startChoice));
+    });
+
+    startDateInput.addEventListener('change', () => {
+      state.startChoice = 'custom';
+      startChoiceButtons.forEach(button => button.classList.toggle('active', button.dataset.startChoice === 'custom'));
+    });
+
+    startCarFlowBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = 1;
+      setStartChoice(state.startChoice);
+      renderStep();
+    });
+
+    document.querySelectorAll('.toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const extra = button.dataset.extra;
+        if (state.extras.has(extra)) {
+          state.extras.delete(extra);
+        } else {
+          state.extras.add(extra);
+        }
+        button.classList.toggle('active', state.extras.has(extra));
+      });
+    });
+
+    backBtn.addEventListener('click', () => {
+      if (state.step <= 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step -= 1;
+        renderStep();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (state.step === stepItems.length - 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step += 1;
+        renderStep();
+      }
+    });
+
+    mobileMenu.addEventListener('click', () => {
+      topbar.classList.toggle('menu-open');
+    });
+
+    langButtons.forEach(button => {
+      button.addEventListener('click', () => applyLanguage(button.dataset.lang));
+    });
+
+    brandSelect.addEventListener('change', populateModels);
+
+    vinInput.addEventListener('input', () => {
+      vinInput.value = vinInput.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 17);
+    });
+
+    window.addEventListener('hashchange', () => {
+      const nextRoute = location.hash.replace('#', '') || 'home';
+      if (nextRoute !== state.route) setRoute(nextRoute);
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', event => {
+      event.preventDefault();
+      alert(state.lang === 'ge'
+        ? 'დემო მოთხოვნა მომზადდა. რეალურ ვერსიაში ის შეინახება თქვენს CRM-ში ან Supabase-ში.'
+        : 'Demo request prepared. In production this would be saved to your CRM or Supabase.');
+    });
+
+    populateYears();
+    populateModels();
+    setStartChoice('today');
+    setProduct('car');
+    setRoute(location.hash.replace('#', '') || 'home');
+    applyLanguage('ge');
+  </script>
+</body>
+</html>
