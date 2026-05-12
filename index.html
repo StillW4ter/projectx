@@ -1794,6 +1794,39 @@
                 </div>
               </div>
 
+              <div id="homeChooser" style="display:none">
+                <h2>Start apartment insurance</h2>
+                <p class="wizard-intro">A short apartment flow for building cover, contents, liability, and sample partner prices.</p>
+                <div class="coverage-grid">
+                  <button class="coverage-card active" type="button">
+                    <span>
+                      <strong>Apartment and contents</strong>
+                      <span>Area, rental status, owner details, and policy start date.</span>
+                    </span>
+                    <span class="tag">Demo ready</span>
+                  </button>
+                  <button class="coverage-card" type="button">
+                    <span>
+                      <strong>Liability option</strong>
+                      <span>Support if another apartment is damaged because of your home.</span>
+                    </span>
+                    <span class="tag">Included</span>
+                  </button>
+                  <button class="coverage-card" type="button">
+                    <span>
+                      <strong>Flexible payment</strong>
+                      <span>Monthly or yearly sample pricing.</span>
+                    </span>
+                    <span class="tag">GEL</span>
+                  </button>
+                </div>
+                <div class="flow-actions">
+                  <button class="secondary-btn" data-route="home" type="button">Choose another product</button>
+                  <button class="secondary-btn" id="demoHomePricesBtn" type="button">Show demo prices</button>
+                  <button class="primary-btn" id="startHomeFlowBtn" type="button">Continue to questions</button>
+                </div>
+              </div>
+
               <div id="comingSoonProduct" style="display:none">
                 <h2 id="comingSoonTitle">This product flow is being prepared</h2>
                 <p id="comingSoonCopy">The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.</p>
@@ -2120,6 +2153,123 @@
               <div class="flow-actions">
                 <button class="secondary-btn" id="backBtn" type="button">Back</button>
                 <button class="primary-btn" id="nextBtn" type="button">Next</button>
+              </div>
+            </form>
+
+            <form id="homeQuoteForm" style="display:none">
+              <div class="home-step active" data-home-step="0">
+                <h2>Enter apartment area in square meters</h2>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="homeArea">Area</label>
+                    <input id="homeArea" name="homeArea" type="number" min="20" value="55" placeholder="sq/m">
+                  </div>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="1">
+                <h2>Is the apartment rented?</h2>
+                <input id="homeRented" name="homeRented" type="hidden" value="no">
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="homeRented" data-choice-value="yes" type="button"><strong>Yes</strong></button>
+                  <button class="select-card active" data-choice-target="homeRented" data-choice-value="no" type="button"><strong>No</strong></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="2">
+                <h2>Do you want liability cover if a neighbor apartment is damaged because of your home?</h2>
+                <input id="neighborCover" name="neighborCover" type="hidden" value="yes">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="neighborCover" data-choice-value="yes" type="button"><strong>Yes</strong></button>
+                  <button class="select-card" data-choice-target="neighborCover" data-choice-value="no" type="button"><strong>No</strong></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="3">
+                <h2>Payment frequency</h2>
+                <input id="homePayment" name="homePayment" type="hidden" value="monthly">
+                <div class="payment-grid">
+                  <button class="payment-option active" data-choice-target="homePayment" data-choice-value="monthly" type="button"><strong>Monthly</strong><span>25 ₾</span></button>
+                  <button class="payment-option" data-choice-target="homePayment" data-choice-value="yearly" type="button"><strong>Yearly</strong><span>300 ₾</span></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="4">
+                <h2>Choose policy payment period</h2>
+                <input id="homePayTerm" name="homePayTerm" type="hidden" value="monthly">
+                <div class="payment-grid">
+                  <button class="payment-option active" data-choice-target="homePayTerm" data-choice-value="monthly" type="button"><strong>Monthly</strong><span>39.58 ₾</span></button>
+                  <button class="payment-option" data-choice-target="homePayTerm" data-choice-value="annual" type="button"><strong>Yearly</strong><span>475 ₾</span></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="5">
+                <h2>Choose owner type</h2>
+                <input id="homeOwnerType" name="homeOwnerType" type="hidden" value="individual">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="homeOwnerType" data-choice-value="individual" type="button"><strong>Individual</strong></button>
+                  <button class="select-card" data-choice-target="homeOwnerType" data-choice-value="company" type="button"><strong>Company</strong></button>
+                  <button class="select-card" data-choice-target="homeOwnerType" data-choice-value="bank" type="button"><strong>Bank</strong></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="6">
+                <h2>Do you have a promo code?</h2>
+                <input id="homePromoChoice" name="homePromoChoice" type="hidden" value="no">
+                <div class="option-grid">
+                  <button class="select-card" data-choice-target="homePromoChoice" data-choice-value="yes" type="button"><strong>Yes</strong></button>
+                  <button class="select-card active" data-choice-target="homePromoChoice" data-choice-value="no" type="button"><strong>No</strong></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="7">
+                <h2>Do you own the apartment?</h2>
+                <input id="homeOwns" name="homeOwns" type="hidden" value="yes">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="homeOwns" data-choice-value="yes" type="button"><strong>Yes</strong></button>
+                  <button class="select-card" data-choice-target="homeOwns" data-choice-value="no" type="button"><strong>No</strong></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="8">
+                <h2>Enter personal number and date of birth</h2>
+                <div class="field-grid">
+                  <div class="field full"><label for="homePersonalId">Personal number</label><input id="homePersonalId" name="homePersonalId" placeholder="Personal #"></div>
+                </div>
+                <div class="identity-grid">
+                  <input name="homeBirthDay" placeholder="DD" value="13">
+                  <input name="homeBirthMonth" placeholder="MM" value="5">
+                  <input name="homeBirthYear" placeholder="YYYY" value="2026">
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="9">
+                <h2>Do you want to insure your apartment?</h2>
+                <input id="homeBuildingCover" name="homeBuildingCover" type="hidden" value="yes">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="homeBuildingCover" data-choice-value="yes" type="button"><strong>Yes</strong></button>
+                  <button class="select-card" data-choice-target="homeBuildingCover" data-choice-value="no" type="button"><strong>No</strong></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="10">
+                <h2>Do you want to insure your contents?</h2>
+                <input id="homeContentsCover" name="homeContentsCover" type="hidden" value="yes">
+                <div class="option-grid">
+                  <button class="select-card active" data-choice-target="homeContentsCover" data-choice-value="yes" type="button"><strong>Yes</strong></button>
+                  <button class="select-card" data-choice-target="homeContentsCover" data-choice-value="no" type="button"><strong>No</strong></button>
+                </div>
+              </div>
+
+              <div class="home-step" data-home-step="11">
+                <h2>Your apartment insurance comparison</h2>
+                <p id="homeSummaryLine">Review sample apartment insurance offers based on your selections.</p>
+                <div class="results-grid" id="homeResultsGrid"></div>
+              </div>
+
+              <div class="flow-actions">
+                <button class="secondary-btn" id="homeBackBtn" type="button">Back</button>
+                <button class="primary-btn" id="homeNextBtn" type="button">Next</button>
               </div>
             </form>
 
@@ -2520,7 +2670,35 @@
         'Life insurance payout to the chosen beneficiary.': 'სიცოცხლის დაზღვევის ანაზღაურება არჩეულ ბენეფიციარზე.',
         'Critical illness payout when the selected product includes it.': 'კრიტიკული დაავადების ანაზღაურება, თუ პროდუქტი ამას მოიცავს.',
         'Remote verification with personal ID or passport.': 'დისტანციური ვერიფიკაცია პირადობით ან პასპორტით.',
-        'Monthly premium estimate with insurer follow-up.': 'თვიური პრემიის შეფასება სადაზღვევოს შემდგომი ზარით.',
+      'Monthly premium estimate with insurer follow-up.': 'თვიური პრემიის შეფასება სადაზღვევოს შემდგომი ზარით.',
+        'Start apartment insurance': 'ბინის დაზღვევის დაწყება',
+        'A short apartment flow for building cover, contents, liability, and sample partner prices.': 'მოკლე ბინის დაზღვევის პროცესი შენობის, ნივთების, პასუხისმგებლობისა და პარტნიორი ფასებისთვის.',
+        'This demo follows apartment insurance questions: area, rental status, neighbor liability, payment period, owner details, and contents cover.': 'ეს დემო მიჰყვება ბინის დაზღვევის კითხვებს: ფართობი, გაქირავება, მეზობლის პასუხისმგებლობა, გადახდა, მფლობელი და ნივთების დაფარვა.',
+        'Apartment and contents': 'ბინა და ნივთები',
+        'Area, rental status, owner details, and policy start date.': 'ფართობი, გაქირავების სტატუსი, მფლობელის მონაცემები და პოლისის დაწყება.',
+        'Liability option': 'პასუხისმგებლობის ოფცია',
+        'Support if another apartment is damaged because of your home.': 'დახმარება, თუ სხვა ბინა თქვენი სახლიდან გამოწვეული მიზეზით დაზიანდა.',
+        'Flexible payment': 'მოქნილი გადახდა',
+        'Monthly or yearly sample pricing.': 'თვიური ან წლიური სატესტო ფასი.',
+        'Demo ready': 'დემო მზადაა',
+        'Included': 'ჩართულია',
+        'Enter apartment area in square meters': 'შეიყვანეთ დასაზღვევი სახლის ფართობი კვადრატულ მეტრში',
+        'Area': 'ფართობი',
+        'Is the apartment rented?': 'ბინა გაქირავებულია?',
+        'Do you want liability cover if a neighbor apartment is damaged because of your home?': 'გსურთ თუ არა პასუხისმგებლობის დაზღვევა იმ შემთხვევისთვის, თუ სხვისი სახლი თქვენი მიზეზით დაზიანდება?',
+        'Payment frequency': 'გადახდის სიხშირე',
+        'Choose policy payment period': 'აირჩიეთ პოლისის გადახდის პერიოდი',
+        'Choose owner type': 'აირჩიეთ პოლისის დამზღვევის ტიპი',
+        'Company': 'კომპანია',
+        'Do you own the apartment?': 'თქვენს სახლს აზღვევთ?',
+        'Do you want to insure your apartment?': 'გსურთ ბინის დაზღვევა?',
+        'Do you want to insure your contents?': 'გსურთ თქვენი ნივთების დაზღვევა?',
+        'Your apartment insurance comparison': 'თქვენი ბინის დაზღვევის შედარება',
+        'Review sample apartment insurance offers based on your selections.': 'ნახეთ სატესტო ბინის დაზღვევის შეთავაზებები თქვენი არჩევანის მიხედვით.',
+        'Water leakage and fire damage protection.': 'წყლის გაჟონვისა და ხანძრის დაზიანების დაფარვა.',
+        'Building structure and apartment repair cover.': 'შენობის კონსტრუქციისა და ბინის რემონტის დაფარვა.',
+        'Contents protection for furniture and appliances.': 'ნივთების დაცვა ავეჯისა და ტექნიკისთვის.',
+        'Neighbor liability support when selected.': 'მეზობლის პასუხისმგებლობის მხარდაჭერა არჩევის შემთხვევაში.',
         'per month': 'თვეში',
         'Request call': 'ზარის მოთხოვნა'
       }
@@ -2818,6 +2996,13 @@
       'Monthly premium estimate with insurer follow-up.'
     ];
 
+    const homeCoverageBullets = [
+      'Water leakage and fire damage protection.',
+      'Building structure and apartment repair cover.',
+      'Contents protection for furniture and appliances.',
+      'Neighbor liability support when selected.'
+    ];
+
     const pages = document.querySelectorAll('.page');
     const compareLayout = document.querySelector('.compare-layout');
     const navButtons = document.querySelectorAll('[data-route]');
@@ -2834,14 +3019,18 @@
     const nextBtn = document.getElementById('nextBtn');
     const quoteForm = document.getElementById('quoteForm');
     const lifeQuoteForm = document.getElementById('lifeQuoteForm');
+    const homeQuoteForm = document.getElementById('homeQuoteForm');
     const productDetail = document.getElementById('productDetail');
     const coverageChooser = document.getElementById('coverageChooser');
     const lifeChooser = document.getElementById('lifeChooser');
+    const homeChooser = document.getElementById('homeChooser');
     const comingSoonProduct = document.getElementById('comingSoonProduct');
     const startCarFlowBtn = document.getElementById('startCarFlowBtn');
     const startLifeFlowBtn = document.getElementById('startLifeFlowBtn');
+    const startHomeFlowBtn = document.getElementById('startHomeFlowBtn');
     const demoCarPricesBtn = document.getElementById('demoCarPricesBtn');
     const demoLifePricesBtn = document.getElementById('demoLifePricesBtn');
+    const demoHomePricesBtn = document.getElementById('demoHomePricesBtn');
     const coverageCards = document.querySelectorAll('[data-coverage-intent]');
     const startChoiceButtons = document.querySelectorAll('[data-start-choice]');
     const brandSelect = document.getElementById('brand');
@@ -2859,6 +3048,11 @@
     const lifeResultsGrid = document.getElementById('lifeResultsGrid');
     const lifeSummaryLine = document.getElementById('lifeSummaryLine');
     const lifePremium = document.getElementById('lifePremium');
+    const homeFormSteps = document.querySelectorAll('.home-step');
+    const homeBackBtn = document.getElementById('homeBackBtn');
+    const homeNextBtn = document.getElementById('homeNextBtn');
+    const homeResultsGrid = document.getElementById('homeResultsGrid');
+    const homeSummaryLine = document.getElementById('homeSummaryLine');
 
     function t(text) {
       return state.lang === 'ge' ? translations.ge[text] || text : text;
@@ -2986,12 +3180,15 @@
       const config = productConfigs[state.product] || productConfigs.car;
       const isCar = state.product === 'car';
       const isLife = state.product === 'life';
-      const activeFlowSteps = isLife ? lifeFormSteps : formSteps;
+      const isHome = state.product === 'home';
+      const activeFlowSteps = isLife ? lifeFormSteps : isHome ? homeFormSteps : formSteps;
       document.getElementById('flowHeading').textContent = t(config.title);
       document.getElementById('flowCopy').textContent = state.product === 'car'
         ? t('Choose the coverage style first, then continue into a focused car quote flow.')
         : isLife
           ? t('Choose life insurance, critical illness insurance, or both, then continue into a focused quote flow.')
+        : isHome
+          ? t('A short apartment flow for building cover, contents, liability, and sample partner prices.')
         : t('The selected insurance page is ready as a dedicated product page. The next build can add its own question flow without showing the full product grid again.');
       document.getElementById('productTitle').textContent = t(config.title);
       document.getElementById('productDescription').textContent = t(config.description);
@@ -2999,25 +3196,29 @@
         ? t('Based on Georgian market patterns: Aldagi lists Minimum, Standard, and Full packages; GPI Auto Fix includes third-party liability and fixed limits; TBC motor terms describe Casco, MTPL, and driver/passenger accident sections.')
         : isLife
           ? t('This flow is modeled for life insurance, critical illness insurance, or a combined product with identity verification and a health declaration.')
+        : isHome
+          ? t('This demo follows apartment insurance questions: area, rental status, neighbor liability, payment period, owner details, and contents cover.')
         : t('This product has its own page now. Its dedicated question flow can be added without returning the user to the full product selector.');
       document.getElementById('productImage').src = config.image;
       document.getElementById('productImage').alt = t(config.alt);
       document.getElementById('productEyebrow').textContent = t('Selected product');
 
-      compareLayout.classList.toggle('single-product', !(isCar || isLife));
+      compareLayout.classList.toggle('single-product', !(isCar || isLife || isHome));
       productDetail.style.display = state.quoteStarted ? 'none' : 'grid';
       quoteForm.style.display = state.quoteStarted && isCar ? 'block' : 'none';
       lifeQuoteForm.style.display = state.quoteStarted && isLife ? 'block' : 'none';
+      homeQuoteForm.style.display = state.quoteStarted && isHome ? 'block' : 'none';
       coverageChooser.style.display = isCar ? 'block' : 'none';
       lifeChooser.style.display = isLife ? 'block' : 'none';
-      comingSoonProduct.style.display = isCar || isLife ? 'none' : 'block';
+      homeChooser.style.display = isHome ? 'block' : 'none';
+      comingSoonProduct.style.display = isCar || isLife || isHome ? 'none' : 'block';
       if (compareProductSwitch) {
         compareProductSwitch.style.display = state.productPreselected || state.quoteStarted ? 'none' : 'grid';
       }
-      progressBar.style.width = (isCar || isLife) ? `${Math.min(100, ((state.step + 1) / (activeFlowSteps.length + 1)) * 100)}%` : '16%';
+      progressBar.style.width = (isCar || isLife || isHome) ? `${Math.min(100, ((state.step + 1) / (activeFlowSteps.length + 1)) * 100)}%` : '16%';
 
       stepItems.forEach((item, index) => {
-        item.classList.toggle('active', index === 0 && (isCar || isLife));
+        item.classList.toggle('active', index === 0 && (isCar || isLife || isHome));
         item.classList.toggle('done', false);
       });
 
@@ -3026,6 +3227,9 @@
       }
       if (state.quoteStarted && isLife) {
         renderLifeStep();
+      }
+      if (state.quoteStarted && isHome) {
+        renderHomeStep();
       }
     }
 
@@ -3159,6 +3363,88 @@
             </div>
           `;
           lifeResultsGrid.appendChild(card);
+        });
+    }
+
+    function renderHomeStep() {
+      const formIndex = state.step - 1;
+      const lastIndex = homeFormSteps.length - 1;
+      productDetail.style.display = 'none';
+      homeQuoteForm.style.display = 'block';
+      if (compareProductSwitch) compareProductSwitch.style.display = 'none';
+      homeFormSteps.forEach(step => step.classList.toggle('active', Number(step.dataset.homeStep) === formIndex));
+      stepItems.forEach((item, index) => {
+        item.classList.toggle('active', index === Math.min(5, Math.floor((formIndex + 1) / 2)));
+        item.classList.toggle('done', index < Math.min(5, Math.floor((formIndex + 1) / 2)));
+      });
+      progressBar.style.width = `${Math.min(100, ((formIndex + 2) / (homeFormSteps.length + 1)) * 100)}%`;
+      homeNextBtn.textContent = formIndex === lastIndex ? t('Start again') : formIndex === lastIndex - 1 ? t('Show prices') : t('Next');
+      homeBackBtn.textContent = t('Back');
+      if (formIndex === lastIndex) renderHomeResults();
+    }
+
+    function getHomeData() {
+      const data = new FormData(homeQuoteForm);
+      return {
+        area: Number(data.get('homeArea') || 55),
+        rented: data.get('homeRented') || 'no',
+        neighborCover: data.get('neighborCover') || 'yes',
+        payment: data.get('homePayment') || 'monthly',
+        payTerm: data.get('homePayTerm') || 'monthly',
+        ownerType: data.get('homeOwnerType') || 'individual',
+        buildingCover: data.get('homeBuildingCover') || 'yes',
+        contentsCover: data.get('homeContentsCover') || 'yes'
+      };
+    }
+
+    function calculateHomePrice(data, factor = 1) {
+      const areaFactor = Math.max(.72, data.area / 55);
+      const rentedFactor = data.rented === 'yes' ? 1.12 : 1;
+      const neighborFactor = data.neighborCover === 'yes' ? 1.08 : .94;
+      const ownerFactor = data.ownerType === 'company' ? 1.16 : data.ownerType === 'bank' ? 1.08 : 1;
+      const buildingFactor = data.buildingCover === 'yes' ? 1 : .78;
+      const contentsFactor = data.contentsCover === 'yes' ? 1.1 : .88;
+      return Math.max(14, Math.round(32 * areaFactor * rentedFactor * neighborFactor * ownerFactor * buildingFactor * contentsFactor * factor));
+    }
+
+    function renderHomeResults() {
+      const data = getHomeData();
+      const monthly = t('per month');
+      homeSummaryLine.textContent = state.lang === 'ge'
+        ? `${data.area} კვ.მ, ბინა ${data.rented === 'yes' ? 'გაქირავებულია' : 'არ არის გაქირავებული'}, მეზობლის პასუხისმგებლობა ${data.neighborCover === 'yes' ? 'ჩართულია' : 'გამორთულია'}.`
+        : `${data.area} sq/m, rented: ${data.rented}, neighbor liability: ${data.neighborCover}.`;
+      homeResultsGrid.innerHTML = '';
+      insurers
+        .map(insurer => ({ ...insurer, price: calculateHomePrice(data, insurer.factor) }))
+        .sort((a, b) => a.price - b.price)
+        .forEach(insurer => {
+          const card = document.createElement('article');
+          card.className = 'result-card';
+          card.innerHTML = `
+            <div>
+              <div class="result-brand">
+                <span class="company-logo" style="background:${insurer.tone}">${insurer.logo}</span>
+                <div>
+                  <h3>${insurer.name}</h3>
+                  <p>${state.lang === 'ge' ? 'წლიური ჯამი' : 'Annual total'}: ${insurer.price * 12} ${state.lang === 'ge' ? 'ლარი' : 'GEL'}</p>
+                </div>
+              </div>
+              <div class="coverage-tags">
+                <span class="tag">${t('Apartment and contents')}</span>
+                <span class="tag">${t('Liability option')}</span>
+                <span class="tag">${t('Flexible payment')}</span>
+              </div>
+              <ul class="coverage-bullets">
+                ${homeCoverageBullets.map(item => `<li>${t(item)}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="price-box">
+              <strong>${insurer.price} ${state.lang === 'ge' ? 'ლარი' : 'GEL'}</strong>
+              <span>${monthly}</span>
+              <button class="ghost-btn" type="button" style="margin-top:12px">${t('Request call')}</button>
+            </div>
+          `;
+          homeResultsGrid.appendChild(card);
         });
     }
 
@@ -3332,6 +3618,12 @@
       renderLifeStep();
     });
 
+    startHomeFlowBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = 1;
+      renderHomeStep();
+    });
+
     demoCarPricesBtn.addEventListener('click', () => {
       state.quoteStarted = true;
       state.step = formSteps.length;
@@ -3343,6 +3635,12 @@
       state.quoteStarted = true;
       state.step = lifeFormSteps.length;
       renderLifeStep();
+    });
+
+    demoHomePricesBtn.addEventListener('click', () => {
+      state.quoteStarted = true;
+      state.step = homeFormSteps.length;
+      renderHomeStep();
     });
 
     document.querySelectorAll('.toggle').forEach(button => {
@@ -3400,6 +3698,29 @@
       } else {
         state.step += 1;
         renderLifeStep();
+      }
+    });
+
+    homeBackBtn.addEventListener('click', () => {
+      if (state.step <= 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step -= 1;
+        renderHomeStep();
+      }
+    });
+
+    homeNextBtn.addEventListener('click', () => {
+      const formIndex = state.step - 1;
+      if (formIndex === homeFormSteps.length - 1) {
+        state.quoteStarted = false;
+        state.step = 0;
+        renderProductPage();
+      } else {
+        state.step += 1;
+        renderHomeStep();
       }
     });
 
