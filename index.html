@@ -628,6 +628,34 @@
       min-width: 0;
     }
 
+    .compare-product-switch {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .product-pill {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      min-height: 48px;
+      padding: 10px 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 900;
+      color: #40504b;
+    }
+
+    .product-pill.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(23, 109, 79, .14);
+    }
+
     .product-hero-panel {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -1669,6 +1697,16 @@
               <div class="progress" aria-label="Progress"><span id="progressBar"></span></div>
             </div>
 
+            <div class="compare-product-switch" aria-label="Choose insurance product">
+              <button class="product-pill active" data-product="car" type="button">Car</button>
+              <button class="product-pill" data-product="travel" type="button">Travel</button>
+              <button class="product-pill" data-product="home" type="button">House</button>
+              <button class="product-pill" data-product="mortgage" type="button">Mortgage</button>
+              <button class="product-pill" data-product="life" type="button">Life</button>
+              <button class="product-pill" data-product="health" type="button">Health</button>
+              <button class="product-pill" data-product="dog" type="button">Dog</button>
+            </div>
+
             <div class="product-detail" id="productDetail">
               <div class="product-hero-panel">
                 <div class="product-hero-copy">
@@ -1976,9 +2014,9 @@
               <div class="form-step" data-step="12">
                 <h2>Enter policy start date</h2>
                 <div class="date-options">
-                  <button class="choice active" data-start-choice="today" type="button"><span class="icon">✓</span><strong>Today</strong><span>Start protection immediately.</span></button>
-                  <button class="choice" data-start-choice="tomorrow" type="button"><span class="icon">1</span><strong>Tomorrow</strong><span>Start from the next day.</span></button>
-                  <button class="choice" data-start-choice="custom" type="button"><span class="icon">◷</span><strong>Choose date</strong><span>Select a custom policy start date.</span></button>
+                  <button class="choice active" data-start-choice="tomorrow" type="button"><span class="icon">1</span><strong>Tomorrow</strong><span>Start from the next day.</span></button>
+                  <button class="choice" data-start-choice="nextMonth" type="button"><span class="icon">M</span><strong>Beginning of month</strong><span>Start from the first day of next month.</span></button>
+                  <button class="choice" data-start-choice="custom" type="button"><span class="icon">◷</span><strong>Custom date</strong><span>Select a specific policy start date.</span></button>
                 </div>
                 <div class="field-grid">
                   <div class="field">
@@ -2305,7 +2343,7 @@
       product: 'car',
       quoteStarted: false,
       coverageIntent: 'thirdParty',
-      startChoice: 'today',
+      startChoice: 'tomorrow',
       extras: new Set(['roadside'])
     };
 
@@ -2472,6 +2510,7 @@
 
     Object.assign(translations.ge, {
       'Choose one product first. The next page will focus only on that insurance flow.': 'ჯერ აირჩიეთ ერთი პროდუქტი. შემდეგი გვერდი მხოლოდ ამ დაზღვევის პროცესზე იქნება ფოკუსირებული.',
+      'Choose insurance product': 'აირჩიეთ დაზღვევის პროდუქტი',
       'Travel insurance': 'სამოგზაურო დაზღვევა',
       'Dates, destination, travelers': 'თარიღები, მიმართულება, მგზავრები',
       'House insurance': 'სახლის დაზღვევა',
@@ -2516,6 +2555,9 @@
       'Beginning of next month': 'შემდეგი თვის დასაწყისი',
       'Useful when replacing an existing policy.': 'სასარგებლოა არსებული პოლისის შეცვლისას.',
       'Choose date': 'თარიღის არჩევა',
+      'Beginning of month': 'თვის დასაწყისი',
+      'Start from the first day of next month.': 'დაწყება შემდეგი თვის პირველი დღიდან.',
+      'Custom date': 'სხვა თარიღი',
       'Select a custom policy start date.': 'აირჩიეთ პოლისის დაწყების კონკრეტული თარიღი.',
       'Policy start date': 'პოლისის დაწყების თარიღი',
       'Policy term': 'პოლისის ვადა',
@@ -2838,7 +2880,10 @@
     }
 
     function formatDateForInput(date) {
-      return date.toISOString().slice(0, 10);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     }
 
     function beginningOfNextMonth() {
@@ -3309,7 +3354,7 @@
 
     populateYears();
     populateModels();
-    setStartChoice('today');
+    setStartChoice('tomorrow');
     setProduct('car');
     setRoute(location.hash.replace('#', '') || 'home');
     applyLanguage('ge');
