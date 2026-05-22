@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="ka">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>shevadaro v2</title>
+  <style>
+    :root {
+      --ink: #161e51;
+      --muted: rgba(22, 30, 81, .68);
+      --line: rgba(22, 30, 81, .12);
+      --panel: #ffffff;
+      --soft: #eef6ff;
+      --purple: #7267e8;
+      --cyan: #27c7ff;
+      --green: #137a58;
+      --yellow: #ffbd10;
+      --shadow: 0 24px 70px rgba(22, 30, 81, .12);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(39, 199, 255, .20), transparent 28rem),
+        radial-gradient(circle at 88% 0%, rgba(197, 145, 233, .35), transparent 32rem),
+        linear-gradient(180deg, #fbfdff 0%, #f5f7ff 100%);
+      min-height: 100vh;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, .76);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; }
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      color: white;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--ink), var(--purple));
+      box-shadow: 0 14px 30px rgba(114, 103, 232, .32);
+    }
+    .brand small { display: block; color: var(--muted); font-weight: 700; }
+
+    .nav { display: flex; align-items: center; gap: 8px; }
+    .nav button, .pill {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      border-radius: 999px;
+      min-height: 42px;
+      padding: 0 16px;
+      font-weight: 900;
+    }
+    .nav button.active, .pill.primary {
+      color: white;
+      border-color: transparent;
+      background: var(--ink);
+    }
+    .pill.gradient {
+      color: white;
+      border: 0;
+      background: linear-gradient(120deg, var(--cyan), var(--purple));
+      box-shadow: 0 16px 34px rgba(39, 199, 255, .24);
+    }
+
+    main { max-width: 1180px; margin: 0 auto; padding: 32px 22px 88px; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) 430px;
+      gap: 30px;
+      align-items: center;
+      min-height: calc(100vh - 150px);
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(46px, 7vw, 92px);
+      line-height: .96;
+      letter-spacing: 0;
+      margin: 0 0 18px;
+      max-width: 780px;
+    }
+    .hero-copy p {
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.45;
+      max-width: 660px;
+      margin: 0 0 26px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .stats { display: flex; gap: 16px; margin-top: 34px; flex-wrap: wrap; }
+    .stat { border-left: 4px solid var(--yellow); padding-left: 14px; min-width: 130px; }
+    .stat b { display: block; font-size: 24px; }
+    .stat span { color: var(--muted); font-weight: 800; }
+
+    .phone {
+      width: min(100%, 390px);
+      margin: 0 auto;
+      border-radius: 34px;
+      background: linear-gradient(180deg, #eefbff, #fff);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      border: 10px solid #1f244b;
+      min-height: 780px;
+      position: relative;
+      overflow: hidden;
+    }
+    .phone:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(39, 199, 255, .25), transparent 13rem),
+        radial-gradient(circle at 90% 6%, rgba(197, 145, 233, .28), transparent 15rem);
+    }
+    .phone > * { position: relative; }
+    .phone-head { display: flex; justify-content: space-between; align-items: center; font-weight: 900; }
+    .avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #4ac7ff, #7a66e8); }
+    .switcher { display: flex; background: white; border-radius: 999px; padding: 5px; margin: 18px 0; box-shadow: 0 8px 22px rgba(22, 30, 81, .08); }
+    .switcher button { flex: 1; height: 44px; border: 0; border-radius: 999px; background: transparent; font-weight: 900; color: var(--ink); }
+    .switcher button.active { background: var(--ink); color: white; }
+    .promo {
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 168px;
+      background:
+        linear-gradient(135deg, rgba(22, 30, 81, .82), rgba(114, 103, 232, .72)),
+        url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80") center/cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .promo h3 { margin: 0 0 8px; font-size: 24px; }
+    .section-title { margin: 22px 0 12px; font-size: 18px; }
+    .mobile-product-list { display: grid; gap: 12px; }
+    .mobile-product {
+      border: 0;
+      width: 100%;
+      text-align: left;
+      display: grid;
+      grid-template-columns: 52px 1fr 42px;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 24px;
+      color: var(--ink);
+      background: #dee3fa;
+    }
+    .mobile-product:nth-child(2) { background: #ffe8e8; }
+    .mobile-product:nth-child(3) { background: #efe3ff; }
+    .mobile-product:nth-child(4) { background: #e9f8ed; }
+    .mobile-product:nth-child(5) { background: #fff5dd; }
+    .mobile-product:nth-child(6) { background: #e9f5ff; }
+    .mobile-product:nth-child(7) { background: #f1eaff; }
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      font-size: 23px;
+      box-shadow: inset 0 0 14px rgba(255,255,255,.28);
+    }
+    .plus { width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--ink); color: white; font-size: 24px; }
+    .mobile-product b { display: block; font-size: 17px; }
+    .mobile-product span { color: var(--muted); font-weight: 700; font-size: 13px; }
+    .bottom-nav {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      background: rgba(22, 30, 81, .95);
+      padding: 7px;
+      border-radius: 999px;
+      box-shadow: 0 16px 40px rgba(22, 30, 81, .25);
+    }
+    .bottom-nav button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(255,255,255,.16);
+      color: white;
+      font-size: 20px;
+    }
+    .bottom-nav button.active { background: linear-gradient(135deg, var(--cyan), var(--purple)); }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .panel {
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 3vw, 32px);
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+    .panel h2 { margin: 0 0 8px; font-size: clamp(36px, 5vw, 70px); line-height: 1; }
+    .panel p { color: var(--muted); font-weight: 750; line-height: 1.45; }
+    .progress { width: 180px; height: 11px; border-radius: 999px; background: rgba(22,30,81,.08); overflow: hidden; margin-top: 16px; }
+    .progress i { display: block; height: 100%; width: var(--w, 12%); background: linear-gradient(90deg, var(--green), var(--cyan)); }
+
+    .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .product-card {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 168px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      color: var(--ink);
+    }
+    .product-card.active { outline: 3px solid rgba(114,103,232,.22); border-color: var(--purple); }
+    .product-card b { font-size: 20px; }
+    .product-card span { color: var(--muted); font-weight: 750; }
+
+    .flow-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 22px; }
+    .flow-side { position: sticky; top: 100px; align-self: start; }
+    .step-list { display: grid; gap: 10px; margin-top: 18px; }
+    .step-pill { display: flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 900; }
+    .step-pill i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 12px; background: rgba(22, 30, 81, .08); font-style: normal; }
+    .step-pill.done, .step-pill.active { color: var(--ink); }
+    .step-pill.active i { color: white; background: var(--green); }
+
+    .question-box {
+      min-height: 650px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .question-title { font-size: clamp(30px, 4vw, 58px); line-height: 1.06; margin: 0 0 18px; }
+    .fields { display: grid; gap: 14px; margin-top: 18px; }
+    .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .choice-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .choice, .field {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 20px;
+      min-height: 74px;
+      padding: 16px 18px;
+      color: var(--ink);
+      font-weight: 900;
+      text-align: left;
+    }
+    .choice.active { border-color: var(--purple); background: #edeaff; box-shadow: inset 0 0 0 2px rgba(114,103,232,.14); }
+    .field label { display: block; color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+    .field input, .field select {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-weight: 900;
+      font-size: 18px;
+      min-width: 0;
+    }
+    .flow-actions {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .offers-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .offer {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .offer.recommended { border-color: var(--purple); box-shadow: 0 18px 50px rgba(114, 103, 232, .18); }
+    .offer h3 { margin: 0; font-size: 22px; }
+    .price { font-size: 38px; font-weight: 1000; color: var(--purple); line-height: 1; }
+    .offer ul { padding-left: 20px; margin: 0; color: var(--muted); font-weight: 800; line-height: 1.55; }
+    .tag { display: inline-flex; align-self: flex-start; padding: 7px 11px; border-radius: 999px; background: #ecf7f2; color: var(--green); font-weight: 950; font-size: 13px; }
+
+    .desktop-preview {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 480px);
+      gap: 24px;
+      align-items: center;
+      margin-top: 28px;
+      padding: 18px;
+      background: white;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+    }
+    .preview-image {
+      min-height: 380px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(22,30,81,.18), rgba(114,103,232,.2)), var(--img) center/cover;
+    }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .phone { min-height: 720px; }
+      .product-grid, .offers-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-layout { grid-template-columns: 1fr; }
+      .flow-side { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner { padding: 12px 14px; }
+      .brand small, .nav .hide-mobile { display: none; }
+      main { padding: 18px 12px 76px; }
+      .hero-copy h1 { font-size: 45px; }
+      .hero-copy p { font-size: 17px; }
+      .hero { gap: 18px; }
+      .phone { border: 0; border-radius: 28px; min-height: 690px; padding: 16px; width: 100%; }
+      .product-grid, .offers-grid, .field-grid, .choice-grid { grid-template-columns: 1fr; }
+      .panel { border-radius: 24px; padding: 18px; }
+      .panel-head { display: block; }
+      .progress { width: 100%; }
+      .desktop-preview { grid-template-columns: 1fr; padding: 12px; }
+      .preview-image { min-height: 230px; order: -1; }
+      .question-box { min-height: auto; }
+      .flow-actions { position: sticky; bottom: 0; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); margin: 20px -18px -18px; padding: 14px 18px; }
+      .flow-actions .pill { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#home" aria-label="shevadaro">
+        <span class="brand-mark">sh</span>
+        <span>shevadaro <small data-copy="tagline">Insurance compare for Georgia</small></span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="active hide-mobile" data-nav="home" data-copy="navHome">Home</button>
+        <button class="hide-mobile" data-nav="products" data-copy="navProducts">Products</button>
+        <button class="hide-mobile" data-nav="contact" data-copy="navContact">Contact</button>
+        <button id="langToggle" class="pill">GE</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="hero">
+        <div class="hero-copy">
+          <h1 data-copy="heroTitle">Smarter protection, built for Georgia.</h1>
+          <p data-copy="heroText">Choose the insurance you need, answer a short guided flow, and compare demo offers from Georgian partners in GEL.</p>
+          <div class="hero-actions">
+            <button class="pill primary" data-action="start" data-copy="start">Get Started</button>
+            <button class="pill gradient" data-action="offers" data-copy="demoPrices">View demo prices</button>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>7</b><span data-copy="statProducts">products</span></div>
+            <div class="stat"><b>3-4</b><span data-copy="statOffers">offers each</span></div>
+            <div class="stat"><b>GEL</b><span data-copy="statCurrency">local prices</span></div>
+          </div>
+        </div>
+
+        <aside class="phone" aria-label="Mobile app preview">
+          <div class="phone-head">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span class="avatar"></span>
+              <div><b data-copy="welcome">Welcome Back!</b><br><small data-copy="community">Georgian community</small></div>
+            </div>
+            <button class="pill" data-action="start">+</button>
+          </div>
+          <div class="switcher">
+            <button class="active" data-copy="buyNow">Buy Now</button>
+            <button data-copy="renew">Renew</button>
+          </div>
+          <div class="promo">
+            <h3 data-copy="promoTitle">Compare before you decide</h3>
+            <span data-copy="promoText">Auto, travel, property, health, life, mortgage, and pet insurance.</span>
+          </div>
+          <h3 class="section-title" data-copy="popular">Popular Insurances</h3>
+          <div id="mobileProductList" class="mobile-product-list"></div>
+          <div class="bottom-nav">
+            <button class="active" data-action="home">⌂</button>
+            <button data-action="products">⌖</button>
+            <button data-action="offers">◌</button>
+            <button data-nav="contact">☏</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="products" class="screen">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 data-copy="productsTitle">Choose insurance</h2>
+            <p data-copy="productsText">Pick one product. The next page focuses only on that flow.</p>
+          </div>
+          <div class="progress"><i style="--w:14%"></i></div>
+        </div>
+        <div id="productGrid" class="product-grid"></div>
+      </div>
+    </section>
+
+    <section id="flow" class="screen">
+      <div class="flow-layout">
+        <aside class="panel flow-side">
+          <b data-copy="quoteProgress">Quote progress</b>
+          <div id="stepList" class="step-list"></div>
+        </aside>
+        <div class="panel question-box">
+          <div>
+            <div class="panel-head">
+              <div>
+                <h2 id="flowProductTitle">Auto insurance</h2>
+                <p id="flowProductSub">Short guided flow</p>
+              </div>
+              <div class="progress"><i id="flowProgress" style="--w:20%"></i></div>
+            </div>
+            <h3 id="questionTitle" class="question-title"></h3>
+            <p id="questionHelp"></p>
+            <div id="questionFields" class="fields"></div>
+          </div>
+          <div class="flow-actions">
+            <button class="pill" id="backBtn" data-copy="back">Back</button>
+            <button class="pill gradient" id="skipBtn" data-copy="skipOffers">Skip to offers</button>
+            <button class="pill primary" id="nextBtn" data-copy="next">Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="offers" class="screen">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="offersTitle">Prepared offers</h2>
+            <p id="offersSub">Demo comparison from partner companies.</p>
+          </div>
+          <div class="progress"><i style="--w:100%"></i></div>
+        </div>
+        <div id="offersGrid" class="offers-grid"></div>
+        <div class="flow-actions">
+          <button class="pill" data-action="products" data-copy="chooseAnother">Choose another product</button>
+          <button class="pill primary" data-action="flow" data-copy="editAnswers">Edit answers</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="screen">
+      <div class="panel desktop-preview">
+        <div>
+          <h2 data-copy="contactTitle">Talk to a consultant</h2>
+          <p data-copy="contactText">Leave your details and the Shevadaro team can help complete the comparison flow.</p>
+          <div class="fields field-grid">
+            <div class="field"><label data-copy="name">Name</label><input value="Giorgi"></div>
+            <div class="field"><label data-copy="phone">Phone</label><input value="+995 555 075 343"></div>
+            <div class="field"><label>Email</label><input value="demo@shevadaro.ge"></div>
+            <div class="field"><label data-copy="product">Product</label><select id="contactProduct"></select></div>
+          </div>
+          <p><button class="pill primary" style="margin-top:18px" data-copy="send">Send request</button></p>
+        </div>
+        <div class="preview-image" style="--img:url('https://images.unsplash.com/photo-1556745753-b2904692b3cd?auto=format&fit=crop&w=900&q=80')"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const state = { lang: "ge", product: "auto", step: 0, answers: {} };
+
+    const ui = {
+      en: {
+        tagline: "Insurance compare for Georgia", navHome: "Home", navProducts: "Products", navContact: "Contact",
+        heroTitle: "Smarter protection, built for Georgia.",
+        heroText: "Choose the insurance you need, answer a short guided flow, and compare demo offers from Georgian partners in GEL.",
+        start: "Get Started", demoPrices: "View demo prices", statProducts: "products", statOffers: "offers each", statCurrency: "local prices",
+        welcome: "Welcome Back!", community: "Georgian community", buyNow: "Buy Now", renew: "Renew",
+        promoTitle: "Compare before you decide", promoText: "Auto, travel, property, health, life, mortgage, and pet insurance.",
+        popular: "Popular Insurances", productsTitle: "Choose insurance", productsText: "Pick one product. The next page focuses only on that flow.",
+        quoteProgress: "Quote progress", back: "Back", next: "Next", skipOffers: "Skip to offers", chooseAnother: "Choose another product",
+        editAnswers: "Edit answers", offersTitle: "Prepared offers", offersSub: "Demo comparison from partner companies.",
+        contactTitle: "Talk to a consultant", contactText: "Leave your details and the Shevadaro team can help complete the comparison flow.",
+        name: "Name", phone: "Phone", product: "Product", send: "Send request"
+      },
+      ge: {
+        tagline: "დაზღვევის შედარება საქართველოში", navHome: "მთავარი", navProducts: "პროდუქტები", navContact: "კონტაქტი",
+        heroTitle: "ჭკვიანი დაცვა საქართველოსთვის.",
+        heroText: "აირჩიეთ დაზღვევა, გაიარეთ მოკლე კითხვარი და შეადარეთ დემო შეთავაზებები ქართულ კომპანიებში GEL-ით.",
+        start: "დაწყება", demoPrices: "დემო ფასები", statProducts: "პროდუქტი", statOffers: "შეთავაზება", statCurrency: "ადგილობრივი ფასები",
+        welcome: "კეთილი დაბრუნება!", community: "ქართული საზოგადოება", buyNow: "შეძენა", renew: "განახლება",
+        promoTitle: "შეადარეთ გადაწყვეტილებამდე", promoText: "ავტო, სამოგზაურო, ქონება, ჯანმრთელობა, სიცოცხლე, იპოთეკა და შინაური ცხოველი.",
+        popular: "პოპულარული დაზღვევები", productsTitle: "აირჩიეთ დაზღვევა", productsText: "აირჩიეთ ერთი პროდუქტი. შემდეგი გვერდი აჩვენებს მხოლოდ შესაბამის კითხვარს.",
+        quoteProgress: "შეთავაზების პროგრესი", back: "უკან", next: "შემდეგი", skipOffers: "შეთავაზებებზე გადასვლა", chooseAnother: "სხვა პროდუქტი",
+        editAnswers: "პასუხების შეცვლა", offersTitle: "მომზადებული შეთავაზებები", offersSub: "დემო შედარება პარტნიორი კომპანიებისგან.",
+        contactTitle: "კონსულტანტთან საუბარი", contactText: "დატოვეთ მონაცემები და Shevadaro დაგეხმარებათ შედარების დასრულებაში.",
+        name: "სახელი", phone: "ტელეფონი", product: "პროდუქტი", send: "გაგზავნა"
+      }
+    };
+
+    const products = {
+      auto: { icon: "🚗", en: ["Auto insurance", "Vehicle, driver and coverage"], ge: ["ავტოდაზღვევა", "ავტომობილი, მძღოლი და პაკეტი"], img: "url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80')", base: 204 },
+      travel: { icon: "✈", en: ["Travel insurance", "Dates, country and passengers"], ge: ["სამოგზაურო დაზღვევა", "თარიღები, ქვეყანა და მგზავრები"], img: "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80')", base: 38 },
+      property: { icon: "⌂", en: ["Property insurance", "Apartment, building and contents"], ge: ["ქონების დაზღვევა", "ბინა, შენობა და ნივთები"], img: "url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80')", base: 52 },
+      mortgage: { icon: "□", en: ["Mortgage insurance", "Bank, loan and property"], ge: ["იპოთეკის დაზღვევა", "ბანკი, სესხი და ქონება"], img: "url('https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=900&q=80')", base: 64 },
+      life: { icon: "♥", en: ["Life insurance", "Life, critical illness or both"], ge: ["სიცოცხლის დაზღვევა", "სიცოცხლე, კრიტიკული ან ორივე"], img: "url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80')", base: 48 },
+      health: { icon: "+", en: ["Health insurance", "Clinic, dental and medicine"], ge: ["ჯანმრთელობის დაზღვევა", "კლინიკა, სტომატოლოგია და წამლები"], img: "url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=900&q=80')", base: 72 },
+      pet: { icon: "🐾", en: ["Pet insurance", "Dogs, cats and clinic coverage"], ge: ["შინაური ცხოველის დაზღვევა", "ძაღლი, კატა და კლინიკის დაფარვა"], img: "url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=900&q=80')", base: 29 }
+    };
+
+    const flows = {
+      auto: [
+        q("coverage", ["Coverage type", "დაფარვის ტიპი"], ["Third party", "Comprehensive", "Third party + own damage"], ["მესამე პირი", "სრული კასკო", "მესამე პირი + საკუთარი ზიანი"]),
+        q("start", ["Policy start date", "პოლისის დაწყების თარიღი"], ["Tomorrow", "Beginning of month", "Custom date"], ["ხვალ", "თვის დასაწყისი", "მორგებული თარიღი"]),
+        f("vehicle", ["Vehicle details", "ავტომობილის მონაცემები"], [["brand","Brand","ბრენდი","Honda"],["model","Model","მოდელი","Civic"],["year","Year","წელი","2022"],["engine","Engine","ძრავი","1.8"]]),
+        f("vin", ["VIN and plate", "VIN და ნომერი"], [["vin","VIN max 17 characters","VIN მაქს. 17 სიმბოლო","JHMFC1660GX000000",17],["plate","Plate number","სახელმწიფო ნომერი","AB123CD"]]),
+        q("driver", ["Youngest driver age", "ყველაზე ახალგაზრდა მძღოლი"], ["18+", "21+", "26+", "30+"], ["18+", "21+", "26+", "30+"])
+      ],
+      travel: [
+        f("travelers", ["Trip and passenger details", "მოგზაურობის მონაცემები"], [["country","Destination country","მიმართულება","Italy"],["start","Start date","დაწყება","2026-06-01"],["end","End date","დასრულება","2026-06-08"],["passengers","Passengers","მგზავრები","2"]]),
+        q("limit", ["Coverage maximum", "დაფარვის ლიმიტი"], ["50,000 EUR", "100,000 EUR", "50,000 USD", "100,000 USD"], ["50,000 EUR", "100,000 EUR", "50,000 USD", "100,000 USD"]),
+        q("buyer", ["Who is buying the policy?", "ვისთვის ყიდულობთ პოლისს?"], ["For myself", "For family", "For someone else"], ["ჩემთვის", "ოჯახისთვის", "სხვა პირისთვის"]),
+        q("risk", ["Add baggage and flight delay cover?", "დავამატოთ ბარგისა და რეისის დაგვიანება?"], ["Yes", "No"], ["დიახ", "არა"]),
+        f("contact", ["Contact information", "საკონტაქტო ინფორმაცია"], [["mobile","Mobile number","მობილური","555075343"],["email","Email","ელფოსტა","demo@shevadaro.ge"]])
+      ],
+      property: [
+        f("home", ["Apartment or house details", "ბინის ან სახლის მონაცემები"], [["city","City","ქალაქი","Tbilisi"],["area","Area m2","ფართობი მ2","85"],["floor","Floor","სართული","5"],["year","Building year","აშენების წელი","2016"]]),
+        q("type", ["Property type", "ქონების ტიპი"], ["Apartment", "House", "Commercial"], ["ბინა", "სახლი", "კომერციული"]),
+        f("values", ["Coverage values", "დაფარვის თანხები"], [["building","Building value GEL","შენობის ღირებულება GEL","180000"],["contents","Contents value GEL","ნივთების ღირებულება GEL","25000"]]),
+        q("risks", ["Choose extra protection", "აირჩიეთ დამატებითი დაცვა"], ["Water damage", "Theft", "Earthquake", "All risks"], ["წყლის დაზიანება", "ქურდობა", "მიწისძვრა", "ყველა რისკი"]),
+        q("owner", ["Do you own the property?", "ქონება თქვენია?"], ["Yes", "No"], ["დიახ", "არა"])
+      ],
+      mortgage: [
+        f("loan", ["Mortgage details", "იპოთეკის მონაცემები"], [["bank","Bank","ბანკი","TBC"],["loan","Loan amount GEL","სესხის თანხა GEL","150000"],["term","Loan term years","სესხის ვადა წლებში","15"],["propertyValue","Property value GEL","ქონების ღირებულება GEL","220000"]]),
+        q("cover", ["Bank required coverage", "ბანკის მოთხოვნილი დაფარვა"], ["Property only", "Borrower life", "Property + life"], ["მხოლოდ ქონება", "მსესხებლის სიცოცხლე", "ქონება + სიცოცხლე"]),
+        f("address", ["Property address", "ქონების მისამართი"], [["city","City","ქალაქი","Tbilisi"],["street","Street","ქუჩა","Kazbegi Ave"],["area","Area m2","ფართობი მ2","78"],["cadastre","Cadastre code","საკადასტრო კოდი","01.10.10.000.000"]]),
+        q("start", ["Policy start date", "პოლისის დაწყება"], ["Tomorrow", "Beginning of month", "Custom date"], ["ხვალ", "თვის დასაწყისი", "მორგებული თარიღი"])
+      ],
+      life: [
+        q("product", ["Choose product", "აირჩიეთ პროდუქტი"], ["Life + critical illness", "Life insurance", "Critical illness"], ["სიცოცხლე + კრიტიკული", "სიცოცხლის დაზღვევა", "კრიტიკული დაავადებები"]),
+        f("person", ["Policyholder", "დამზღვევი"], [["age","Age 20-53","ასაკი 20-53","35"],["gender","Gender","სქესი","Male"],["id","ID number","პირადი ნომერი","01001001001"],["phone","Phone","ტელეფონი","555075343"]]),
+        q("lifeLimit", ["Life coverage limit", "სიცოცხლის დაფარვის ლიმიტი"], ["50,000 GEL", "100,000 GEL", "Custom"], ["50,000 GEL", "100,000 GEL", "მორგებული"]),
+        q("criticalLimit", ["Critical illness limit", "კრიტიკული დაავადებების ლიმიტი"], ["50,000 GEL", "100,000 GEL", "Not included"], ["50,000 GEL", "100,000 GEL", "არ შედის"]),
+        q("health", ["Any serious medical condition?", "არსებული სერიოზული დაავადება?"], ["No", "Yes, consultant needed"], ["არა", "დიახ, საჭიროა კონსულტანტი"])
+      ],
+      health: [
+        q("package", ["Choose health package", "აირჩიეთ ჯანმრთელობის პაკეტი"], ["Basic", "Standard", "Premium"], ["საბაზისო", "სტანდარტი", "პრემიუმი"]),
+        f("insured", ["Insured people", "დაზღვეული პირები"], [["age","Main insured age","მთავარი პირის ასაკი","32"],["family","Family members","ოჯახის წევრები","1"],["city","City","ქალაქი","Tbilisi"],["clinic","Preferred clinic","სასურველი კლინიკა","Any"]]),
+        q("extras", ["Add extra benefits", "დამატებითი სარგებელი"], ["Dental", "Medicine", "Critical illness", "All"], ["სტომატოლოგია", "მედიკამენტები", "კრიტიკული", "ყველა"]),
+        q("condition", ["Any current diagnosis?", "არის მიმდინარე დიაგნოზი?"], ["No", "Yes"], ["არა", "დიახ"])
+      ],
+      pet: [
+        q("petType", ["Pet type", "ცხოველის ტიპი"], ["Dog", "Cat"], ["ძაღლი", "კატა"]),
+        f("pet", ["Pet details", "ცხოველის მონაცემები"], [["name","Pet name","სახელი","Luna"],["breed","Breed","ჯიში","Labrador"],["age","Age","ასაკი","3"],["weight","Weight kg","წონა კგ","18"]]),
+        q("care", ["Care status", "მოვლის სტატუსი"], ["Vaccinated", "Microchipped", "Both", "Not yet"], ["ვაქცინირებული", "ჩიპირებული", "ორივე", "ჯერ არა"]),
+        q("package", ["Choose coverage", "აირჩიეთ დაფარვა"], ["Accidents", "Clinic visits", "Full care"], ["უბედური შემთხვევა", "კლინიკა", "სრული დაცვა"]),
+        q("extras", ["Add surgery and liability?", "ოპერაცია და პასუხისმგებლობა?"], ["Yes", "No"], ["დიახ", "არა"])
+      ]
+    };
+
+    function q(key, title, en, ge) { return { type: "choice", key, title, options: { en, ge } }; }
+    function f(key, title, fields) { return { type: "fields", key, title, fields }; }
+    const t = key => ui[state.lang][key] || key;
+    const pt = (id, part = 0) => products[id][state.lang][part];
+
+    function show(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+      document.querySelectorAll("[data-nav]").forEach(b => b.classList.toggle("active", b.dataset.nav === id));
+      if (id === "flow") renderFlow();
+      if (id === "offers") renderOffers();
+      location.hash = id;
+    }
+
+    function renderCopies() {
+      document.documentElement.lang = state.lang === "ge" ? "ka" : "en";
+      document.querySelectorAll("[data-copy]").forEach(el => el.textContent = t(el.dataset.copy));
+      document.getElementById("langToggle").textContent = state.lang.toUpperCase();
+      renderProducts();
+      renderContactSelect();
+      if (document.getElementById("flow").classList.contains("active")) renderFlow();
+      if (document.getElementById("offers").classList.contains("active")) renderOffers();
+    }
+
+    function renderProducts() {
+      const mobile = document.getElementById("mobileProductList");
+      const grid = document.getElementById("productGrid");
+      mobile.innerHTML = "";
+      grid.innerHTML = "";
+      Object.keys(products).forEach(id => {
+        const p = products[id];
+        const mb = document.createElement("button");
+        mb.className = "mobile-product";
+        mb.innerHTML = `<span class="icon">${p.icon}</span><span><b>${pt(id)}</b><span>${pt(id,1)}</span></span><span class="plus">+</span>`;
+        mb.onclick = () => selectProduct(id, true);
+        mobile.appendChild(mb);
+
+        const card = document.createElement("button");
+        card.className = `product-card ${state.product === id ? "active" : ""}`;
+        card.innerHTML = `<span class="icon">${p.icon}</span><b>${pt(id)}</b><span>${pt(id,1)}</span>`;
+        card.onclick = () => selectProduct(id, true);
+        grid.appendChild(card);
+      });
+    }
+
+    function renderContactSelect() {
+      const select = document.getElementById("contactProduct");
+      select.innerHTML = Object.keys(products).map(id => `<option>${pt(id)}</option>`).join("");
+    }
+
+    function selectProduct(id, goFlow = false) {
+      state.product = id;
+      state.step = 0;
+      state.answers[id] ||= {};
+      renderProducts();
+      if (goFlow) show("flow");
+    }
+
+    function renderFlow() {
+      const product = products[state.product];
+      const steps = flows[state.product];
+      const step = steps[state.step];
+      document.getElementById("flowProductTitle").textContent = pt(state.product);
+      document.getElementById("flowProductSub").textContent = pt(state.product, 1);
+      document.getElementById("flowProgress").style.setProperty("--w", `${((state.step + 1) / steps.length) * 100}%`);
+      document.getElementById("questionTitle").textContent = step.title[state.lang === "ge" ? 1 : 0];
+      document.getElementById("questionHelp").textContent = state.lang === "ge" ? "დემო მონაცემები უკვე შევსებულია, შეგიძლიათ შეცვალოთ ან პირდაპირ გააგრძელოთ." : "Demo data is prefilled. You can change it or continue.";
+      const list = document.getElementById("stepList");
+      list.innerHTML = steps.map((s, i) => `<div class="step-pill ${i === state.step ? "active" : i < state.step ? "done" : ""}"><i>${i + 1}</i><span>${s.title[state.lang === "ge" ? 1 : 0]}</span></div>`).join("");
+      const fields = document.getElementById("questionFields");
+      fields.className = `fields ${step.type === "fields" ? "field-grid" : ""}`;
+      if (step.type === "choice") {
+        fields.className = "fields choice-grid";
+        fields.innerHTML = step.options[state.lang].map((option, index) => `<button class="choice ${index === 0 ? "active" : ""}" data-value="${option}">${option}</button>`).join("");
+        fields.querySelectorAll(".choice").forEach(btn => btn.onclick = () => {
+          fields.querySelectorAll(".choice").forEach(x => x.classList.remove("active"));
+          btn.classList.add("active");
+          state.answers[state.product][step.key] = btn.dataset.value;
+        });
+        state.answers[state.product][step.key] ||= step.options[state.lang][0];
+      } else {
+        fields.innerHTML = step.fields.map(([key,en,ge,value,max]) => `<div class="field"><label>${state.lang === "ge" ? ge : en}</label><input ${max ? `maxlength="${max}"` : ""} value="${state.answers[state.product][key] || value}" data-key="${key}"></div>`).join("");
+        fields.querySelectorAll("input").forEach(input => input.oninput = () => state.answers[state.product][input.dataset.key] = input.value);
+      }
+      document.querySelector(".question-box").style.backgroundImage = `linear-gradient(rgba(255,255,255,.93),rgba(255,255,255,.93)), ${product.img}`;
+      document.querySelector(".question-box").style.backgroundSize = "cover";
+    }
+
+    function renderOffers() {
+      const p = products[state.product];
+      const names = ["Aldagi", "GPI", "TBC Insurance", "Imedi L"];
+      const geNames = ["ალდაგი", "GPI", "TBC დაზღვევა", "იმედი L"];
+      const benefits = {
+        en: ["Fast digital policy", "24/7 assistance", "Partner clinic/network", "Flexible coverage"],
+        ge: ["სწრაფი ციფრული პოლისი", "24/7 დახმარება", "პარტნიორი კლინიკა/ქსელი", "მოქნილი დაფარვა"]
+      };
+      const multiplier = state.answers[state.product]?.risk === "Yes" || state.answers[state.product]?.risk === "დიახ" ? 1.18 : 1;
+      document.getElementById("offersTitle").textContent = `${t("offersTitle")} · ${pt(state.product)}`;
+      document.getElementById("offersSub").textContent = t("offersSub");
+      document.getElementById("offersGrid").innerHTML = names.map((name, i) => {
+        const price = Math.round((p.base * (1 + i * .14) * multiplier) * 100) / 100;
+        return `<article class="offer ${i === 1 ? "recommended" : ""}">
+          <span class="tag">${i === 1 ? (state.lang === "ge" ? "რეკომენდებული" : "Recommended") : (state.lang === "ge" ? "დემო" : "Demo")}</span>
+          <h3>${state.lang === "ge" ? geNames[i] : name}</h3>
+          <div class="price">${price} ₾</div>
+          <ul>${benefits[state.lang].map(b => `<li>${b}</li>`).join("")}</ul>
+          <button class="pill primary">${state.lang === "ge" ? "არჩევა" : "Choose"}</button>
+        </article>`;
+      }).join("");
+    }
+
+    document.addEventListener("click", e => {
+      const nav = e.target.closest("[data-nav]");
+      const action = e.target.closest("[data-action]");
+      if (nav) show(nav.dataset.nav);
+      if (action) {
+        const a = action.dataset.action;
+        if (a === "start" || a === "products") show("products");
+        if (a === "offers") show("offers");
+        if (a === "flow") show("flow");
+        if (a === "home") show("home");
+      }
+    });
+
+    document.getElementById("langToggle").onclick = () => {
+      state.lang = state.lang === "ge" ? "en" : "ge";
+      renderCopies();
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      const steps = flows[state.product];
+      if (state.step < steps.length - 1) { state.step++; renderFlow(); } else show("offers");
+    };
+    document.getElementById("backBtn").onclick = () => {
+      if (state.step > 0) { state.step--; renderFlow(); } else show("products");
+    };
+    document.getElementById("skipBtn").onclick = () => show("offers");
+
+    const initial = location.hash.replace("#", "");
+    renderCopies();
+    if (initial && document.getElementById(initial)) show(initial);
+  </script>
+</body>
+</html>
