@@ -50,6 +50,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-direction: row-reverse;
       gap: 16px;
     }
 
@@ -218,6 +219,187 @@
 
     .screen { display: none; }
     .screen.active { display: block; }
+
+    .landing { display: grid; gap: 72px; }
+    .landing-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 520px);
+      gap: 38px;
+      align-items: center;
+      min-height: calc(100vh - 132px);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 10px 14px;
+      margin-bottom: 18px;
+      color: var(--green);
+      background: #e7f4ef;
+      border: 1px solid rgba(19, 122, 88, .18);
+      font-weight: 950;
+    }
+    .landing-hero h1, .landing-section h2 {
+      margin: 0;
+      color: #14201e;
+      letter-spacing: 0;
+    }
+    .landing-hero h1 {
+      max-width: 760px;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: .95;
+    }
+    .landing-hero p, .landing-section p {
+      color: var(--muted);
+      font-weight: 760;
+      line-height: 1.45;
+      font-size: 20px;
+    }
+    .hero-photo, .split-photo {
+      min-height: 560px;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(22, 30, 81, .08), rgba(19, 122, 88, .12)),
+        var(--img) center/cover;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+    .landing-section {
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: clamp(22px, 4vw, 48px);
+      box-shadow: 0 18px 55px rgba(22, 30, 81, .08);
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .section-head h2, .landing-section h2 { font-size: clamp(34px, 4.6vw, 66px); line-height: 1; }
+    .home-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .home-option {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 24px;
+      padding: 20px;
+      min-height: 190px;
+      text-align: left;
+      display: grid;
+      gap: 12px;
+      color: var(--ink);
+      box-shadow: 0 14px 34px rgba(22, 30, 81, .06);
+    }
+    .home-option:hover { border-color: var(--green); transform: translateY(-2px); }
+    .home-option b { font-size: 22px; }
+    .home-option span { color: var(--muted); font-weight: 780; }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 460px);
+      gap: 34px;
+      align-items: center;
+    }
+    .split-photo { min-height: 420px; }
+    .partners-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(360px, 1fr);
+      gap: 30px;
+      align-items: center;
+    }
+    .partner-orbit {
+      min-height: 560px;
+      position: relative;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, white 0 25%, rgba(39,199,255,.10) 26% 42%, rgba(114,103,232,.12) 43% 61%, transparent 62%),
+        linear-gradient(135deg, rgba(255,255,255,.9), rgba(255,255,255,.52));
+    }
+    .partner-center {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, var(--green), var(--ink));
+      font-size: 28px;
+      font-weight: 1000;
+      box-shadow: var(--shadow);
+    }
+    .partner-chip {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-230px) rotate(calc(-1 * var(--angle)));
+      min-width: 132px;
+      max-width: 180px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 28px rgba(22,30,81,.10);
+      text-align: center;
+      font-weight: 950;
+      font-size: 13px;
+    }
+    .steps-grid, .reviews-grid, .download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .step-card, .review-card, .download-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+    }
+    .step-card i {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--ink);
+      color: white;
+      font-style: normal;
+      font-weight: 1000;
+      margin-bottom: 16px;
+    }
+    .store-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+    .store-button {
+      min-height: 58px;
+      border-radius: 16px;
+      border: 0;
+      color: white;
+      background: #141817;
+      padding: 0 20px;
+      font-weight: 1000;
+    }
+    .cta-band {
+      text-align: center;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(19,122,88,.96), rgba(22,30,81,.96)),
+        url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=80") center/cover;
+    }
+    .cta-band h2 { color: white; }
+    .cta-band p { color: rgba(255,255,255,.82); margin-inline: auto; max-width: 720px; }
+    .footer {
+      display: grid;
+      grid-template-columns: 1.1fr repeat(3, minmax(0, .7fr));
+      gap: 24px;
+      padding: 34px 0 0;
+      color: var(--muted);
+      font-weight: 780;
+    }
+    .footer h3 { color: var(--ink); margin: 0 0 12px; }
+    .footer a { display: block; margin: 8px 0; }
     .panel {
       background: rgba(255,255,255,.86);
       border: 1px solid var(--line);
@@ -339,6 +521,11 @@
 
     @media (max-width: 980px) {
       .hero { grid-template-columns: 1fr; min-height: auto; }
+      .landing-hero, .split, .partners-wrap { grid-template-columns: 1fr; min-height: auto; }
+      .home-options, .steps-grid, .reviews-grid, .download-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .partner-orbit { min-height: 470px; }
+      .partner-chip { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-190px) rotate(calc(-1 * var(--angle))); }
+      .footer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .phone { min-height: 720px; }
       .product-grid, .offers-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .flow-layout { grid-template-columns: 1fr; }
@@ -348,7 +535,17 @@
     @media (max-width: 640px) {
       .topbar-inner { padding: 12px 14px; }
       .brand small, .nav .hide-mobile { display: none; }
+      .topbar-inner { flex-direction: row-reverse; }
       main { padding: 18px 12px 76px; }
+      .landing { gap: 34px; }
+      .landing-hero h1 { font-size: 44px; }
+      .landing-hero p, .landing-section p { font-size: 16px; }
+      .hero-photo, .split-photo { min-height: 300px; }
+      .home-options, .steps-grid, .reviews-grid, .download-grid, .footer { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .partner-orbit { min-height: auto; border-radius: 28px; display: grid; gap: 10px; padding: 18px; }
+      .partner-center, .partner-chip { position: static; transform: none; width: auto; height: auto; border-radius: 18px; max-width: none; }
+      .download-card { grid-column: auto !important; }
       .hero-copy h1 { font-size: 45px; }
       .hero-copy p { font-size: 17px; }
       .hero { gap: 18px; }
@@ -373,9 +570,9 @@
         <span>Ways <small data-copy="tagline">Insurance compare for Georgia</small></span>
       </a>
       <nav class="nav" aria-label="Main navigation">
-        <button class="active hide-mobile" data-nav="home" data-copy="navHome">Home</button>
-        <button class="hide-mobile" data-nav="products" data-copy="navProducts">Products</button>
-        <button class="hide-mobile" data-nav="contact" data-copy="navContact">Contact</button>
+        <button class="active hide-mobile" data-nav="home" data-copy="navMenu">Menu</button>
+        <button class="hide-mobile" data-nav="contact" data-copy="navSignIn">Sign In</button>
+        <button class="pill primary hide-mobile" data-action="products" data-copy="navCta">Compare offers</button>
         <button id="langToggle" class="pill">GE</button>
       </nav>
     </div>
@@ -383,46 +580,130 @@
 
   <main>
     <section id="home" class="screen active">
-      <div class="hero">
-        <div class="hero-copy">
-          <h1 data-copy="heroTitle">Smarter protection, built for Georgia.</h1>
-          <p data-copy="heroText">Choose the insurance you need, answer a short guided flow, and compare demo offers from Georgian partners in GEL.</p>
-          <div class="hero-actions">
-            <button class="pill primary" data-action="start" data-copy="start">Get Started</button>
-            <button class="pill gradient" data-action="offers" data-copy="demoPrices">View demo prices</button>
-          </div>
-          <div class="stats">
-            <div class="stat"><b>7</b><span data-copy="statProducts">products</span></div>
-            <div class="stat"><b>3-4</b><span data-copy="statOffers">offers each</span></div>
-            <div class="stat"><b>GEL</b><span data-copy="statCurrency">local prices</span></div>
-          </div>
-        </div>
-
-        <aside class="phone" aria-label="Mobile app preview">
-          <div class="phone-head">
-            <div style="display:flex;align-items:center;gap:12px">
-              <span class="avatar"></span>
-              <div><b data-copy="welcome">Welcome Back!</b><br><small data-copy="community">Georgian community</small></div>
+      <div class="landing">
+        <section class="landing-hero">
+          <div>
+            <span class="eyebrow" data-copy="heroEyebrow">Insurance comparison for Georgia</span>
+            <h1 data-copy="heroTitle">Compare insurance offers in one place.</h1>
+            <p data-copy="heroText">Choose auto, travel, property, health, critical illness, or pet insurance and receive clear demo offers from Georgian insurance partners.</p>
+            <div class="hero-actions">
+              <button class="pill primary" data-action="products" data-copy="start">Start comparison</button>
+              <button class="pill gradient" data-nav="contact" data-copy="talkConsultant">Talk to a consultant</button>
             </div>
-            <button class="pill" data-action="start">+</button>
+            <div class="stats">
+              <div class="stat"><b>6</b><span data-copy="statProducts">insurance types</span></div>
+              <div class="stat"><b>3-4</b><span data-copy="statOffers">offers each</span></div>
+              <div class="stat"><b>GEL</b><span data-copy="statCurrency">local prices</span></div>
+            </div>
           </div>
-          <div class="switcher">
-            <button class="active" data-copy="buyNow">Buy Now</button>
-            <button data-copy="renew">Renew</button>
+          <div class="hero-photo" style="--img:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80')" aria-label="Family home"></div>
+        </section>
+
+        <section class="landing-section">
+          <div class="section-head">
+            <div>
+              <h2 data-copy="optionsTitle">Insurance options</h2>
+              <p data-copy="optionsText">Select a product and go directly into its question flow.</p>
+            </div>
+            <button class="pill primary" data-action="products" data-copy="viewAll">View all products</button>
           </div>
-          <div class="promo">
-            <h3 data-copy="promoTitle">Compare before you decide</h3>
-            <span data-copy="promoText">Auto, travel, property, health, life, mortgage, and pet insurance.</span>
+          <div id="homeInsuranceOptions" class="home-options"></div>
+        </section>
+
+        <section class="landing-section split">
+          <div>
+            <span class="eyebrow" data-copy="whyEyebrow">Built for everyday decisions</span>
+            <h2 data-copy="whyTitle">Insurance decisions should be easier.</h2>
+            <p data-copy="whyText">Ways guides users through one short form, prepares demo prices, and shows what each offer includes so families, drivers, homeowners, and pet owners can compare before committing.</p>
           </div>
-          <h3 class="section-title" data-copy="popular">Popular Insurances</h3>
-          <div id="mobileProductList" class="mobile-product-list"></div>
-          <div class="bottom-nav">
-            <button class="active" data-action="home">⌂</button>
-            <button data-action="products">⌖</button>
-            <button data-action="offers">◌</button>
-            <button data-nav="contact">☏</button>
+          <div class="split-photo" style="--img:url('https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=1000&q=80')"></div>
+        </section>
+
+        <section class="landing-section partners-wrap">
+          <div>
+            <h2 data-copy="partnersTitle">Compare leading insurance companies.</h2>
+            <p data-copy="partnersText">Ways is designed to present prices, limits, deductibles, and coverage bullets from several providers in one clear comparison.</p>
           </div>
-        </aside>
+          <div class="partner-orbit" id="partnerOrbit">
+            <div class="partner-center">Ways</div>
+          </div>
+        </section>
+
+        <section class="landing-section">
+          <div class="section-head">
+            <div>
+              <h2 data-copy="howTitle">How does it work?</h2>
+              <p data-copy="howText">A simple path from product choice to prepared offers.</p>
+            </div>
+          </div>
+          <div class="steps-grid">
+            <article class="step-card"><i>1</i><h3 data-copy="step1Title">Choose insurance</h3><p data-copy="step1Text">Pick the product you want to compare.</p></article>
+            <article class="step-card"><i>2</i><h3 data-copy="step2Title">Answer questions</h3><p data-copy="step2Text">Use demo data or edit the form.</p></article>
+            <article class="step-card"><i>3</i><h3 data-copy="step3Title">Compare offers</h3><p data-copy="step3Text">Review prices and coverage bullets.</p></article>
+          </div>
+        </section>
+
+        <section class="landing-section download-grid">
+          <div class="download-card" style="grid-column: span 2">
+            <h2 data-copy="downloadTitle">Download the Ways app</h2>
+            <p data-copy="downloadText">Compare offers, save quotes, and manage insurance from your phone.</p>
+            <div class="store-buttons">
+              <button class="store-button">App Store</button>
+              <button class="store-button">Google Play</button>
+            </div>
+          </div>
+          <div class="download-card">
+            <h3 data-copy="appPreviewTitle">Mobile-first quote flow</h3>
+            <p data-copy="appPreviewText">Designed for quick forms, clear prices, and Georgian language support.</p>
+          </div>
+        </section>
+
+        <section class="landing-section">
+          <div class="section-head">
+            <div>
+              <h2 data-copy="reviewsTitle">Reviews</h2>
+              <p data-copy="reviewsText">Example customer feedback for the demo.</p>
+            </div>
+          </div>
+          <div class="reviews-grid">
+            <article class="review-card"><b>★★★★★</b><p data-copy="review1">I compared car insurance in a few minutes and understood the difference between offers.</p></article>
+            <article class="review-card"><b>★★★★★</b><p data-copy="review2">The travel insurance flow was simple and the price was easy to see.</p></article>
+            <article class="review-card"><b>★★★★★</b><p data-copy="review3">I liked seeing several companies side by side before choosing.</p></article>
+          </div>
+        </section>
+
+        <section class="landing-section cta-band">
+          <h2 data-copy="finalCtaTitle">Ready to compare insurance offers?</h2>
+          <p data-copy="finalCtaText">Start with one insurance type and see prepared demo offers in minutes.</p>
+          <div class="hero-actions">
+            <button class="pill gradient" data-action="products" data-copy="start">Start comparison</button>
+            <button class="pill" data-nav="contact" data-copy="talkConsultant">Talk to a consultant</button>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div>
+            <h3>Ways</h3>
+            <p data-copy="footerText">Insurance comparison platform for Georgia.</p>
+          </div>
+          <div>
+            <h3 data-copy="footerProducts">Products</h3>
+            <a data-action="products">Auto</a>
+            <a data-action="products">Travel</a>
+            <a data-action="products">Property</a>
+          </div>
+          <div>
+            <h3 data-copy="footerCompany">Company</h3>
+            <a data-nav="contact" data-copy="navContact">Contact</a>
+            <a data-copy="terms">Terms</a>
+            <a data-copy="privacy">Privacy</a>
+          </div>
+          <div>
+            <h3 data-copy="footerContact">Contact</h3>
+            <a>demo@ways.ge</a>
+            <a>+995 555 075 343</a>
+          </div>
+        </footer>
       </div>
     </section>
 
@@ -507,10 +788,27 @@
 
     const ui = {
       en: {
-        tagline: "Insurance compare for Georgia", navHome: "Home", navProducts: "Products", navContact: "Contact",
-        heroTitle: "Smarter protection, built for Georgia.",
-        heroText: "Choose the insurance you need, answer a short guided flow, and compare demo offers from Georgian partners in GEL.",
-        start: "Get Started", demoPrices: "View demo prices", statProducts: "products", statOffers: "offers each", statCurrency: "local prices",
+        tagline: "Insurance compare for Georgia", navHome: "Home", navProducts: "Products", navContact: "Contact", navMenu: "Menu", navSignIn: "Sign In", navCta: "Compare offers",
+        heroEyebrow: "Insurance comparison for Georgia",
+        heroTitle: "Compare insurance offers in one place.",
+        heroText: "Choose auto, travel, property, health, critical illness, or pet insurance and receive clear demo offers from Georgian insurance partners.",
+        start: "Start comparison", talkConsultant: "Talk to a consultant", demoPrices: "View demo prices", statProducts: "insurance types", statOffers: "offers each", statCurrency: "local prices",
+        optionsTitle: "Insurance options", optionsText: "Select a product and go directly into its question flow.", viewAll: "View all products",
+        whyEyebrow: "Built for everyday decisions", whyTitle: "Insurance decisions should be easier.",
+        whyText: "Ways guides users through one short form, prepares demo prices, and shows what each offer includes so families, drivers, homeowners, and pet owners can compare before committing.",
+        partnersTitle: "Compare leading insurance companies.", partnersText: "Ways is designed to present prices, limits, deductibles, and coverage bullets from several providers in one clear comparison.",
+        howTitle: "How does it work?", howText: "A simple path from product choice to prepared offers.",
+        step1Title: "Choose insurance", step1Text: "Pick the product you want to compare.",
+        step2Title: "Answer questions", step2Text: "Use demo data or edit the form.",
+        step3Title: "Compare offers", step3Text: "Review prices and coverage bullets.",
+        downloadTitle: "Download the Ways app", downloadText: "Compare offers, save quotes, and manage insurance from your phone.",
+        appPreviewTitle: "Mobile-first quote flow", appPreviewText: "Designed for quick forms, clear prices, and Georgian language support.",
+        reviewsTitle: "Reviews", reviewsText: "Example customer feedback for the demo.",
+        review1: "I compared car insurance in a few minutes and understood the difference between offers.",
+        review2: "The travel insurance flow was simple and the price was easy to see.",
+        review3: "I liked seeing several companies side by side before choosing.",
+        finalCtaTitle: "Ready to compare insurance offers?", finalCtaText: "Start with one insurance type and see prepared demo offers in minutes.",
+        footerText: "Insurance comparison platform for Georgia.", footerProducts: "Products", footerCompany: "Company", footerContact: "Contact", terms: "Terms", privacy: "Privacy",
         welcome: "Welcome Back!", community: "Georgian community", buyNow: "Buy Now", renew: "Renew",
         promoTitle: "Compare before you decide", promoText: "Auto, travel, property, health, life, mortgage, and pet insurance.",
         popular: "Popular Insurances", productsTitle: "Choose insurance", productsText: "Pick one product. The next page focuses only on that flow.",
@@ -520,10 +818,27 @@
         name: "Name", phone: "Phone", product: "Product", send: "Send request"
       },
       ge: {
-        tagline: "დაზღვევის შედარება საქართველოში", navHome: "მთავარი", navProducts: "პროდუქტები", navContact: "კონტაქტი",
-        heroTitle: "ჭკვიანი დაცვა საქართველოსთვის.",
-        heroText: "აირჩიეთ დაზღვევა, გაიარეთ მოკლე კითხვარი და შეადარეთ დემო შეთავაზებები ქართულ კომპანიებში GEL-ით.",
-        start: "დაწყება", demoPrices: "დემო ფასები", statProducts: "პროდუქტი", statOffers: "შეთავაზება", statCurrency: "ადგილობრივი ფასები",
+        tagline: "დაზღვევის შედარება საქართველოში", navHome: "მთავარი", navProducts: "პროდუქტები", navContact: "კონტაქტი", navMenu: "მენიუ", navSignIn: "შესვლა", navCta: "შეთავაზებების შედარება",
+        heroEyebrow: "დაზღვევის შედარება საქართველოში",
+        heroTitle: "შეადარეთ დაზღვევის შეთავაზებები ერთ სივრცეში.",
+        heroText: "აირჩიეთ ავტო, სამოგზაურო, ქონების, ჯანმრთელობის, კრიტიკული დაავადებების ან შინაური ცხოველის დაზღვევა და მიიღეთ გასაგები დემო შეთავაზებები ქართული პარტნიორებისგან.",
+        start: "შედარების დაწყება", talkConsultant: "კონსულტანტთან საუბარი", demoPrices: "დემო ფასები", statProducts: "დაზღვევის ტიპი", statOffers: "შეთავაზება", statCurrency: "ადგილობრივი ფასები",
+        optionsTitle: "დაზღვევის ვარიანტები", optionsText: "აირჩიეთ პროდუქტი და პირდაპირ გადადით შესაბამის კითხვარზე.", viewAll: "ყველა პროდუქტი",
+        whyEyebrow: "ყოველდღიური გადაწყვეტილებებისთვის", whyTitle: "დაზღვევის არჩევა მარტივი უნდა იყოს.",
+        whyText: "Ways მომხმარებელს ატარებს მოკლე კითხვარში, ამზადებს დემო ფასებს და აჩვენებს რას მოიცავს თითოეული შეთავაზება, რათა ოჯახებმა, მძღოლებმა, სახლის მფლობელებმა და შინაური ცხოველის მფლობელებმა არჩევანი წინასწარ შეადარონ.",
+        partnersTitle: "შეადარეთ წამყვანი სადაზღვევო კომპანიები.", partnersText: "Ways შექმნილია ფასების, ლიმიტების, ფრანშიზებისა და დაფარვის პუნქტების ერთ ნათელ შედარებაში საჩვენებლად.",
+        howTitle: "როგორ მუშაობს?", howText: "მარტივი გზა პროდუქტის არჩევიდან მომზადებულ შეთავაზებამდე.",
+        step1Title: "აირჩიეთ დაზღვევა", step1Text: "აირჩიეთ პროდუქტი, რომლის შედარებაც გსურთ.",
+        step2Title: "უპასუხეთ კითხვებს", step2Text: "გამოიყენეთ დემო მონაცემები ან შეცვალეთ ფორმა.",
+        step3Title: "შეადარეთ შეთავაზებები", step3Text: "ნახეთ ფასები და დაფარვის პუნქტები.",
+        downloadTitle: "ჩამოტვირთეთ Ways აპი", downloadText: "შეადარეთ შეთავაზებები, შეინახეთ ფასები და მართეთ დაზღვევა ტელეფონიდან.",
+        appPreviewTitle: "მობილურზე მორგებული კითხვარი", appPreviewText: "შექმნილია სწრაფი ფორმებისთვის, ნათელი ფასებისთვის და ქართული ენის მხარდაჭერისთვის.",
+        reviewsTitle: "შეფასებები", reviewsText: "დემო მომხმარებლების მაგალითი.",
+        review1: "ავტოდაზღვევა რამდენიმე წუთში შევადარე და შეთავაზებებს შორის განსხვავება მარტივად გავიგე.",
+        review2: "სამოგზაურო დაზღვევის კითხვარი მარტივი იყო და ფასიც ნათლად ჩანდა.",
+        review3: "მომეწონა რამდენიმე კომპანიის გვერდიგვერდ ნახვა არჩევამდე.",
+        finalCtaTitle: "მზად ხართ დაზღვევის შეთავაზებების შესადარებლად?", finalCtaText: "დაიწყეთ ერთი დაზღვევის ტიპით და ნახეთ მომზადებული დემო შეთავაზებები რამდენიმე წუთში.",
+        footerText: "დაზღვევის შედარების პლატფორმა საქართველოსთვის.", footerProducts: "პროდუქტები", footerCompany: "კომპანია", footerContact: "კონტაქტი", terms: "წესები", privacy: "კონფიდენციალურობა",
         welcome: "კეთილი დაბრუნება!", community: "ქართული საზოგადოება", buyNow: "შეძენა", renew: "განახლება",
         promoTitle: "შეადარეთ გადაწყვეტილებამდე", promoText: "ავტო, სამოგზაურო, ქონება, ჯანმრთელობა, სიცოცხლე, იპოთეკა და შინაური ცხოველი.",
         popular: "პოპულარული დაზღვევები", productsTitle: "აირჩიეთ დაზღვევა", productsText: "აირჩიეთ ერთი პროდუქტი. შემდეგი გვერდი აჩვენებს მხოლოდ შესაბამის კითხვარს.",
@@ -543,6 +858,27 @@
       health: { icon: "+", en: ["Health insurance", "Clinic, dental and medicine"], ge: ["ჯანმრთელობის დაზღვევა", "კლინიკა, სტომატოლოგია და წამლები"], img: "url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=900&q=80')", base: 72 },
       pet: { icon: "🐾", en: ["Pet insurance", "Dogs, cats and clinic coverage"], ge: ["შინაური ცხოველის დაზღვევა", "ძაღლი, კატა და კლინიკის დაფარვა"], img: "url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=900&q=80')", base: 29 }
     };
+
+    const homeProducts = [
+      ["auto"],
+      ["travel"],
+      ["property", "Home/property insurance", "სახლი/ქონების დაზღვევა"],
+      ["health"],
+      ["life", "Critical illness insurance", "კრიტიკული დაავადებების დაზღვევა"],
+      ["pet"]
+    ];
+
+    const partners = [
+      "ჯიპიაი ჰოლდინგი (GPI Holding) — ვენის სადაზღვევო ჯგუფი",
+      "თიბისი დაზღვევა (TBC Insurance)",
+      "ალდაგი (Aldagi)",
+      "იმედი L (Imedi L)",
+      "არდი (Ardi Insurance)",
+      "უნისონი (Unison)",
+      "ირაო (IRAO) — ვენის სადაზღვევო ჯგუფი",
+      "გლობალ ბენეფითს ჯორჯია (Global Benefits Georgia)",
+      "პსპ დაზღვევა (PSP Insurance)"
+    ];
 
     const flows = {
       auto: [
@@ -612,6 +948,8 @@
       document.querySelectorAll("[data-copy]").forEach(el => el.textContent = t(el.dataset.copy));
       document.getElementById("langToggle").textContent = state.lang.toUpperCase();
       renderProducts();
+      renderHomeOptions();
+      renderPartners();
       renderContactSelect();
       if (document.getElementById("flow").classList.contains("active")) renderFlow();
       if (document.getElementById("offers").classList.contains("active")) renderOffers();
@@ -620,15 +958,17 @@
     function renderProducts() {
       const mobile = document.getElementById("mobileProductList");
       const grid = document.getElementById("productGrid");
-      mobile.innerHTML = "";
+      if (mobile) mobile.innerHTML = "";
       grid.innerHTML = "";
       Object.keys(products).forEach(id => {
         const p = products[id];
-        const mb = document.createElement("button");
-        mb.className = "mobile-product";
-        mb.innerHTML = `<span class="icon">${p.icon}</span><span><b>${pt(id)}</b><span>${pt(id,1)}</span></span><span class="plus">+</span>`;
-        mb.onclick = () => selectProduct(id, true);
-        mobile.appendChild(mb);
+        if (mobile) {
+          const mb = document.createElement("button");
+          mb.className = "mobile-product";
+          mb.innerHTML = `<span class="icon">${p.icon}</span><span><b>${pt(id)}</b><span>${pt(id,1)}</span></span><span class="plus">+</span>`;
+          mb.onclick = () => selectProduct(id, true);
+          mobile.appendChild(mb);
+        }
 
         const card = document.createElement("button");
         card.className = `product-card ${state.product === id ? "active" : ""}`;
@@ -636,6 +976,32 @@
         card.onclick = () => selectProduct(id, true);
         grid.appendChild(card);
       });
+    }
+
+    function renderHomeOptions() {
+      const target = document.getElementById("homeInsuranceOptions");
+      if (!target) return;
+      target.innerHTML = homeProducts.map(([id, enName, geName]) => {
+        const p = products[id];
+        const title = state.lang === "ge" ? (geName || pt(id)) : (enName || pt(id));
+        return `<button class="home-option" data-product="${id}">
+          <span class="icon">${p.icon}</span>
+          <b>${title}</b>
+          <span>${pt(id, 1)}</span>
+        </button>`;
+      }).join("");
+      target.querySelectorAll("[data-product]").forEach(btn => {
+        btn.onclick = () => selectProduct(btn.dataset.product, true);
+      });
+    }
+
+    function renderPartners() {
+      const target = document.getElementById("partnerOrbit");
+      if (!target) return;
+      target.innerHTML = `<div class="partner-center">Ways</div>` + partners.map((name, i) => {
+        const angle = `${Math.round((360 / partners.length) * i)}deg`;
+        return `<span class="partner-chip" style="--angle:${angle}">${name}</span>`;
+      }).join("");
     }
 
     function renderContactSelect() {
